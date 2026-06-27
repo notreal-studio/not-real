@@ -141,6 +141,19 @@ header{position:fixed;top:0;left:0;right:0;z-index:90;mix-blend-mode:difference}
 .gal-cap .gi{font-family:"Switzer";color:var(--muted);font-size:13px;letter-spacing:0.1em}
 .gal-cap .gt{font-family:"Switzer",serif;font-size:20px;font-weight:500}
 .gal-cap .gd{color:var(--muted);font-size:13px}
+.gal-item .gp{margin-top:10px;color:var(--muted);font-size:14px;line-height:1.5;max-width:46ch}
+
+/* FAQ */
+.faq-list{margin-top:clamp(24px,4vw,48px);border-top:1px solid var(--line)}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-item summary{cursor:pointer;list-style:none;padding:20px 0;font-family:"Switzer",serif;
+  font-size:clamp(16px,2vw,20px);font-weight:500;display:flex;justify-content:space-between;
+  align-items:center;gap:16px}
+.faq-item summary::after{content:"+";font-size:22px;font-weight:400;flex-shrink:0;
+  transition:transform .3s ease}
+.faq-item[open] summary::after{transform:rotate(45deg)}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item p{margin:0 0 20px;color:var(--muted);font-size:15px;line-height:1.6;max-width:62ch}
 
 /* big CTA */
 .cta{text-align:center}

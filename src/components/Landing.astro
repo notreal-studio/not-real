@@ -44,7 +44,8 @@ const work = [1, 2, 3, 4];
         <li class="ml lbl-l"><span class="ml-label">{t("menu.work_l")}</span><a href="#darbai"><span class="ml-w">{t("menu.work")}</span></a></li>
         <li class="ml lbl-r"><a class="reel" href="#darbai"><span class="ml-w">*(<span class="reel-tile"><span class="gph gph-2"></span></span>)</span></a><span class="ml-label">{t("menu.showreel_l")}</span></li>
         <li class="ml lbl-l"><span class="ml-label">{t("menu.about_l")}</span><a href="#paslaugos"><span class="ml-w">{t("menu.about")}</span></a></li>
-        <li class="ml lbl-r"><a href="#kontaktai"><span class="ml-w">{t("menu.contact")}</span></a><span class="ml-label">{t("menu.contact_l")}</span></li>
+        <li class="ml lbl-r"><a href="#faq"><span class="ml-w">{t("menu.faq")}</span></a><span class="ml-label">{t("menu.faq_l")}</span></li>
+        <li class="ml lbl-l"><span class="ml-label">{t("menu.contact_l")}</span><a href="#kontaktai"><span class="ml-w">{t("menu.contact")}</span></a></li>
       </ul>
       <div class="menu-foot">
         <a href="mailto:labas@not-real.ai">{t("menu.email")}</a>
@@ -111,7 +112,24 @@ const work = [1, 2, 3, 4];
             <article class="gal-item reveal">
               <div class="gal-media"><div class="gal-ph">{t(`work.${n}_ph`)}</div></div>
               <div class="gal-cap"><span class="gi">(0{n})</span><span class="gt">{t(`work.${n}_t`)}</span><span class="gd">{t(`work.${n}_d`)}</span></div>
+              <p class="gp">{t(`work.${n}_desc`)}</p>
             </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* FAQ */}
+    <section class="block" id="faq">
+      <div class="wrap">
+        <div class="kicker reveal">{t("faq.kicker")}</div>
+        <h2 class="statement reveal" set:html={t("faq.h2")}></h2>
+        <div class="faq-list">
+          {[1, 2, 3, 4, 5, 6].map((n) => (
+            <details class="faq-item reveal">
+              <summary>{t(`faq.${n}_q`)}</summary>
+              <p>{t(`faq.${n}_a`)}</p>
+            </details>
           ))}
         </div>
       </div>

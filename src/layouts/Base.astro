@@ -30,6 +30,15 @@ const orgSchema = {
   areaServed: "Kaunas, Lithuania",
   sameAs: ["https://instagram.com/notreal.inga"],
 };
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [1, 2, 3, 4, 5, 6].map((n) => ({
+    "@type": "Question",
+    name: t(`faq.${n}_q`),
+    acceptedAnswer: { "@type": "Answer", text: t(`faq.${n}_a`) },
+  })),
+};
 ---
 <!DOCTYPE html>
 <html lang={lang}>
@@ -40,6 +49,8 @@ const orgSchema = {
   <meta name="description" content={t("meta.desc")} />
   <link rel="canonical" href={canonical} />
   <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+  <link rel="apple-touch-icon" href={`${base}apple-touch-icon.png`} />
+  <link rel="manifest" href={`${base}site.webmanifest`} />
 
   {/* Open Graph (Facebook, LinkedIn, žinučių peržiūros) */}
   <meta property="og:type" content="website" />
@@ -60,6 +71,7 @@ const orgSchema = {
 
   {/* Structured data — padeda Google suprasti, kas tu esi */}
   <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   {/* hreflang — kiekvienai kalbai automatiškai */}
   {languages.map((l) => (
@@ -73,6 +85,15 @@ const orgSchema = {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
   <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  {/* Google Analytics 4 */}
+  <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-6TMLTSEL2S"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6TMLTSEL2S');
+  </script>
 </head>
 <body class="locked">
   <slot />
