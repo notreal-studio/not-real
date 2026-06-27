@@ -1,0 +1,167 @@
+---
+import Base from "../layouts/Base.astro";
+import { languages, defaultLang, langName, useTranslations, localePath, type Lang } from "../i18n/utils";
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const base = import.meta.env.BASE_URL;
+
+const mq = [t("mq.1"), t("mq.2"), t("mq.3"), t("mq.4"), t("mq.5"), t("mq.6")];
+const work = [1, 2, 3, 4];
+---
+<Base lang={lang}>
+  {/* LOADER */}
+  <div id="loader">
+    <div class="ln serif">Not <b>Real</b></div>
+    <div class="lc"><span id="lcount">0</span> — {t("loader.loading")}</div>
+    <div class="lbar" id="lbar"></div>
+  </div>
+
+  {/* NAV */}
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#top"><span class="dot"></span>Not Real</a>
+      <button class="menu-btn" id="menuOpen"><span>{t("nav.menu")}</span><span class="bars"><i></i><i></i></span></button>
+    </div>
+  </header>
+
+  {/* OVERLAY MENU */}
+  <nav id="menu" aria-hidden="true">
+    <div class="menu-inner">
+      <div class="menu-top">
+        <a class="brand" href="#top" style="color:var(--cream)"><span class="dot"></span>Not Real</a>
+        <div class="lang-switch">
+          {languages.map((l) => (
+            <a href={localePath(l, base)} class={l === lang ? "is-active" : ""}>{langName[l]}</a>
+          ))}
+        </div>
+        <button class="menu-close" id="menuClose">{t("menu.close")}</button>
+      </div>
+      <ul class="menu-links">
+        <li class="ml lbl-l"><span class="ml-label">{t("menu.home_l")}</span><a href="#top"><span class="ml-w">{t("menu.home")}</span></a></li>
+        <li class="ml lbl-r"><a href="#paslaugos"><span class="ml-w">{t("menu.services")}</span></a><span class="ml-label">{t("menu.services_l")}</span></li>
+        <li class="ml lbl-l"><span class="ml-label">{t("menu.work_l")}</span><a href="#darbai"><span class="ml-w">{t("menu.work")}</span></a></li>
+        <li class="ml lbl-r"><a class="reel" href="#darbai"><span class="ml-w">*(<span class="reel-tile"><span class="gph gph-2"></span></span>)</span></a><span class="ml-label">{t("menu.showreel_l")}</span></li>
+        <li class="ml lbl-l"><span class="ml-label">{t("menu.about_l")}</span><a href="#paslaugos"><span class="ml-w">{t("menu.about")}</span></a></li>
+        <li class="ml lbl-r"><a href="#kontaktai"><span class="ml-w">{t("menu.contact")}</span></a><span class="ml-label">{t("menu.contact_l")}</span></li>
+      </ul>
+      <div class="menu-foot">
+        <a href="mailto:labas@not-real.ai">{t("menu.email")}</a>
+        <a href="https://instagram.com/notreal.inga" target="_blank" rel="noopener">{t("menu.instagram")}</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    {/* HERO */}
+    <section class="hero">
+      <div class="hero-media">
+        {/* TIKRAS VIDEO: pakeisk placeholder bloką šituo (ir įkelk failą):
+        <video autoplay muted loop playsinline poster="assets/hero-poster.jpg">
+          <source src="assets/hero.mp4" type="video/mp4">
+        </video> */}
+        <div class="hero-ph" id="heroPh"></div>
+        <div class="hero-grain"></div>
+      </div>
+      <div class="hero-scrim"></div>
+
+      <div class="hero-tag">
+        <div class="play" id="playReel">
+          <span class="circ">▶</span><span>{t("hero.play")}</span>
+        </div>
+        <div class="ph-note" style="margin-top:16px">{t("hero.ph_note")}</div>
+      </div>
+
+      <div class="wrap hero-content">
+        <div class="eyebrow reveal">{t("hero.eyebrow")}</div>
+        <h1 class="reveal" set:html={t("hero.h1")}></h1>
+        <p class="sub reveal">{t("hero.sub")}</p>
+      </div>
+    </section>
+
+    {/* MARQUEE */}
+    <div class="marquee" aria-hidden="true">
+      <div class="mq-track">
+        {[...mq, ...mq].map((w, i) => (i % 2 === 0 ? <span>{w}</span> : <b>{w}</b>))}
+      </div>
+    </div>
+
+    {/* GIANT SERVICES */}
+    <section class="giant" id="paslaugos">
+      <div class="wrap">
+        <div class="giant-label reveal">{t("giant.label")}</div>
+        <h2 class="giant-type reveal">{t("giant.beauty")} (<a class="gtile" href="#kontaktai" aria-label={t("giant.beauty_a")}><span class="gtile-media"><span class="gph gph-1"></span></span><span class="gcue">{t("giant.cue_l")}</span></a>) {t("giant.fashion")} (<a class="gtile" href="#kontaktai" aria-label={t("giant.fashion_a")}><span class="gtile-media"><span class="gph gph-2"></span></span><span class="gcue">{t("giant.cue_r")}</span></a>) {t("giant.wellness")} (<a class="gtile" href="#kontaktai" aria-label={t("giant.wellness_a")}><span class="gtile-media"><span class="gph gph-3"></span></span><span class="gcue">{t("giant.cue_l")}</span></a>)</h2>
+        <p class="giant-state reveal" set:html={t("giant.state")}></p>
+      </div>
+    </section>
+
+    {/* WORK */}
+    <section class="block" id="darbai">
+      <div class="wrap">
+        <div class="work-head">
+          <div>
+            <div class="kicker reveal">{t("work.kicker")}</div>
+            <h2 class="statement reveal" set:html={t("work.statement")}></h2>
+          </div>
+          <p class="lead reveal" style="margin-top:0">{t("work.lead")}</p>
+        </div>
+        <div class="gal">
+          {work.map((n) => (
+            <article class="gal-item reveal">
+              <div class="gal-media"><div class="gal-ph">{t(`work.${n}_ph`)}</div></div>
+              <div class="gal-cap"><span class="gi">(0{n})</span><span class="gt">{t(`work.${n}_t`)}</span><span class="gd">{t(`work.${n}_d`)}</span></div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* CTA */}
+    <section class="block cta">
+      <div class="wrap">
+        <h2 class="reveal" set:html={t("cta.h2")}></h2>
+        <a class="cta-btn reveal" href="#kontaktai">{t("cta.btn")}</a>
+      </div>
+    </section>
+
+    {/* CONTACT */}
+    <section class="block" id="kontaktai" style="border-top:1px solid var(--line)">
+      <div class="wrap">
+        <div class="kicker reveal">{t("contact.kicker")}</div>
+        <div class="contact-shell">
+          <div class="reveal">
+            <h2 class="statement" set:html={t("contact.h2")}></h2>
+            <p class="lead">{t("contact.lead")}</p>
+            <div class="c-links">
+              <a href="mailto:labas@not-real.ai">labas@not-real.ai</a>
+              <a href="https://instagram.com/notreal.inga" target="_blank" rel="noopener">{t("contact.instagram")}</a>
+            </div>
+          </div>
+          <form id="contact-form" class="reveal">
+            <input type="hidden" name="access_key" value="7092e718-fa64-44a3-b8de-428b83b5391e" />
+            <input type="hidden" name="subject" value={t("form.subject")} />
+            <input type="hidden" name="from_name" value={t("form.from")} />
+            <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
+            <label for="name">{t("form.name_label")}</label>
+            <input id="name" name="name" type="text" placeholder={t("form.name_ph")} required />
+            <label for="email">{t("form.email_label")}</label>
+            <input id="email" name="email" type="email" placeholder={t("form.email_ph")} required />
+            <label for="message">{t("form.msg_label")}</label>
+            <textarea id="message" name="message" placeholder={t("form.msg_ph")} required></textarea>
+            <button class="cbtn" type="submit">{t("form.submit")}</button>
+            <div class="form-msg" id="form-msg" role="status"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <a class="brand" href="#top" style="color:var(--cream)"><span class="dot"></span>Not Real</a>
+      <span class="tag">{t("footer.tag")}</span>
+      <a style="color:var(--pink);font-weight:500" href="mailto:labas@not-real.ai">labas@not-real.ai</a>
+    </div>
+  </footer>
+</Base>

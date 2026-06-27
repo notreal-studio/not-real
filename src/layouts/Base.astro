@@ -1,0 +1,83 @@
+---
+import "../styles/global.css";
+import { languages, defaultLang, useTranslations, localePath, type Lang } from "../i18n/utils";
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const base = import.meta.env.BASE_URL;                 // '/' (custom domain) arba '/repo/'
+const site = (Astro.site?.href ?? "").replace(/\/$/, ""); // pvz. https://not-real.ai
+
+// JS pusės tekstai (formos žinutės, showreel) — perduodami į naršyklę
+const jsT = {
+  reel: t("js.reel"), sending: t("js.sending"),
+  ok: t("js.ok"), err: t("js.err"), neterr: t("js.neterr"),
+};
+
+// SEO: canonical, Open Graph, structured data
+const canonical = `${site}${localePath(lang, base)}`;
+const ogLocaleMap: Record<string, string> = { lt: "lt_LT", en: "en_US" }; // pridėdamas kalbą, įrašyk čia
+const ogLocale = ogLocaleMap[lang] ?? "lt_LT";
+const ogImage = `${site}${base}og.jpg`; // įkelk public/og.jpg (1200×630)
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Not Real",
+  url: `${site}${base}`,
+  description: t("meta.desc"),
+  email: "labas@not-real.ai",
+  areaServed: "Kaunas, Lithuania",
+  sameAs: ["https://instagram.com/notreal.inga"],
+};
+---
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{t("meta.title")}</title>
+  <meta name="description" content={t("meta.desc")} />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+
+  {/* Open Graph (Facebook, LinkedIn, žinučių peržiūros) */}
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:title" content={t("meta.title")} />
+  <meta property="og:description" content={t("meta.desc")} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:locale" content={ogLocale} />
+  {languages.filter((l) => l !== lang).map((l) => (
+    <meta property="og:locale:alternate" content={ogLocaleMap[l] ?? "lt_LT"} />
+  ))}
+
+  {/* Twitter / X kortelė */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={t("meta.title")} />
+  <meta name="twitter:description" content={t("meta.desc")} />
+  <meta name="twitter:image" content={ogImage} />
+
+  {/* Structured data — padeda Google suprasti, kas tu esi */}
+  <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+
+  {/* hreflang — kiekvienai kalbai automatiškai */}
+  {languages.map((l) => (
+    <link rel="alternate" hreflang={l} href={`${site}${localePath(l, base)}`} />
+  ))}
+  <link rel="alternate" hreflang="x-default" href={`${site}${localePath(defaultLang, base)}`} />
+
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+  <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800,900&f[]=sentient@400,401,500,501&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body class="locked">
+  <slot />
+
+  <script is:inline set:html={`window.__t=${JSON.stringify(jsT)};`}></script>
+  <script is:inline src={`${base}main.js`}></script>
+</body>
+</html>
