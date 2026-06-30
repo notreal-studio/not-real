@@ -4,32 +4,27 @@ Daugiakalbė statinė landing svetainė (Astro). Numatytoji kalba **LT** (šakny
 
 ---
 
-## Būsena (2026-06-28)
+## Būsena (2026-06-30)
 
 **Atlikta:**
 
-- `npm install` + `npm run build` patikrinti — praeina be klaidų
-- `astro.config.mjs` ir `public/robots.txt` sukonfigūruoti GitHub Pages URL be domeno: `site: "https://notreal-studio.github.io"`, `base: "/not-real/"`
-- Web3Forms raktas įrašytas (`Landing.astro`)
-- Instagram nuoroda įrašyta visur: `https://instagram.com/notreal.inga`
-- `git init`, commit, push į `https://github.com/notreal-studio/not-real.git` (branch `main`)
-- GitHub Pages **Source: GitHub Actions** įjungtas, deploy workflow sėkmingas (žr. Actions tab)
-- Svetainė gyva: **<https://notreal-studio.github.io/not-real/>**
+- Svetainė gyva: **<https://notreal.lt>** — custom domenas pilnai sukonfigūruotas (DNS A įrašai, CNAME, GitHub Pages), HTTPS aktyvus ir priverstinis (`Enforce HTTPS`)
+- `astro.config.mjs`: `site: "https://notreal.lt"`, `base: "/"`
+- `git init`, commit, push į `https://github.com/notreal-studio/not-real.git` (branch `main`), GitHub Pages **Source: GitHub Actions**, deploy workflow sėkmingas
+- Web3Forms raktas + Instagram nuoroda (`notreal.inga`) įrašyti `Landing.astro`
 - **FAQ sekcija** (6 klausimai LT+EN, `<details>` akordeonas) + `FAQPage` JSON-LD schema
 - **Darbų aprašymai** — 4 case study kortelės papildytos raktažodžiais praturtintu tekstu
-- **og.jpg** — sugeneruotas brendinuotas vaizdas (1200×630) pagal esamus brand spalvas/šriftus
-- **apple-touch-icon.png + icon-192/512.png + site.webmanifest** — sugeneruoti iš `favicon.svg`, prijungti `Base.astro` `<head>`
-- **Google Analytics 4** — sukurta property "not-real", Measurement ID `G-6TMLTSEL2S` įrašytas `Base.astro`
+- **Google Analytics 4** — property "not-real", Measurement ID `G-6TMLTSEL2S` įrašytas `Base.astro`
+- **Naujas brand identity (Cellar & Silk)** — Inga (dizainerė) pristatė pilną brand book'ą (`NOT_REAL_Brand_Book_v1.pdf`, ne repo'je). Įdiegti realūs assets: `favicon.svg`, `favicon.ico`, `favicon-96x96.png`, `apple-touch-icon.png`, `web-app-manifest-192/512x512.png`, `logo.svg`, `logo-512.png`, naujas `og.jpg` — visi Bone Cream/Espresso/Bordeaux paletėje, Instrument Serif šriftu. Visi sujungti `Base.astro` `<head>` ir `site.webmanifest`.
 
-## TODO — kitos sesijos / rytojaus darbai
+## TODO — kitos sesijos darbai
 
-1. **Domenas** (planuojama pirkti 2026-06-29) — kai turėsi pavadinimą, pasakyk: sutvarkysiu `astro.config.mjs` (`site`, `base: "/"`), `public/robots.txt`, `public/CNAME`, DNS A įrašus (185.199.108.153 / .109 / .110 / .111 + `www` CNAME), GitHub Pages custom domain laukelį
-2. **Tikrinimas naršyklėje** — atidaryti `https://notreal-studio.github.io/not-real/` ir `/en/`, paspaudžioti meniu, FAQ akordeoną, kalbos jungiklį, išsiųsti testinę kontaktų formos žinutę (Web3Forms)
-3. **GA4 Realtime** — patikrinti, ar po apsilankymo duomenys rodomi Reports → Realtime
-4. **El. paštas** — kol nenusprendi pašto providerio (svarstoma `info@not-real.eu`), placeholder `labas@not-real.ai` lieka visur (`Landing.astro`, `Base.astro`, `ui.ts`). Kai apsisprendi — pasakyk, pakeisiu visur vienu kartu.
-5. **Google Search Console** — gali registruoti **bet kada, net dabar**, nereikia jokios verslo registracijos, tik svetainės nuosavybės patvirtinimas + sitemap pateikimas. Sąmoningai atidėta tik tam, kad nereikėtų kurti naujo property po domeno pasikeitimo.
-6. **Individuali veikla / UAB registracija** — planuojama po 1-2 savaičių, prieš pirmus klientus (reikalinga norint išrašyti sąskaitas — tai Lietuvos mokesčių reikalavimas, ne Google).
-7. **Google Business Profile** — kurti **kartu su #6**, kai turėsi domeną/paštą/NAP. Sukūrimo metu Google paprašys: verslo pavadinimo, **veiklos kategorijos** (pvz. "Marketing agency"/"Advertising agency" — tai tik Maps/paieškos kategorija, ne mokestinė klasifikacija), adreso (gali būti paslėptas, jei pasirenkama "Service-area business"), kontaktų. **PVM mokėtojo kodo Google NEPRAŠO** — tai atskiras LT mokesčių dalykas, reikalingas tik sąskaitoms, ne profilio kūrimui.
+1. **DIDYSIS — pilnas reskin pagal brand book'ą.** Naujas pozicionavimas pasikeitė iš esmės: nebe "AI prekės ženklų studija grožiui/madai/wellness Kaune" (LT/EN B2B agentūra), o **"NOT REAL — An AI Visual Studio"**, Ingos (foto → AI visual director) asmeninė studija, taikoma į **"e-commerce and service brands"** tarptautiniu mastu, anglų k. editorial tonas. Reikės: (a) `global.css` spalvų kintamųjų pakeitimo į Cellar & Silk (Bone Cream `#F2EDE4`, Espresso `#2B1D14`, Vintage Bordeaux `#5C1F2A`, Cognac `#8B5A3C`, Mushroom `#A8997F`, 60-30-10 taisyklė), (b) šriftų pakeitimo (Switzer/Sentient/Oswald → Instrument Serif + Inter), (c) viso teksto perrašymo `ui.ts` pagal manifestą/tone of voice/taglines iš brand book'o, (d) apsisprendimo, ar lieka LT+EN dvikalbystė, ar pereinama prie EN-pirmumo. **Nepradėti be vartotojo patvirtinimo dėl apimties.**
+2. **El. paštas** — kol nenusprendi pašto providerio, placeholder `labas@not-real.ai` lieka visur (`Landing.astro`, `Base.astro`, `ui.ts`). Pastaba: brand book pavyzdžiuose minimas `studio@notreal.xyz` — tai tik draft, realus domenas yra `notreal.lt`.
+3. **Google Search Console** — domenas jau galutinis, dabar gali registruoti `notreal.lt` be jokių kliūčių.
+4. **Individuali veikla / UAB registracija** — planuojama prieš pirmus klientus (reikalinga sąskaitoms — LT mokesčių reikalavimas, ne Google).
+5. **Google Business Profile** — kurti kartu su #4. Veiklos kategorija (pvz. "Marketing/Advertising agency") yra tik Maps kategorija, ne mokestinė; **PVM kodo Google neprašo**.
+6. **GA4 Realtime** — patikrinti, ar duomenys renkasi nuo naujo domeno.
 
 ---
 
