@@ -1,13 +1,29 @@
 {
-  "name": "Not Real — AI prekės ženklų studija",
-  "short_name": "Not Real",
-  "start_url": ".",
-  "scope": ".",
+  "name": "NOT REAL — An AI Visual Studio",
+  "short_name": "NOT REAL",
+  "description": "Editorial-grade AI visuals. Without the editorial-grade timeline.",
+  "start_url": "/",
   "display": "standalone",
-  "background_color": "#0D0B0A",
-  "theme_color": "#0D0B0A",
+  "background_color": "#F2EDE4",
+  "theme_color": "#2B1D14",
+  "lang": "en",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "/favicon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
   ]
 }

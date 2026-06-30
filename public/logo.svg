@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 96" role="img" aria-label="NOT REAL — An AI Visual Studio">
+  <title>NOT REAL</title>
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif&amp;display=swap');
+    </style>
+  </defs>
+  <!-- Background: Bone Cream -->
+  <rect width="520" height="96" fill="#F2EDE4"/>
+  <!-- Wordmark: NOT REAL — Instrument Serif, wide tracking -->
+  <text
+    x="28"
+    y="68"
+    font-family="'Instrument Serif', Georgia, 'Times New Roman', serif"
+    font-size="52"
+    font-weight="400"
+    letter-spacing="15"
+    fill="#2B1D14"
+    xml:space="preserve">NOT REAL</text>
+</svg>
