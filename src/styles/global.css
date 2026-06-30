@@ -1,13 +1,32 @@
 :root{
-  --bg:#2B1D14;          /* Espresso */
-  --bg-2:#3A2A1D;        /* lifted Espresso */
-  --cream:#F2EDE4;       /* Bone Cream — text */
-  --muted:#A8997F;       /* Mushroom — sub text */
-  --pink:#8B5A3C;        /* Cognac — text accent, links, hovers */
-  --bordeaux:#5C1F2A;    /* Vintage Bordeaux — signature solid-fill accent */
-  --pistachio:#48B97A;   /* success state */
+  /* raw brand palette — constant, never changes with theme */
+  --c-bone:#F2EDE4; --c-espresso:#2B1D14; --c-bordeaux:#5C1F2A; --c-cognac:#8B5A3C; --c-mushroom:#A8997F;
+
+  /* role tokens — DARK theme (default). NOTE: --cream/--pink are role names that
+     flip value per theme (e.g. --cream holds Espresso in light mode) — kept for
+     minimal diff rather than renamed across ~40 call sites. */
+  --bg:var(--c-espresso);       /* page background */
+  --bg-2:#3A2A1D;               /* lifted surface (inputs, cards) */
+  --cream:var(--c-bone);        /* primary text */
+  --muted:var(--c-mushroom);    /* sub text */
+  --pink:var(--c-cognac);       /* text-level accent (links, hovers, italics) */
+  --bordeaux:var(--c-bordeaux); /* solid-fill buttons */
+  --on-bordeaux:var(--c-bone);  /* text on Bordeaux fill — always light, never flips */
   --line:rgba(242,237,228,0.12);
+  --giant-bg:var(--c-bone); --giant-text:var(--c-espresso); --giant-accent:var(--c-bordeaux);
+  --pistachio:#48B97A;   /* success state */
   --maxw:1280px;
+}
+[data-theme="light"]{
+  --bg:var(--c-bone);
+  --bg-2:#E5DDD0;
+  --cream:var(--c-espresso);
+  --muted:var(--c-mushroom);
+  --pink:var(--c-bordeaux);     /* Bordeaux on Bone Cream is the brand book's own primary pairing */
+  --bordeaux:var(--c-bordeaux);
+  --on-bordeaux:var(--c-bone);
+  --line:rgba(43,29,20,0.12);
+  --giant-bg:var(--c-espresso); --giant-text:var(--c-bone); --giant-accent:var(--c-cognac);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;overflow-x:hidden}
@@ -31,12 +50,18 @@ a{color:inherit;text-decoration:none}
 /* ===== NAV ===== */
 header{position:fixed;top:0;left:0;right:0;z-index:90;mix-blend-mode:difference}
 .nav{display:flex;align-items:center;justify-content:space-between;height:84px}
+.nav-actions{display:flex;align-items:center;gap:22px}
 .brand{font-family:"Inter",serif;font-weight:700;font-size:24px;color:#fff;display:flex;align-items:center;gap:9px}
 .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--bordeaux);display:inline-block;mix-blend-mode:normal}
 .menu-btn{font-family:"Inter";color:#fff;background:none;border:none;cursor:pointer;
   letter-spacing:0.16em;text-transform:uppercase;font-size:13px;display:flex;align-items:center;gap:10px}
 .menu-btn .bars{display:inline-flex;flex-direction:column;gap:4px}
 .menu-btn .bars i{width:24px;height:2px;background:#fff;display:block}
+.theme-toggle{background:none;border:none;cursor:pointer;color:#fff;padding:0;
+  display:flex;align-items:center;justify-content:center;width:24px;height:24px}
+.theme-toggle svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:1.6}
+html[data-theme="dark"] .theme-toggle .i-moon{display:none}
+html[data-theme="light"] .theme-toggle .i-sun{display:none}
 
 /* ===== OVERLAY MENU ===== */
 #menu{position:fixed;inset:0;z-index:120;background:var(--bg);
@@ -83,7 +108,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:90;mix-blend-mode:difference}
 .play{display:inline-flex;align-items:center;gap:12px;margin-top:18px;cursor:pointer;
   font-family:"Inter";letter-spacing:0.16em;text-transform:uppercase;font-size:13px;color:var(--cream)}
 .play .circ{width:54px;height:54px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;transition:.25s}
-.play:hover .circ{background:var(--bordeaux);border-color:var(--bordeaux);color:var(--cream)}
+.play:hover .circ{background:var(--bordeaux);border-color:var(--bordeaux);color:var(--on-bordeaux)}
 .hero-content{position:relative;z-index:2;width:100%;padding-bottom:clamp(34px,6vh,72px)}
 .eyebrow{font-family:"Inter";font-size:12px;letter-spacing:0.3em;color:var(--pink);text-transform:uppercase;margin-bottom:22px}
 .hero h1{font-family:"Inter",serif;font-size:clamp(3.6rem,14.5vw,13.5rem);font-weight:700;
@@ -161,7 +186,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:90;mix-blend-mode:difference}
 .cta-btn{display:inline-flex;align-items:center;gap:14px;margin-top:40px;
   font-family:"Inter";letter-spacing:0.14em;text-transform:uppercase;font-size:14px;
   border:1px solid var(--line);border-radius:999px;padding:18px 34px;transition:.25s}
-.cta-btn:hover{background:var(--bordeaux);color:var(--cream);border-color:var(--bordeaux);transform:translateY(-2px)}
+.cta-btn:hover{background:var(--bordeaux);color:var(--on-bordeaux);border-color:var(--bordeaux);transform:translateY(-2px)}
 
 /* contact */
 .contact-shell{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;margin-top:48px}
@@ -178,7 +203,7 @@ textarea{resize:vertical;min-height:120px}
 .c-links a{font-family:"Inter",sans-serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:500}
 .c-links a:hover{color:var(--pink);font-style:italic}
 .cbtn{font-family:"Inter";font-weight:500;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;
-  background:var(--bordeaux);color:var(--cream);padding:15px 26px;border-radius:4px;border:none;cursor:pointer;align-self:flex-start;transition:.2s}
+  background:var(--bordeaux);color:var(--on-bordeaux);padding:15px 26px;border-radius:4px;border:none;cursor:pointer;align-self:flex-start;transition:.2s}
 .cbtn:hover{filter:brightness(1.08);transform:translateY(-1px)}
 
 footer{border-top:1px solid var(--line);padding:46px 0}
@@ -190,11 +215,11 @@ footer{border-top:1px solid var(--line);padding:46px 0}
 .reveal.in{opacity:1;transform:none}
 
 /* ===== GIANT SERVICES ===== */
-.giant{background:#F2EDE4;color:#2B1D14;padding:clamp(90px,15vh,170px) 0;overflow:hidden}
-.giant-label{font-family:"Inter";font-size:12px;letter-spacing:0.26em;text-transform:uppercase;color:#8B5A3C;margin-bottom:clamp(24px,4vh,46px);text-align:center}
+.giant{background:var(--giant-bg);color:var(--giant-text);padding:clamp(90px,15vh,170px) 0;overflow:hidden}
+.giant-label{font-family:"Inter";font-size:12px;letter-spacing:0.26em;text-transform:uppercase;color:var(--c-cognac);margin-bottom:clamp(24px,4vh,46px);text-align:center}
 .giant-type{font-family:"Inter",system-ui,sans-serif;font-weight:700;text-transform:uppercase;
   font-size:clamp(4.5rem,23vw,18.5rem);line-height:1.12;letter-spacing:-0.01em;text-align:center;
-  color:#2B1D14;overflow-wrap:break-word}
+  color:var(--giant-text);overflow-wrap:break-word}
 .gtile{position:relative;display:inline-block;vertical-align:middle;margin:0 .04em;line-height:0}
 .gtile-media{display:inline-block;width:clamp(60px,9vw,128px);aspect-ratio:1/1.18;border-radius:6px;
   overflow:hidden;vertical-align:middle;box-shadow:0 10px 28px rgba(0,0,0,0.20);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
@@ -207,11 +232,11 @@ footer{border-top:1px solid var(--line);padding:46px 0}
 @keyframes gph{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 .gcue{position:absolute;top:50%;left:calc(100% + 12px);transform:translateY(-50%);
   font-family:"Inter",serif;font-style:italic;font-size:clamp(13px,1.4vw,18px);
-  color:#2B1D14;white-space:nowrap;line-height:1.1;opacity:0;transition:opacity .25s}
+  color:var(--giant-text);white-space:nowrap;line-height:1.1;opacity:0;transition:opacity .25s}
 .gtile:hover .gcue{opacity:.8}
 .giant-state{font-family:"Inter",sans-serif;font-size:clamp(1.25rem,2.6vw,2rem);font-weight:500;
-  line-height:1.32;max-width:760px;margin:clamp(40px,7vh,80px) auto 0;text-align:center;color:#2B1D14}
-.giant-state em{font-style:italic;color:#5C1F2A}
+  line-height:1.32;max-width:760px;margin:clamp(40px,7vh,80px) auto 0;text-align:center;color:var(--giant-text)}
+.giant-state em{font-style:italic;color:var(--giant-accent)}
 @media (max-width:720px){
   .gcue{display:none}
   .gtile-media{width:clamp(50px,15vw,86px)}

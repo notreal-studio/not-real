@@ -24,6 +24,7 @@ export const ui: Record<string, Record<string, string>> = {
 
     "nav.menu": "Meniu",
     "menu.close": "Uždaryti",
+    "theme.toggle": "Perjungti šviesų / tamsų režimą",
     "menu.home": "PRADŽIA",      "menu.home_l": "Namai",
     "menu.services": "PASLAUGOS", "menu.services_l": "Ką darom",
     "menu.work": "DARBAI",        "menu.work_l": "Projektai",
@@ -108,6 +109,7 @@ export const ui: Record<string, Record<string, string>> = {
 
     "nav.menu": "Menu",
     "menu.close": "Close",
+    "theme.toggle": "Toggle light / dark mode",
     "menu.home": "HOME",       "menu.home_l": "Home",
     "menu.services": "SERVICES", "menu.services_l": "What we do",
     "menu.work": "WORK",         "menu.work_l": "Projects",

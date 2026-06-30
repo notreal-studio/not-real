@@ -24,6 +24,19 @@
     },55);
   }
 
+  /* ---- THEME TOGGLE ---- */
+  const root = document.documentElement;
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+  if (!localStorage.getItem('theme') && window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('theme')) root.setAttribute('data-theme', e.matches ? 'light' : 'dark');
+    });
+  }
+
   /* ---- OVERLAY MENU ---- */
   const menu=document.getElementById('menu');
   const open=()=>{menu.classList.add('open');menu.setAttribute('aria-hidden','false');body.classList.add('locked');if(window.gsap&&!reduced){gsap.from('#menu .ml-w',{yPercent:115,duration:0.7,stagger:0.06,ease:'power3.out',delay:0.28});}};
