@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://notreal-studio.github.io/not-real/sitemap-index.xml
+Sitemap: https://notreal.lt/sitemap-index.xml

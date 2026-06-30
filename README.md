@@ -13,24 +13,23 @@ Daugiakalbė statinė landing svetainė (Astro). Numatytoji kalba **LT** (šakny
 - Web3Forms raktas įrašytas (`Landing.astro`)
 - Instagram nuoroda įrašyta visur: `https://instagram.com/notreal.inga`
 - `git init`, commit, push į `https://github.com/notreal-studio/not-real.git` (branch `main`)
+- GitHub Pages **Source: GitHub Actions** įjungtas, deploy workflow sėkmingas (žr. Actions tab)
+- Svetainė gyva: **<https://notreal-studio.github.io/not-real/>**
 - **FAQ sekcija** (6 klausimai LT+EN, `<details>` akordeonas) + `FAQPage` JSON-LD schema
 - **Darbų aprašymai** — 4 case study kortelės papildytos raktažodžiais praturtintu tekstu
 - **og.jpg** — sugeneruotas brendinuotas vaizdas (1200×630) pagal esamus brand spalvas/šriftus
 - **apple-touch-icon.png + icon-192/512.png + site.webmanifest** — sugeneruoti iš `favicon.svg`, prijungti `Base.astro` `<head>`
 - **Google Analytics 4** — sukurta property "not-real", Measurement ID `G-6TMLTSEL2S` įrašytas `Base.astro`
 
-**Kiti žingsniai (rankiniu būdu, GitHub svetainėje):**
+## TODO — kitos sesijos / rytojaus darbai
 
-1. **Settings → Pages → Build and deployment → Source: GitHub Actions** — be šito automatinis deploy neprasidės
-2. Patikrinti **Actions** skiltyje, kad workflow „Deploy to GitHub Pages" baigėsi sėkmingai (žalia varnelė)
-3. Atidaryti `https://notreal-studio.github.io/not-real/` ir `/en/`, patikrinti meniu, kalbos jungiklį, kontaktų formą (testinis pateikimas per Web3Forms)
-4. GA4 → po deploy patikrinti **Realtime** ataskaitą, kad duomenys renkasi
-
-**Atidėta / dar nenuspręsta:**
-
-- **El. paštas** — placeholder `labas@not-real.ai` paliktas, kol bus pasirinktas pašto provideris (svarstomas `info@not-real.eu`)
-- **Domenas** — kol kas naudojam GitHub Pages URL; svarstomi `.lt` / `.eu` / `.ai`, reikės pasirinkti vieną kaip canonical (kiti — redirect), tada atnaujinti `astro.config.mjs` (`base: "/"`), `robots.txt`, ir pridėti `public/CNAME` + DNS A įrašus
-- SEO turinio plėtra (FAQ, case studies, raktažodžių puslapiai) ir Google Search Console / Google Business Profile setup — žr. **NOT-REAL-PALEIDIMAS-IR-SEO.md**
+1. **Domenas** (planuojama pirkti 2026-06-29) — kai turėsi pavadinimą, pasakyk: sutvarkysiu `astro.config.mjs` (`site`, `base: "/"`), `public/robots.txt`, `public/CNAME`, DNS A įrašus (185.199.108.153 / .109 / .110 / .111 + `www` CNAME), GitHub Pages custom domain laukelį
+2. **Tikrinimas naršyklėje** — atidaryti `https://notreal-studio.github.io/not-real/` ir `/en/`, paspaudžioti meniu, FAQ akordeoną, kalbos jungiklį, išsiųsti testinę kontaktų formos žinutę (Web3Forms)
+3. **GA4 Realtime** — patikrinti, ar po apsilankymo duomenys rodomi Reports → Realtime
+4. **El. paštas** — kol nenusprendi pašto providerio (svarstoma `info@not-real.eu`), placeholder `labas@not-real.ai` lieka visur (`Landing.astro`, `Base.astro`, `ui.ts`). Kai apsisprendi — pasakyk, pakeisiu visur vienu kartu.
+5. **Google Search Console** — gali registruoti **bet kada, net dabar**, nereikia jokios verslo registracijos, tik svetainės nuosavybės patvirtinimas + sitemap pateikimas. Sąmoningai atidėta tik tam, kad nereikėtų kurti naujo property po domeno pasikeitimo.
+6. **Individuali veikla / UAB registracija** — planuojama po 1-2 savaičių, prieš pirmus klientus (reikalinga norint išrašyti sąskaitas — tai Lietuvos mokesčių reikalavimas, ne Google).
+7. **Google Business Profile** — kurti **kartu su #6**, kai turėsi domeną/paštą/NAP. Sukūrimo metu Google paprašys: verslo pavadinimo, **veiklos kategorijos** (pvz. "Marketing agency"/"Advertising agency" — tai tik Maps/paieškos kategorija, ne mokestinė klasifikacija), adreso (gali būti paslėptas, jei pasirenkama "Service-area business"), kontaktų. **PVM mokėtojo kodo Google NEPRAŠO** — tai atskiras LT mokesčių dalykas, reikalingas tik sąskaitoms, ne profilio kūrimui.
 
 ---
 
