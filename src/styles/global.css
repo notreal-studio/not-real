@@ -74,15 +74,20 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
   letter-spacing:0.16em;text-transform:uppercase;font-size:13px;transition:color .2s}
 .menu-close:hover{color:var(--pink)}
 .menu-links{list-style:none;display:flex;flex-direction:column;align-items:center;gap:0;margin:auto 0;padding:0}
-.ml{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;width:100%;column-gap:clamp(12px,1.8vw,26px)}
+.ml{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;width:100%;column-gap:clamp(12px,1.8vw,26px)}
 .ml a{grid-column:2;justify-self:center;display:inline-block;overflow:hidden;font-family:"Inter",system-ui,sans-serif;font-weight:700;text-transform:uppercase;
-  font-size:clamp(2.4rem,8.6vw,6.6rem);line-height:0.96;color:var(--cream);letter-spacing:-0.02em;transition:color .25s}
+  font-size:clamp(2.64rem,9.46vw,7.26rem);line-height:0.96;color:var(--cream);letter-spacing:-0.02em}
 .ml a.reel{overflow:visible}
-.ml-w{display:inline-block;will-change:transform}
-.ml a:hover{color:var(--pink)}
-.ml-label{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-size:clamp(13px,1.5vw,19px);color:var(--muted);white-space:nowrap}
+.ml-w{display:inline-block;position:relative;will-change:transform;
+  transition:transform 0.45s cubic-bezier(.22,1,.36,1)}
+.ml-w::after{content:attr(data-label);position:absolute;top:-100%;left:0;display:block;white-space:nowrap}
+.ml a:hover .ml-w{transform:translateY(100%)}
+.ml-label{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-size:clamp(13px,1.5vw,19px);color:var(--muted);white-space:nowrap;
+  transition:transform 0.45s cubic-bezier(.22,1,.36,1)}
 .ml.lbl-l .ml-label{grid-column:1;justify-self:end;text-align:right}
 .ml.lbl-r .ml-label{grid-column:3;justify-self:start;text-align:left}
+.ml.lbl-l:hover .ml-label{transform:translateX(-10px)}
+.ml.lbl-r:hover .ml-label{transform:translateX(10px)}
 .reel{display:inline-flex;align-items:center}
 .reel-tile{display:inline-block;width:clamp(54px,7vw,104px);aspect-ratio:1/1;border-radius:5px;
   overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.4);transition:transform .3s;margin:0 .14em;vertical-align:middle}
