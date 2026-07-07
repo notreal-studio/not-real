@@ -44,12 +44,19 @@ const work = [1, 2, 3, 4];
       {/* TOP BAR */}
       <div class="menu-top">
         <a class="menu-nr-logo" href="#top" onclick="document.getElementById('menuClose').click()">
-          <svg viewBox="0 0 100 100" width="48" height="48">
+          <svg viewBox="0 0 100 100" width="52" height="52">
             <rect width="100" height="100" fill="none"/>
             <text x="50" y="71" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif" font-size="56" font-weight="400" letter-spacing="3" fill="currentColor">NR</text>
           </svg>
         </a>
-        <button class="menu-close" id="menuClose">{t("menu.close")}</button>
+        <div class="menu-top-right">
+          <div class="menu-lang">
+            {languages.map((l) => (
+              <a href={localePath(l, base)} class={l === lang ? "is-active" : ""}>{langName[l]}</a>
+            ))}
+          </div>
+          <button class="menu-close" id="menuClose">{t("menu.close")}</button>
+        </div>
       </div>
 
       {/* NAV LINKS — right-aligned */}
@@ -86,9 +93,6 @@ const work = [1, 2, 3, 4];
           <a class="mf-icon" href="#kontaktai" aria-label="Rašyk mums" onclick="document.getElementById('menuClose').click()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
           </a>
-        </div>
-        <div class="reel-ring">
-          <span class="reel-tile"><span class="gph gph-2"></span></span>
         </div>
       </div>
 

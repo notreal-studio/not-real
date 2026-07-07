@@ -80,11 +80,18 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
 
 /* top bar: NR logo + close */
 .menu-top{display:flex;justify-content:space-between;align-items:center}
-.menu-nr-logo{color:var(--cream);opacity:.7;transition:opacity .2s;display:flex}
+.menu-top-right{display:flex;align-items:center;gap:clamp(16px,3vw,36px)}
+.menu-nr-logo{color:var(--cream);opacity:.9;transition:opacity .2s;display:flex}
 .menu-nr-logo:hover{opacity:1}
+.menu-lang{display:flex;align-items:center;gap:8px;font-family:"Inter",sans-serif;
+  font-size:12px;letter-spacing:0.14em;text-transform:uppercase}
+.menu-lang a{color:var(--cream);opacity:.4;transition:opacity .2s}
+.menu-lang a+a::before{content:"/";margin-right:8px;opacity:.25}
+.menu-lang a.is-active{opacity:.85}
+.menu-lang a:hover{opacity:.7}
 .menu-close{font-family:"Inter",sans-serif;color:var(--cream);background:none;border:none;
-  cursor:pointer;letter-spacing:0.2em;text-transform:uppercase;font-size:12px;
-  opacity:.6;transition:opacity .2s}
+  cursor:pointer;letter-spacing:0.2em;text-transform:uppercase;font-size:11px;
+  opacity:.5;transition:opacity .2s}
 .menu-close:hover{opacity:1}
 
 /* nav links — right-aligned */
@@ -92,23 +99,22 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
   justify-content:center;gap:0;padding:0;margin:0}
 .ml-item{display:flex;flex-direction:column;align-items:flex-end}
 .ml-link{font-family:"Instrument Serif",Georgia,serif;font-weight:400;
-  font-size:clamp(1.8rem,4.2vw,3.8rem);line-height:1.1;
-  color:var(--cream);opacity:.5;transition:opacity .3s;
-  display:flex;align-items:baseline;gap:.28em;direction:ltr;overflow:hidden;
-  padding:.12em 0}
+  font-size:clamp(1.4rem,2.8vw,2.8rem);line-height:1.15;letter-spacing:0.02em;
+  color:var(--cream);opacity:.4;transition:opacity .35s;
+  display:flex;align-items:baseline;gap:.3em;padding:.18em 0}
 .ml-link:hover,.ml-item:hover>.ml-link{opacity:1}
-.ml-dot{font-size:.7em;opacity:0;transform:translateX(-6px);
-  transition:opacity .3s,transform .35s cubic-bezier(.22,1,.36,1);
+.ml-dot{font-size:.65em;opacity:0;transform:translateX(-8px);
+  transition:opacity .3s,transform .38s cubic-bezier(.22,1,.36,1);
   color:var(--c-cognac);line-height:1}
 .ml-link:hover .ml-dot,.ml-item:hover>.ml-link .ml-dot{opacity:1;transform:translateX(0)}
 
-/* subcategories */
-.menu-sub{list-style:none;padding:0 0 .4em 0;display:none;flex-direction:column;
-  align-items:flex-end;gap:.15em}
+/* subcategories — only on hover */
+.menu-sub{list-style:none;padding:.2em 0 .5em;display:none;flex-direction:column;
+  align-items:flex-end;gap:.25em}
 .ml-has-sub:hover .menu-sub{display:flex}
-.menu-sub a{font-family:"Inter",sans-serif;font-size:clamp(11px,1.4vw,15px);
-  letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);
-  opacity:.7;transition:opacity .2s,color .2s}
+.menu-sub a{font-family:"Inter",sans-serif;font-size:clamp(10px,1.1vw,13px);
+  letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);
+  opacity:.6;transition:opacity .2s,color .2s;padding:.1em 0}
 .menu-sub a:hover{opacity:1;color:var(--cream)}
 
 /* bottom: social left + reel circle right */
