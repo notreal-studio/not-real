@@ -46,7 +46,13 @@
       gsap.from('#menu .menu-nr-logo',{opacity:0,y:-10,duration:0.4,ease:'power2.out',delay:0.15});
       gsap.from('#menu .menu-close',{opacity:0,duration:0.35,delay:0.2});
       gsap.from('#menu .menu-foot-left',{opacity:0,y:12,duration:0.4,ease:'power2.out',delay:0.5});
-      gsap.from('#menu .reel-ring',{opacity:0,scale:0.7,duration:0.5,ease:'back.out(1.5)',delay:0.55});
+      /* hover slide: letters rise from below and flip into view */
+      document.querySelectorAll('#menu .ml-link').forEach(function(a){
+        var txt=a.querySelector('.ml-text');
+        if(!txt)return;
+        a.addEventListener('mouseenter',function(){gsap.fromTo(txt,{yPercent:105},{yPercent:0,duration:0.45,ease:'power3.out',overwrite:true});});
+        a.addEventListener('mouseleave',function(){gsap.to(txt,{yPercent:105,duration:0.35,ease:'power3.in',overwrite:true});});
+      });
     }
   };
   const close=()=>{menu.classList.remove('open');menu.setAttribute('aria-hidden','true');body.classList.remove('locked');};

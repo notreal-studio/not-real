@@ -112,16 +112,17 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
 .ml-link{font-family:"Instrument Serif",Georgia,serif;font-weight:400;
   font-size:clamp(1.5rem,3vw,3.2rem);line-height:1.2;letter-spacing:0.04em;
   color:var(--cream);opacity:.38;transition:opacity .35s;
-  display:flex;align-items:center;gap:.5em;padding:.14em 0}
+  display:flex;align-items:center;gap:.5em;padding:.14em 0;overflow:hidden}
 .ml-link:hover,.ml-item:hover>.ml-link{opacity:1}
+.ml-text{display:inline-block;will-change:transform}
 .ml-dot{font-size:.55em;opacity:0;transform:translateX(-10px) scale(0.6);
   transition:opacity .3s,transform .4s cubic-bezier(.22,1,.36,1);
   color:var(--c-cognac)}
 .ml-link:hover .ml-dot,.ml-item:hover>.ml-link .ml-dot{opacity:1;transform:translateX(0) scale(1)}
 
-/* subcategories — always visible, indented */
-.menu-sub{list-style:none;padding:.15em 0 .6em 0;display:flex;flex-direction:column;
-  align-items:flex-start;gap:.2em}
+/* subcategories — always visible, 2-column grid */
+.menu-sub{list-style:none;padding:.2em 0 .6em 0;
+  display:grid;grid-template-columns:1fr 1fr;gap:.2em .5em}
 .menu-sub a{font-family:"Inter",sans-serif;font-size:clamp(10px,1vw,12px);
   letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);
   opacity:.5;transition:opacity .2s,color .2s;padding:.08em 0}
