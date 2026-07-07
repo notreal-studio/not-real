@@ -210,6 +210,18 @@ footer{border-top:1px solid var(--line);padding:46px 0}
 .foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
 .foot .tag{color:var(--muted);font-size:13px;font-style:italic;font-family:"Inter",serif}
 
+/* floating social dock */
+.social-dock{position:fixed;right:20px;bottom:24px;z-index:80;
+  display:flex;flex-direction:column;gap:8px;
+  background:var(--bg-2);border:1px solid var(--line);
+  border-radius:40px;padding:10px 8px}
+.sd-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;color:var(--cream);transition:background .2s,color .2s,transform .2s}
+.sd-btn svg{width:17px;height:17px}
+.sd-btn:hover{background:var(--bordeaux);color:var(--on-bordeaux);transform:scale(1.1)}
+@media(max-width:560px){.social-dock{right:12px;bottom:16px;gap:6px;padding:8px 6px}
+  .sd-btn{width:32px;height:32px}.sd-btn svg{width:15px;height:15px}}
+
 /* reveal */
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
 .reveal.in{opacity:1;transform:none}
