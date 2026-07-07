@@ -39,14 +39,16 @@
 
   /* ---- OVERLAY MENU ---- */
   const menu=document.getElementById('menu');
-  const open=()=>{menu.classList.add('open');menu.setAttribute('aria-hidden','false');body.classList.add('locked');if(window.gsap&&!reduced){gsap.from('#menu .ml-w',{yPercent:115,duration:0.7,stagger:0.06,ease:'power3.out',delay:0.28});
-    /* hover slide — GSAP handles this to avoid CSS/inline-style conflict */
-    document.querySelectorAll('#menu .ml a:not(.reel)').forEach(function(a){
-      var w=a.querySelector('.ml-w');
-      if(!w)return;
-      a.addEventListener('mouseenter',function(){gsap.to(w,{yPercent:105,duration:0.4,ease:'power3.in',overwrite:true});});
-      a.addEventListener('mouseleave',function(){gsap.fromTo(w,{yPercent:-105},{yPercent:0,duration:0.45,ease:'power3.out',overwrite:true});});
-    });}};
+  const open=()=>{
+    menu.classList.add('open');menu.setAttribute('aria-hidden','false');body.classList.add('locked');
+    if(window.gsap&&!reduced){
+      gsap.from('#menu .ml-item',{x:40,opacity:0,duration:0.55,stagger:0.07,ease:'power3.out',delay:0.25});
+      gsap.from('#menu .menu-nr-logo',{opacity:0,y:-10,duration:0.4,ease:'power2.out',delay:0.15});
+      gsap.from('#menu .menu-close',{opacity:0,duration:0.35,delay:0.2});
+      gsap.from('#menu .menu-foot-left',{opacity:0,y:12,duration:0.4,ease:'power2.out',delay:0.5});
+      gsap.from('#menu .reel-ring',{opacity:0,scale:0.7,duration:0.5,ease:'back.out(1.5)',delay:0.55});
+    }
+  };
   const close=()=>{menu.classList.remove('open');menu.setAttribute('aria-hidden','true');body.classList.remove('locked');};
   document.getElementById('menuOpen').addEventListener('click',open);
   document.getElementById('menuClose').addEventListener('click',close);

@@ -23,6 +23,11 @@ const work = [1, 2, 3, 4];
     <div class="wrap nav">
       <a class="brand" href="#top"><span class="dot"></span>Not Real</a>
       <div class="nav-actions">
+        <div class="header-lang">
+          {languages.map((l) => (
+            <a href={localePath(l, base)} class={l === lang ? "is-active" : ""}>{langName[l]}</a>
+          ))}
+        </div>
         <button class="theme-toggle" id="themeToggle" aria-label={t("theme.toggle")}>
           <svg class="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v3M12 18.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2.5 12h3M18.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke-linecap="round"/></svg>
           <svg class="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z" stroke-linejoin="round"/></svg>
@@ -35,39 +40,58 @@ const work = [1, 2, 3, 4];
   {/* OVERLAY MENU */}
   <nav id="menu" aria-hidden="true">
     <div class="menu-inner">
+
+      {/* TOP BAR */}
       <div class="menu-top">
-        <a class="brand" href="#top" style="color:var(--cream)"><span class="dot"></span>Not Real</a>
-        <div class="lang-switch">
-          {languages.map((l) => (
-            <a href={localePath(l, base)} class={l === lang ? "is-active" : ""}>{langName[l]}</a>
-          ))}
-        </div>
+        <a class="menu-nr-logo" href="#top" onclick="document.getElementById('menuClose').click()">
+          <svg viewBox="0 0 100 100" width="48" height="48">
+            <rect width="100" height="100" fill="none"/>
+            <text x="50" y="71" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif" font-size="56" font-weight="400" letter-spacing="3" fill="currentColor">NR</text>
+          </svg>
+        </a>
         <button class="menu-close" id="menuClose">{t("menu.close")}</button>
       </div>
-      <ul class="menu-links">
-        <li class="ml lbl-l"><span class="ml-label">{t("menu.home_l")}</span><a href="#top"><span class="ml-w" data-label={t("menu.home")}>{t("menu.home")}</span></a></li>
-        <li class="ml lbl-r"><a href="#paslaugos"><span class="ml-w" data-label={t("menu.services")}>{t("menu.services")}</span></a><span class="ml-label">{t("menu.services_l")}</span></li>
-        <li class="ml lbl-l"><span class="ml-label">{t("menu.work_l")}</span><a href="#darbai"><span class="ml-w" data-label={t("menu.work")}>{t("menu.work")}</span></a></li>
 
-        <li class="ml ml-reel"><a class="reel" href="#darbai"><span class="ml-w"><div class="reel-ring"><span class="reel-tile"><span class="gph gph-2"></span></span></div></span></a></li>
-        <li class="ml lbl-l"><span class="ml-label">{t("menu.about_l")}</span><a href="#paslaugos"><span class="ml-w" data-label={t("menu.about")}>{t("menu.about")}</span></a></li>
-        <li class="ml lbl-r"><a href="#faq"><span class="ml-w" data-label={t("menu.faq")}>{t("menu.faq")}</span></a><span class="ml-label">{t("menu.faq_l")}</span></li>
-        <li class="ml lbl-l"><span class="ml-label">{t("menu.contact_l")}</span><a href="#kontaktai"><span class="ml-w" data-label={t("menu.contact")}>{t("menu.contact")}</span></a></li>
+      {/* NAV LINKS — right-aligned */}
+      <ul class="menu-links">
+        <li class="ml-item"><a href="#top" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span>{t("menu.home")}</a></li>
+        <li class="ml-item"><a href="#paslaugos" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span>{t("menu.services")}</a></li>
+        <li class="ml-item ml-has-sub">
+          <a href="#darbai" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span>{t("menu.portfolio")}</a>
+          <ul class="menu-sub">
+            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.art")}</a></li>
+            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.products")}</a></li>
+            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.fashion")}</a></li>
+            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.other")}</a></li>
+          </ul>
+        </li>
+        <li class="ml-item"><a href="#paslaugos" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span>{t("menu.about")}</a></li>
+        <li class="ml-item"><a href="#" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span>{t("menu.blog")}</a></li>
+        <li class="ml-item"><a href="#faq" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span>{t("menu.faq")}</a></li>
+        <li class="ml-item"><a href="#kontaktai" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span>{t("menu.contact")}</a></li>
       </ul>
+
+      {/* BOTTOM: social left, reel right */}
       <div class="menu-foot">
-        <a class="mf-icon" href="https://instagram.com/notreal.inga" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor" stroke="none"/></svg>
-        </a>
-        <a class="mf-icon" href="#" target="_blank" rel="noopener" aria-label="LinkedIn" data-todo="Pakeisk # į LinkedIn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 10v7"/></svg>
-        </a>
-        <a class="mf-icon" href="#" target="_blank" rel="noopener" aria-label="WhatsApp" data-todo="Pakeisk # į wa.me/+370XXXXXXXX">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>
-        </a>
-        <a class="mf-icon" href="#kontaktai" aria-label="Kontaktai">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-        </a>
+        <div class="menu-foot-left">
+          <a class="mf-icon" href="https://instagram.com/notreal.inga" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a class="mf-icon" href="#" target="_blank" rel="noopener" aria-label="LinkedIn" data-todo="Pakeisk # į LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 10v7"/></svg>
+          </a>
+          <a class="mf-icon" href="#" target="_blank" rel="noopener" aria-label="WhatsApp" data-todo="Pakeisk # į wa.me/+370XXXXXXXX">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>
+          </a>
+          <a class="mf-icon" href="#kontaktai" aria-label="Rašyk mums" onclick="document.getElementById('menuClose').click()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+          </a>
+        </div>
+        <div class="reel-ring">
+          <span class="reel-tile"><span class="gph gph-2"></span></span>
+        </div>
       </div>
+
     </div>
   </nav>
 
