@@ -39,7 +39,14 @@
 
   /* ---- OVERLAY MENU ---- */
   const menu=document.getElementById('menu');
-  const open=()=>{menu.classList.add('open');menu.setAttribute('aria-hidden','false');body.classList.add('locked');if(window.gsap&&!reduced){gsap.from('#menu .ml-w',{yPercent:115,duration:0.7,stagger:0.06,ease:'power3.out',delay:0.28,clearProps:'transform'});}};
+  const open=()=>{menu.classList.add('open');menu.setAttribute('aria-hidden','false');body.classList.add('locked');if(window.gsap&&!reduced){gsap.from('#menu .ml-w',{yPercent:115,duration:0.7,stagger:0.06,ease:'power3.out',delay:0.28});
+    /* hover slide — GSAP handles this to avoid CSS/inline-style conflict */
+    document.querySelectorAll('#menu .ml a:not(.reel)').forEach(function(a){
+      var w=a.querySelector('.ml-w');
+      if(!w)return;
+      a.addEventListener('mouseenter',function(){gsap.to(w,{yPercent:105,duration:0.4,ease:'power3.in',overwrite:true});});
+      a.addEventListener('mouseleave',function(){gsap.fromTo(w,{yPercent:-105},{yPercent:0,duration:0.45,ease:'power3.out',overwrite:true});});
+    });}};
   const close=()=>{menu.classList.remove('open');menu.setAttribute('aria-hidden','true');body.classList.remove('locked');};
   document.getElementById('menuOpen').addEventListener('click',open);
   document.getElementById('menuClose').addEventListener('click',close);
