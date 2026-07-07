@@ -86,10 +86,16 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
 .ml.lbl-r .ml-label{grid-column:3;justify-self:start;text-align:left}
 .ml.lbl-l:hover .ml-label{transform:translateX(-10px)}
 .ml.lbl-r:hover .ml-label{transform:translateX(10px)}
-.reel{display:inline-flex;align-items:center}
-.reel-tile{display:inline-block;width:clamp(54px,7vw,104px);aspect-ratio:1/1;border-radius:50%;
-  overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.4);transition:transform .3s;margin:0 .14em;vertical-align:middle}
-.reel:hover .reel-tile{transform:scale(1.08)}
+.ml-reel{padding:clamp(14px,2.5vh,32px) 0;justify-content:center}
+.reel{display:inline-flex;align-items:center;justify-content:center}
+.reel-ring{position:relative;display:inline-flex;align-items:center;justify-content:center}
+.reel-ring::before{content:'';position:absolute;inset:-8px;border-radius:50%;
+  background:conic-gradient(transparent 0%,transparent 55%,rgba(242,237,228,0.15) 70%,rgba(242,237,228,0.85) 88%,rgba(242,237,228,0.15) 100%);
+  filter:blur(2.5px);animation:ring-spin 3.5s linear infinite}
+@keyframes ring-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.reel-tile{display:inline-block;width:clamp(60px,7vw,108px);aspect-ratio:1/1;border-radius:50%;
+  overflow:hidden;transition:transform .3s}
+.reel:hover .reel-tile{transform:scale(1.06)}
 .reel-tile video{width:100%;height:100%;object-fit:cover}
 .menu-foot{display:flex;justify-content:center;align-items:center;gap:clamp(20px,3vw,36px)}
 .mf-icon{color:var(--cream);opacity:.55;transition:opacity .2s,transform .2s;display:flex;align-items:center;justify-content:center}
