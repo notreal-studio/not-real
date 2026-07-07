@@ -87,7 +87,7 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
 .ml.lbl-l:hover .ml-label{transform:translateX(-10px)}
 .ml.lbl-r:hover .ml-label{transform:translateX(10px)}
 .reel{display:inline-flex;align-items:center}
-.reel-tile{display:inline-block;width:clamp(54px,7vw,104px);aspect-ratio:1/1;border-radius:5px;
+.reel-tile{display:inline-block;width:clamp(54px,7vw,104px);aspect-ratio:1/1;border-radius:50%;
   overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.4);transition:transform .3s;margin:0 .14em;vertical-align:middle}
 .reel:hover .reel-tile{transform:scale(1.08)}
 .reel-tile video{width:100%;height:100%;object-fit:cover}
