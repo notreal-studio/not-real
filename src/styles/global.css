@@ -132,13 +132,6 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
 .hero .sub{max-width:520px;margin-top:24px;color:var(--cream);font-size:clamp(16px,2vw,19px);font-weight:300}
 
 /* ===== MARQUEE ===== */
-.marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  padding:22px 0;background:var(--bg)}
-.mq-track{display:inline-block;white-space:nowrap;will-change:transform;animation:mq 26s linear infinite}
-.mq-track span,.mq-track b{font-family:"Inter",sans-serif;font-size:clamp(1.6rem,5vw,2.8rem)}
-.mq-track span{font-style:italic;font-weight:500;opacity:.45;margin:0 .4em}
-.mq-track b{color:var(--pink);font-weight:600;margin:0 .4em}
-@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ===== SECTION ===== */
 .block{padding:clamp(80px,12vh,150px) 0}

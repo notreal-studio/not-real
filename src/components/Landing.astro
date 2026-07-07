@@ -7,7 +7,7 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 const base = import.meta.env.BASE_URL;
 
-const mq = [t("mq.1"), t("mq.2"), t("mq.3"), t("mq.4"), t("mq.5"), t("mq.6")];
+
 const work = [1, 2, 3, 4];
 ---
 <Base lang={lang}>
@@ -97,13 +97,6 @@ const work = [1, 2, 3, 4];
         <p class="sub reveal">{t("hero.sub")}</p>
       </div>
     </section>
-
-    {/* MARQUEE */}
-    <div class="marquee" aria-hidden="true">
-      <div class="mq-track">
-        {[...mq, ...mq].map((w, i) => (i % 2 === 0 ? <span>{w}</span> : <b>{w}</b>))}
-      </div>
-    </div>
 
     {/* GIANT SERVICES */}
     <section class="giant" id="paslaugos">
