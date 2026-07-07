@@ -76,15 +76,13 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
   clip-path:inset(0 0 100% 0);transition:clip-path .75s cubic-bezier(.76,0,.24,1)}
 #menu.open{clip-path:inset(0 0 0 0)}
 
-/* 2-column grid: left (logo+social), right (lang+close+nav) */
-.menu-inner{height:100%;display:grid;
-  grid-template-columns:clamp(140px,20vw,260px) 1fr;
-  grid-template-rows:auto 1fr auto;
+/* simple flex column — reliable */
+.menu-inner{height:100%;display:flex;flex-direction:column;justify-content:space-between;
   padding:clamp(24px,4vh,48px) clamp(32px,5vw,72px)}
 
 /* top bar */
-.menu-top{grid-column:1/-1;display:flex;justify-content:space-between;align-items:flex-start;
-  margin-bottom:clamp(40px,7vh,80px)}
+.menu-top{display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:clamp(32px,6vh,64px)}
 .menu-top-right{display:flex;align-items:flex-start;gap:clamp(24px,4vw,56px)}
 .menu-nr-logo{color:var(--cream);opacity:.85;transition:opacity .2s;display:flex;align-self:flex-start}
 .menu-nr-logo:hover{opacity:1}
@@ -104,14 +102,15 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
   opacity:.45;transition:opacity .2s;padding-top:4px}
 .menu-close:hover{opacity:1}
 
-/* nav links — left-aligned in right column, with gap from right edge */
+/* nav links — positioned in right 65% of screen, left-aligned */
 .menu-links{list-style:none;display:flex;flex-direction:column;align-items:flex-start;
-  justify-content:center;gap:0;padding:0;margin:0;
-  grid-column:2;grid-row:2;padding-right:clamp(40px,8vw,120px)}
+  gap:0;padding:0;margin:0 0 0 auto;flex:1;
+  width:65%;max-width:560px;justify-content:center;
+  padding-right:clamp(32px,6vw,100px)}
 .ml-item{display:flex;flex-direction:column;align-items:flex-start}
 .ml-link{font-family:"Instrument Serif",Georgia,serif;font-weight:400;
   font-size:clamp(1.5rem,3vw,3.2rem);line-height:1.2;letter-spacing:0.04em;
-  color:var(--cream);opacity:.38;transition:opacity .35s;
+  color:var(--cream);opacity:.6;transition:opacity .35s;
   display:flex;align-items:center;gap:.5em;padding:.14em 0;overflow:hidden}
 .ml-link:hover,.ml-item:hover>.ml-link{opacity:1}
 .ml-text{display:inline-block;will-change:transform}
@@ -128,12 +127,12 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
   opacity:.5;transition:opacity .2s,color .2s;padding:.08em 0}
 .menu-sub a:hover{opacity:.9;color:var(--cream)}
 
-/* HR divider line (like Izanami bottom of nav) */
-.menu-nav-divider{border:none;border-top:1px solid rgba(242,237,228,0.12);
-  margin:clamp(16px,2vh,28px) 0 0;width:100%}
+/* HR divider line */
+.menu-nav-divider{border:none;border-top:1px solid rgba(242,237,228,0.1);
+  margin:clamp(16px,2vh,28px) 0 0;width:100%;align-self:flex-start}
 
 /* bottom row: social left */
-.menu-foot{grid-column:1/-1;grid-row:3;display:flex;justify-content:flex-start;align-items:flex-end}
+.menu-foot{display:flex;justify-content:flex-start;align-items:flex-end}
 .menu-foot-left{display:flex;gap:clamp(14px,2vw,22px);align-items:center}
 
 /* bottom: social left + reel circle right */
