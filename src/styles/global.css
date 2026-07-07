@@ -84,22 +84,22 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
 .menu-top{display:flex;justify-content:space-between;align-items:flex-start;
   margin-bottom:clamp(32px,6vh,64px)}
 .menu-top-right{display:flex;align-items:flex-start;gap:clamp(24px,4vw,56px)}
-.menu-nr-logo{color:var(--cream);opacity:.85;transition:opacity .2s;display:flex;align-self:flex-start}
+.menu-nr-logo{color:var(--cream);opacity:1;transition:opacity .2s;display:flex;align-self:flex-start}
 .menu-nr-logo:hover{opacity:1}
 
 /* language with dot-above active indicator (Izanami style) */
 .menu-lang{display:flex;align-items:flex-start;gap:clamp(20px,3vw,40px);
   font-family:"Inter",sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase}
-.menu-lang a{color:var(--cream);opacity:.35;transition:opacity .2s;
+.menu-lang a{color:var(--cream);opacity:.55;transition:opacity .2s;
   display:flex;flex-direction:column;align-items:center;gap:5px}
 .menu-lang a::before{content:'·';font-size:16px;line-height:1;opacity:0;transition:opacity .2s}
-.menu-lang a.is-active{opacity:.8}
+.menu-lang a.is-active{opacity:1}
 .menu-lang a.is-active::before{opacity:1}
-.menu-lang a:hover{opacity:.65}
+.menu-lang a:hover{opacity:.8}
 
 .menu-close{font-family:"Inter",sans-serif;color:var(--cream);background:none;border:none;
   cursor:pointer;letter-spacing:0.22em;text-transform:uppercase;font-size:11px;
-  opacity:.45;transition:opacity .2s;padding-top:4px}
+  opacity:.8;transition:opacity .2s;padding-top:4px}
 .menu-close:hover{opacity:1}
 
 /* nav links — positioned in right 65% of screen, left-aligned */
@@ -110,7 +110,7 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
 .ml-item{display:flex;flex-direction:column;align-items:flex-start}
 .ml-link{font-family:"Instrument Serif",Georgia,serif;font-weight:400;
   font-size:clamp(1.5rem,3vw,3.2rem);line-height:1.2;letter-spacing:0.04em;
-  color:var(--cream);opacity:.6;transition:opacity .35s;
+  color:var(--cream);opacity:.75;transition:opacity .35s;
   display:flex;align-items:center;gap:.5em;padding:.14em 0;overflow:hidden}
 .ml-link:hover,.ml-item:hover>.ml-link{opacity:1}
 .ml-text{display:inline-block;will-change:transform}
