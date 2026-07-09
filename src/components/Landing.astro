@@ -61,10 +61,10 @@ const work = [1, 2, 3, 4];
 
       {/* NAV LINKS — left-aligned in right column */}
       <ul class="menu-links">
-        <li class="ml-item"><a href="#top" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text">{t("menu.home")}</span></a></li>
-        <li class="ml-item"><a href="#paslaugos" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text">{t("menu.services")}</span></a></li>
+        <li class="ml-item"><a href="#top" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.home")}>{t("menu.home")}</span></a></li>
+        <li class="ml-item"><a href="#paslaugos" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.services")}>{t("menu.services")}</span></a></li>
         <li class="ml-item">
-          <a href="#darbai" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text">{t("menu.portfolio")}</span></a>
+          <a href="#darbai" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.portfolio")}>{t("menu.portfolio")}</span></a>
           <ul class="menu-sub">
             <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.art")}</a></li>
             <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.products")}</a></li>
@@ -72,10 +72,10 @@ const work = [1, 2, 3, 4];
             <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.other")}</a></li>
           </ul>
         </li>
-        <li class="ml-item"><a href="#paslaugos" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text">{t("menu.about")}</span></a></li>
-        <li class="ml-item"><a href="#" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text">{t("menu.blog")}</span></a></li>
-        <li class="ml-item"><a href="#faq" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text">{t("menu.faq")}</span></a></li>
-        <li class="ml-item"><a href="#kontaktai" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text">{t("menu.contact")}</span></a></li>
+        <li class="ml-item"><a href="#paslaugos" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.about")}>{t("menu.about")}</span></a></li>
+        <li class="ml-item"><a href="#" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.blog")}>{t("menu.blog")}</span></a></li>
+        <li class="ml-item"><a href="#faq" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.faq")}>{t("menu.faq")}</span></a></li>
+        <li class="ml-item"><a href="#kontaktai" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.contact")}>{t("menu.contact")}</span></a></li>
       </ul>
       <hr class="menu-nav-divider" />
 

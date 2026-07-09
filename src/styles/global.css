@@ -113,18 +113,24 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
   color:var(--cream);opacity:.75;transition:opacity .35s;
   display:flex;align-items:center;gap:.5em;padding:.14em 0;overflow:hidden}
 .ml-link:hover,.ml-item:hover>.ml-link{opacity:1}
-.ml-text{display:inline-block;will-change:transform}
+/* conveyor belt hover: text exits top, ::after clone enters from below */
+.ml-text{display:block;position:relative;will-change:transform;
+  transition:transform 0.45s cubic-bezier(.22,1,.36,1)}
+.ml-text::after{content:attr(data-text);position:absolute;left:0;top:100%;
+  white-space:nowrap;pointer-events:none}
+.ml-link:hover .ml-text{transform:translateY(-100%)}
 .ml-dot{font-size:.55em;opacity:0;transform:translateX(-10px) scale(0.6);
   transition:opacity .3s,transform .4s cubic-bezier(.22,1,.36,1);
   color:var(--c-cognac)}
 .ml-link:hover .ml-dot,.ml-item:hover>.ml-link .ml-dot{opacity:1;transform:translateX(0) scale(1)}
 
-/* subcategories — always visible, 2-column grid */
-.menu-sub{list-style:none;padding:.2em 0 .6em 0;
-  display:grid;grid-template-columns:1fr 1fr;gap:.2em .5em}
+/* subcategories — always visible, 2-column grid, indented right */
+.menu-sub{list-style:none;padding:.15em 0 .5em 0;
+  display:grid;grid-template-columns:1fr 1fr;gap:.2em 1.4em;
+  margin-left:clamp(16px,3vw,36px)}
 .menu-sub a{font-family:"Inter",sans-serif;font-size:clamp(10px,1vw,12px);
   letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);
-  opacity:.5;transition:opacity .2s,color .2s;padding:.08em 0}
+  opacity:.55;transition:opacity .2s,color .2s;padding:.08em 0}
 .menu-sub a:hover{opacity:.9;color:var(--cream)}
 
 /* HR divider line */
@@ -132,7 +138,7 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
   margin:clamp(16px,2vh,28px) 0 0;width:100%;align-self:flex-start}
 
 /* bottom row: social left */
-.menu-foot{display:flex;justify-content:flex-start;align-items:flex-end}
+.menu-foot{display:flex;justify-content:flex-start;align-items:flex-end;padding-bottom:clamp(10px,2vh,20px)}
 .menu-foot-left{display:flex;gap:clamp(14px,2vw,22px);align-items:center}
 
 /* bottom: social left + reel circle right */
