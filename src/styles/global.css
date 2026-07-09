@@ -127,7 +127,7 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
 /* subcategories — always visible, 2-column grid, indented right */
 .menu-sub{list-style:none;padding:.15em 0 .5em 0;
   display:grid;grid-template-columns:1fr 1fr;gap:.2em 1.4em;
-  margin-left:clamp(16px,3vw,36px)}
+  margin-left:clamp(40px,5.5vw,80px)}
 .menu-sub a{font-family:"Inter",sans-serif;font-size:clamp(10px,1vw,12px);
   letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);
   opacity:.55;transition:opacity .2s,color .2s;padding:.08em 0}
@@ -138,7 +138,7 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
   margin:clamp(16px,2vh,28px) 0 0;width:100%;align-self:flex-start}
 
 /* bottom row: social left */
-.menu-foot{display:flex;justify-content:flex-start;align-items:flex-end;padding-bottom:clamp(10px,2vh,20px)}
+.menu-foot{display:flex;justify-content:flex-start;align-items:flex-end;padding-bottom:clamp(36px,6vh,64px)}
 .menu-foot-left{display:flex;gap:clamp(14px,2vw,22px);align-items:center}
 
 /* bottom: social left + reel circle right */
