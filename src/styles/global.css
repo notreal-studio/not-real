@@ -111,8 +111,14 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
 .ml-link{font-family:"Instrument Serif",Georgia,serif;font-weight:400;
   font-size:clamp(1.5rem,3vw,3.2rem);line-height:1.2;letter-spacing:0.04em;
   color:var(--cream);opacity:.75;transition:opacity .35s;
-  display:flex;align-items:center;gap:.5em;padding:.14em 0;overflow:hidden}
+  display:flex;align-items:center;gap:.5em;padding:.14em 0;
+  overflow:hidden;position:relative}
 .ml-link:hover,.ml-item:hover>.ml-link{opacity:1}
+/* thin strikethrough line sliding in on hover */
+.ml-link::before{content:'';position:absolute;left:0;top:50%;height:1px;width:100%;
+  background:var(--cream);transform:scaleX(0);transform-origin:left center;
+  transition:transform 0.38s cubic-bezier(.22,1,.36,1);pointer-events:none;z-index:1}
+.ml-link:hover::before{transform:scaleX(1)}
 /* conveyor belt hover: text exits top, ::after clone enters from below */
 .ml-text{display:block;position:relative;will-change:transform;
   transition:transform 0.45s cubic-bezier(.22,1,.36,1)}
@@ -138,7 +144,8 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
   margin:clamp(16px,2vh,28px) 0 0;width:100%;align-self:flex-start}
 
 /* bottom row: social left */
-.menu-foot{display:flex;justify-content:flex-start;align-items:flex-end;padding-bottom:clamp(36px,6vh,64px)}
+.menu-foot{display:flex;justify-content:flex-start;align-items:flex-end;
+  padding-bottom:clamp(36px,6vh,64px);margin-top:clamp(20px,4vh,40px)}
 .menu-foot-left{display:flex;gap:clamp(14px,2vw,22px);align-items:center}
 
 /* bottom: social left + reel circle right */
