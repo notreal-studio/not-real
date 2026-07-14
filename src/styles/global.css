@@ -81,7 +81,7 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
 
 /* simple flex column — reliable */
 .menu-inner{height:100%;display:flex;flex-direction:column;justify-content:space-between;
-  padding:clamp(24px,4vh,48px) clamp(32px,5vw,72px)}
+  padding:clamp(24px,4vh,48px) clamp(32px,5vw,72px) 0}
 
 /* top bar */
 .menu-top{display:flex;justify-content:space-between;align-items:flex-start;
@@ -149,16 +149,16 @@ html[data-theme="light"] .theme-toggle .i-sun{display:none}
 .menu-nav-divider{border:none;border-top:1px solid rgba(242,237,228,0.1);
   margin:clamp(16px,2vh,28px) 0 0;width:100%;align-self:flex-start}
 
-/* bottom row: social left */
-.menu-foot{display:flex;justify-content:flex-start;align-items:flex-end;
-  padding-bottom:clamp(16px,3vh,28px);margin-top:clamp(20px,4vh,40px)}
+/* bottom row: social left — gaps (line→icons, icons→edge) are 1/3 of icon size */
+.menu-foot{--mf-icon-size:clamp(18px,2vw,24px);display:flex;justify-content:flex-start;align-items:flex-end;
+  padding-bottom:calc(var(--mf-icon-size) / 3);margin-top:calc(var(--mf-icon-size) / 3)}
 .menu-foot-left{display:flex;gap:clamp(14px,2vw,22px);align-items:center}
 
 /* bottom: social left + reel circle right */
 .menu-foot{display:flex;justify-content:space-between;align-items:flex-end}
 .menu-foot-left{display:flex;gap:clamp(14px,2vw,22px);align-items:center}
 .mf-icon{color:var(--cream);opacity:.45;transition:opacity .2s,transform .2s;display:flex}
-.mf-icon svg{width:clamp(18px,2vw,24px);height:clamp(18px,2vw,24px)}
+.mf-icon svg{width:var(--mf-icon-size);height:var(--mf-icon-size)}
 .mf-icon:hover{opacity:.9;transform:translateY(-2px)}
 
 /* reel tile in menu */
