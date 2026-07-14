@@ -5,7 +5,7 @@
   /* role tokens — DARK theme (default). NOTE: --cream/--pink are role names that
      flip value per theme (e.g. --cream holds Espresso in light mode) — kept for
      minimal diff rather than renamed across ~40 call sites. */
-  --bg:var(--c-espresso);       /* page background */
+  --bg:#100A04;                 /* page background (deep near-black, matches menu overlay) */
   --bg-2:#3A2A1D;               /* lifted surface (inputs, cards) */
   --cream:var(--c-bone);        /* primary text */
   --muted:var(--c-mushroom);    /* sub text */
