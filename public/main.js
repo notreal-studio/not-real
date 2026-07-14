@@ -43,8 +43,7 @@
     menu.classList.add('open');menu.setAttribute('aria-hidden','false');body.classList.add('locked');
     if(window.gsap&&!reduced){
       gsap.from('#menu .ml-item',{x:40,opacity:0,duration:0.55,stagger:0.07,ease:'power3.out',delay:0.25});
-      gsap.from('#menu .menu-nr-logo',{opacity:0,y:-10,duration:0.4,ease:'power2.out',delay:0.15});
-      gsap.from('#menu .menu-close',{opacity:0,duration:0.35,delay:0.2});
+      gsap.from('#menu .menu-nr-logo',{y:-10,duration:0.4,ease:'power2.out',delay:0.15});
       gsap.from('#menu .menu-foot-left',{opacity:0,y:12,duration:0.4,ease:'power2.out',delay:0.5});
       /* hover conveyor handled by CSS ::after + transform */
     }
