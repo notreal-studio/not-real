@@ -4,7 +4,9 @@ Daugiakalbė statinė landing svetainė (Astro). Numatytoji kalba **LT** (šakny
 
 ---
 
-## Būsena (2026-06-30)
+> **Claude Code:** projekto instrukcijos, prieigos ir taisyklės — [`CLAUDE.md`](CLAUDE.md).
+
+## Būsena (2026-09-26)
 
 **Atlikta:**
 
@@ -16,10 +18,12 @@ Daugiakalbė statinė landing svetainė (Astro). Numatytoji kalba **LT** (šakny
 - **Darbų aprašymai** — 4 case study kortelės papildytos raktažodžiais praturtintu tekstu
 - **Google Analytics 4** — property "not-real", Measurement ID `G-6TMLTSEL2S` įrašytas `Base.astro`
 - **Naujas brand identity (Cellar & Silk)** — Inga (dizainerė) pristatė pilną brand book'ą (`NOT_REAL_Brand_Book_v1.pdf`, ne repo'je). Įdiegti realūs assets: `favicon.svg`, `favicon.ico`, `favicon-96x96.png`, `apple-touch-icon.png`, `web-app-manifest-192/512x512.png`, `logo.svg`, `logo-512.png`, naujas `og.jpg` — visi Bone Cream/Espresso/Bordeaux paletėje, Instrument Serif šriftu. Visi sujungti `Base.astro` `<head>` ir `site.webmanifest`.
+- **Dizaino reskin (2026-06-30 – 07-15):** `global.css` perkeltas į Cellar & Silk paletę, šriftai → Instrument Serif + Inter, šviesi/tamsi tema (tamsi numatytoji, fonas `#100A04`), naujas overlay meniu (2 stulpeliai, subkategorijos, LT/EN), social dock (Instagram, LinkedIn, WhatsApp, kontaktai), pašalinta marquee juosta.
+- **Perdavimas (2026-09-26):** projekto vystymą perima Inga; parašytas `CLAUDE.md` su struktūra, taisyklėmis ir prieigų žemėlapiu.
 
 ## TODO — kitos sesijos darbai
 
-1. **DIDYSIS — pilnas reskin pagal brand book'ą.** Naujas pozicionavimas pasikeitė iš esmės: nebe "AI prekės ženklų studija grožiui/madai/wellness Kaune" (LT/EN B2B agentūra), o **"NOT REAL — An AI Visual Studio"**, Ingos (foto → AI visual director) asmeninė studija, taikoma į **"e-commerce and service brands"** tarptautiniu mastu, anglų k. editorial tonas. Reikės: (a) `global.css` spalvų kintamųjų pakeitimo į Cellar & Silk (Bone Cream `#F2EDE4`, Espresso `#2B1D14`, Vintage Bordeaux `#5C1F2A`, Cognac `#8B5A3C`, Mushroom `#A8997F`, 60-30-10 taisyklė), (b) šriftų pakeitimo (Switzer/Sentient/Oswald → Instrument Serif + Inter), (c) viso teksto perrašymo `ui.ts` pagal manifestą/tone of voice/taglines iš brand book'o, (d) apsisprendimo, ar lieka LT+EN dvikalbystė, ar pereinama prie EN-pirmumo. **Nepradėti be vartotojo patvirtinimo dėl apimties.**
+1. **DIDYSIS — tekstų perrašymas pagal brand book'ą.** Spalvos/šriftai jau padaryti; lieka turinys. Naujas pozicionavimas: **"NOT REAL — An AI Visual Studio"**, Ingos studija, taikoma į **"e-commerce and service brands"** tarptautiniu mastu, anglų k. editorial tonas. Reikės: (a) perrašyti `ui.ts` pagal manifestą/tone of voice/taglines, (b) apsispręsti, ar lieka LT+EN dvikalbystė, ar pereinama prie EN-pirmumo. **Nepradėti be patvirtinimo dėl apimties.**
 2. **El. paštas** — kol nenusprendi pašto providerio, placeholder `labas@not-real.ai` lieka visur (`Landing.astro`, `Base.astro`, `ui.ts`). Pastaba: brand book pavyzdžiuose minimas `studio@notreal.xyz` — tai tik draft, realus domenas yra `notreal.lt`.
 3. **Google Search Console** — domenas jau galutinis, dabar gali registruoti `notreal.lt` be jokių kliūčių.
 4. **Individuali veikla / UAB registracija** — planuojama prieš pirmus klientus (reikalinga sąskaitoms — LT mokesčių reikalavimas, ne Google).
