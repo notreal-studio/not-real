@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import { languages, defaultLang, langName, useTranslations, localePath, type Lang } from "../i18n/utils";
+import { heroWorks } from "../data/works";
 
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
@@ -98,28 +99,30 @@ const work = [1, 2, 3, 4];
 
   <main id="top">
     {/* HERO */}
-    <section class="hero">
-      <div class="wrap hero-grid">
-        <div class="hero-copy">
-          <div class="hero-eyebrow">{t("hero.eyebrow")}</div>
-          <h1 class="hero-word" aria-label="Not Real">Not<em>Real</em></h1>
-          <p class="hero-tagline">{t("hero.tagline")}</p>
-          <p class="hero-sub">{t("hero.sub")}</p>
-          <a class="hero-cta" href="#darbai">{t("hero.cta")} <span aria-hidden="true">↓</span></a>
-        </div>
-
-        <div class="hero-polaroid">
-          <div class="hero-media">
-            {/* HERO VIDEO: replace the placeholder below with
-            <video autoplay muted loop playsinline poster="/assets/hero-poster.jpg">
-              <source src="/assets/hero.mp4" type="video/mp4">
-            </video> */}
-            <div class="hero-ph">{t("hero.ph_note")}</div>
+    <section class="hero-slider" aria-roledescription="carousel" aria-label="Selected work">
+      <h1 class="sr-only">Not Real — {t("hero.eyebrow")}. {t("hero.tagline")}</h1>
+      {heroWorks.map((w, n) => (
+        <article class={`hs${w.vertical ? " is-v" : ""}`} aria-roledescription="slide" aria-label={`${n + 1} / ${heroWorks.length}: ${w.title}`}>
+          {w.vertical && <div class="hs-bg" style={`background-image:url(${base}assets/video/${w.slug}.jpg)`}></div>}
+          <video muted playsinline preload="metadata" poster={`${base}assets/video/${w.slug}.jpg`} data-src={`${base}assets/video/${w.slug}.mp4`}></video>
+          <div class="hs-cap">
+            <div class="hs-title">{w.title}</div>
+            <div class="hs-sub">{w.sub[lang]}</div>
           </div>
-          <div class="hero-cap">{t("hero.cap")}</div>
-          <img class="hero-sticker" src={`${base}brand/lipdukai/look-twice-saffron.svg`} alt="" />
-        </div>
+        </article>
+      ))}
+      <div class="hero-scrim"></div>
+      <img class="hs-sticker" src={`${base}brand/lipdukai/look-twice-saffron.svg`} alt="" />
+      <div class="hs-ctrl">
+        <button type="button" class="hs-prev" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <span class="hs-count" aria-live="off">01 / {String(heroWorks.length).padStart(2, "0")}</span>
+        <button type="button" class="hs-next" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+        <button type="button" class="hs-sound" aria-label="Sound" aria-pressed="false">
+          <svg class="i-off" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9l4 6M21 9l-4 6"/></svg>
+          <svg class="i-on" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+        </button>
       </div>
+      <div class="hs-progress"><i></i></div>
     </section>
 
     {/* GIANT SERVICES */}

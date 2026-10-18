@@ -10,8 +10,7 @@
     runReveal();
     if(window.gsap && !reduced){
       gsap.to(loader,{yPercent:-100,duration:0.9,ease:'power4.inOut',onComplete:()=>loader.style.display='none'});
-      gsap.from('.hero-word',{y:40,opacity:0,duration:1,ease:'power3.out',delay:0.15});
-      gsap.from('.hero-polaroid',{y:50,opacity:0,rotate:-2,duration:1.1,ease:'power3.out',delay:0.35});
+      gsap.from('.hs-sticker',{scale:0.6,opacity:0,rotate:-8,duration:0.8,ease:'back.out(2)',delay:0.6});
     } else { loader.style.display='none'; }
   }
   if(reduced){ lcount.textContent='100'; lbar.style.width='100%'; revealSite(); }
