@@ -1,0 +1,66 @@
+---
+import { items } from "../data/portfolio";
+import { useTranslations, type Lang } from "../i18n/utils";
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const path = (p: string) => `${base}${p}`;
+const filters = ["all", "photos", "brandbooks", "video", "ads"] as const;
+
+// Data for the lightbox (JS reads it; the cards themselves are plain HTML).
+const lb = Object.fromEntries(items.filter((i) => i.type !== "case").map((i) => [i.id, {
+  type: i.type, title: i.title, sub: i.sub[lang],
+  video: i.video ? { src: path(i.video.src), poster: path(i.video.poster), vertical: i.video.vertical } : undefined,
+  images: i.images?.map((m) => ({ src: path(m.src), w: m.w, h: m.h })),
+}]));
+const tag = (i: (typeof items)[number]) => (i.type === "case" ? t("pf.case") : t(`pf.f_${i.cats[0]}`));
+---
+<section class="block portfolio" id="darbai">
+  <div class="wrap">
+    <div class="kicker reveal">{t("pf.kicker")}</div>
+    <h2 class="statement reveal" set:html={t("pf.h2")}></h2>
+    <p class="lead reveal">{t("pf.lead")}</p>
+
+    <div class="pf-filters reveal" role="group" aria-label={t("pf.kicker")}>
+      {filters.map((f, n) => (
+        <button type="button" class={`pf-filter${n === 0 ? " is-on" : ""}`} data-f={f} aria-pressed={n === 0 ? "true" : "false"}>{t(`pf.f_${f}`)}</button>
+      ))}
+    </div>
+
+    <div class="pf-grid">
+      {items.map((it, n) => {
+        const media = (
+          <>
+            <div class="pf-media" style={`aspect-ratio:${it.ratio.toFixed(4)}`}>
+              <img src={path(it.cover)} alt={`${it.title} — ${it.sub[lang]}`} loading="lazy" decoding="async" />
+              {it.type === "video" && <span class="pf-play" aria-hidden="true"></span>}
+              <span class="pf-tag">{tag(it)}</span>
+            </div>
+            <div class="pf-cap">
+              <div class="pf-title">{it.title}</div>
+              <div class="pf-sub">{it.sub[lang]}{it.images ? ` · ${it.images.length} ${t("pf.n_photos")}` : ""}</div>
+            </div>
+          </>
+        );
+        const cls = `pf-card${n % 2 ? " is-alt" : ""}`;
+        return it.type === "case" ? (
+          <a class={cls} data-cats={it.cats.join(" ")} href={path(it.href![lang])}>{media}</a>
+        ) : (
+          <button type="button" class={cls} data-cats={it.cats.join(" ")} data-open={it.id} aria-label={`${t("pf.open")}: ${it.title}`}>{media}</button>
+        );
+      })}
+    </div>
+    <p class="pf-empty" hidden>{t("pf.empty")}</p>
+  </div>
+
+  <div id="lb" class="lb" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Viewer">
+    <button type="button" class="lb-close" aria-label={t("pf.close")}>×</button>
+    <button type="button" class="lb-prev" aria-label={t("pf.prev")}><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button type="button" class="lb-next" aria-label={t("pf.next")}><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+    <div class="lb-stage"></div>
+    <div class="lb-cap"><span class="lb-title"></span> <em class="lb-sub"></em> <span class="lb-count"></span></div>
+  </div>
+  <script type="application/json" id="pf-data" set:html={JSON.stringify(lb)}></script>
+</section>

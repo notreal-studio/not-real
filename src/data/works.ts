@@ -19,6 +19,7 @@ export const works: Work[] = [
   { slug: "babushka-kitchen", title: "Kitchen",         sub: { en: "Cinematic story",             lt: "Kinematografinė istorija" },   vertical: false, kind: "film" },
   { slug: "csi-bedroom",      title: "Scene 08",        sub: { en: "Concept film",                lt: "Koncepcinis filmas" },         vertical: false, kind: "film" },
   { slug: "sofa-360",         title: "Sofa, 360°",      sub: { en: "Product visualisation",       lt: "Produkto vizualizacija" },     vertical: false, kind: "product" },
+  { slug: "soxi-film",        title: "SOXI",            sub: { en: "Brand film · sock to sushi",  lt: "Prekės ženklo filmas · nuo kojinės iki suši" }, vertical: true,  kind: "ad" },
 ];
 
 // Order of the full-screen reel at the top of the home page.

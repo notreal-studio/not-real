@@ -2,6 +2,8 @@
 import Base from "../layouts/Base.astro";
 import { languages, defaultLang, langName, useTranslations, localePath, type Lang } from "../i18n/utils";
 import { heroWorks } from "../data/works";
+import Portfolio from "./Portfolio.astro";
+import SiteFooter from "./SiteFooter.astro";
 
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
@@ -125,36 +127,8 @@ const work = [1, 2, 3, 4];
       <div class="hs-progress"><i></i></div>
     </section>
 
-    {/* GIANT SERVICES */}
-    <section class="giant" id="paslaugos">
-      <div class="wrap">
-        <div class="giant-label reveal">{t("giant.label")}</div>
-        <h2 class="giant-type reveal">{t("giant.beauty")} (<a class="gtile" href="#kontaktai" aria-label={t("giant.beauty_a")}><span class="gtile-media"><span class="gph gph-1"></span></span><span class="gcue">{t("giant.cue_l")}</span></a>) {t("giant.fashion")} (<a class="gtile" href="#kontaktai" aria-label={t("giant.fashion_a")}><span class="gtile-media"><span class="gph gph-2"></span></span><span class="gcue">{t("giant.cue_r")}</span></a>) {t("giant.wellness")} (<a class="gtile" href="#kontaktai" aria-label={t("giant.wellness_a")}><span class="gtile-media"><span class="gph gph-3"></span></span><span class="gcue">{t("giant.cue_l")}</span></a>)</h2>
-        <p class="giant-state reveal" set:html={t("giant.state")}></p>
-      </div>
-    </section>
-
-    {/* WORK */}
-    <section class="block" id="darbai">
-      <div class="wrap">
-        <div class="work-head">
-          <div>
-            <div class="kicker reveal">{t("work.kicker")}</div>
-            <h2 class="statement reveal" set:html={t("work.statement")}></h2>
-          </div>
-          <p class="lead reveal" style="margin-top:0">{t("work.lead")}</p>
-        </div>
-        <div class="gal">
-          {work.map((n) => (
-            <article class="gal-item reveal">
-              <div class="gal-media"><div class="gal-ph">{t(`work.${n}_ph`)}</div></div>
-              <div class="gal-cap"><span class="gi">(0{n})</span><span class="gt">{t(`work.${n}_t`)}</span><span class="gd">{t(`work.${n}_d`)}</span></div>
-              <p class="gp">{t(`work.${n}_desc`)}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
+    {/* PORTFOLIO */}
+    <Portfolio lang={lang} />
 
     {/* FAQ */}
     <section class="block" id="faq">
@@ -212,37 +186,7 @@ const work = [1, 2, 3, 4];
     </section>
   </main>
 
-  <footer>
-    <div class="wrap foot">
-      <div class="foot-grid">
-        <div>
-          <div class="foot-word" role="img" aria-label="Not Real">Not<em>Real</em></div>
-          <span class="foot-tag">{t("footer.tag")}</span>
-        </div>
-        <div class="foot-col">
-          <h4>{t("footer.explore")}</h4>
-          <a href="#darbai">{t("menu.portfolio")}</a>
-          <a href="#paslaugos">{t("menu.services")}</a>
-          <a href="#faq">{t("menu.faq")}</a>
-          <a href="#kontaktai">{t("menu.contact")}</a>
-        </div>
-        <div class="foot-col">
-          <h4>{t("footer.hi")}</h4>
-          <a class="plain" href="mailto:inga.bankauske@gmail.com">inga.bankauske@gmail.com</a>
-          <a class="plain" href="https://www.instagram.com/notreal.inga/" target="_blank" rel="noopener">Instagram</a>
-          <a class="plain" href="https://www.linkedin.com/in/ingabankauske" target="_blank" rel="noopener">LinkedIn</a>
-          <a class="plain" href="https://t.me/ingaBank" target="_blank" rel="noopener">Telegram</a>
-        </div>
-      </div>
-      <div class="foot-bottom">
-        <span>{t("footer.copy")}</span>
-        <span class="foot-legal">
-          <a href={lang === "lt" ? `${base}lt/privatumas/` : `${base}privacy/`}>{t("footer.privacy")}</a>
-          <button type="button" data-cookie-settings>{t("footer.cookies")}</button>
-        </span>
-      </div>
-    </div>
-  </footer>
+  <SiteFooter lang={lang} />
 
   {/* FLOATING SOCIAL DOCK */}
   <div class="social-dock" aria-label="Social links">
