@@ -13,7 +13,7 @@ const work = [1, 2, 3, 4];
 <Base lang={lang}>
   {/* LOADER */}
   <div id="loader">
-    <div class="ln serif">Not <b>Real</b></div>
+    <div class="ln">Not<em>Real</em></div>
     <div class="lc"><span id="lcount">0</span> — {t("loader.loading")}</div>
     <div class="lbar" id="lbar"></div>
   </div>
@@ -21,7 +21,7 @@ const work = [1, 2, 3, 4];
   {/* NAV */}
   <header>
     <div class="nav">
-      <a class="brand" href="#top"><span class="dot"></span>Not Real</a>
+      <a class="brand" href="#top" aria-label="Not Real"><span>Not</span><em>Real</em></a>
       <div class="nav-actions">
         <div class="header-lang">
           {languages.map((l) => (
@@ -44,9 +44,7 @@ const work = [1, 2, 3, 4];
       {/* TOP BAR */}
       <div class="menu-top">
         <a class="menu-nr-logo" href="#top" onclick="document.getElementById('menuClose').click()">
-          <svg viewBox="0 0 120 80" width="96" height="64">
-            <text x="60" y="62" text-anchor="middle" font-family="'DM Serif Display',Georgia,serif" font-size="64" font-weight="400" letter-spacing="6" fill="currentColor">NR</text>
-          </svg>
+          <img src={`${base}brand/logotipas/monogram-saffron.svg`} alt="Not Real" width="64" height="64" />
         </a>
         <div class="menu-top-right">
           <div class="menu-lang">
@@ -65,14 +63,13 @@ const work = [1, 2, 3, 4];
         <li class="ml-item">
           <a href="#darbai" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.portfolio")}>{t("menu.portfolio")}</span></a>
           <ul class="menu-sub">
-            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.art")}</a></li>
-            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.products")}</a></li>
-            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.fashion")}</a></li>
-            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.other")}</a></li>
+            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.photos")}</a></li>
+            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.brandbooks")}</a></li>
+            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.video")}</a></li>
+            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.ads")}</a></li>
           </ul>
         </li>
-        <li class="ml-item"><a href="#paslaugos" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.about")}>{t("menu.about")}</span></a></li>
-        <li class="ml-item"><a href="#" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.blog")}>{t("menu.blog")}</span></a></li>
+        <li class="ml-item"><a href="#about" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.about")}>{t("menu.about")}</span></a></li>
         <li class="ml-item"><a href="#faq" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.faq")}>{t("menu.faq")}</span></a></li>
         <li class="ml-item"><a href="#kontaktai" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.contact")}>{t("menu.contact")}</span></a></li>
       </ul>
@@ -102,27 +99,26 @@ const work = [1, 2, 3, 4];
   <main id="top">
     {/* HERO */}
     <section class="hero">
-      <div class="hero-media">
-        {/* TIKRAS VIDEO: pakeisk placeholder bloką šituo (ir įkelk failą):
-        <video autoplay muted loop playsinline poster="assets/hero-poster.jpg">
-          <source src="assets/hero.mp4" type="video/mp4">
-        </video> */}
-        <div class="hero-ph" id="heroPh"></div>
-        <div class="hero-grain"></div>
-      </div>
-      <div class="hero-scrim"></div>
-
-      <div class="hero-tag">
-        <div class="play" id="playReel">
-          <span class="circ">▶</span><span>{t("hero.play")}</span>
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <div class="hero-eyebrow">{t("hero.eyebrow")}</div>
+          <h1 class="hero-word" aria-label="Not Real">Not<em>Real</em></h1>
+          <p class="hero-tagline">{t("hero.tagline")}</p>
+          <p class="hero-sub">{t("hero.sub")}</p>
+          <a class="hero-cta" href="#darbai">{t("hero.cta")} <span aria-hidden="true">↓</span></a>
         </div>
-        <div class="ph-note" style="margin-top:16px">{t("hero.ph_note")}</div>
-      </div>
 
-      <div class="wrap hero-content">
-        <div class="eyebrow reveal">{t("hero.eyebrow")}</div>
-        <h1 class="reveal" set:html={t("hero.h1")}></h1>
-        <p class="sub reveal">{t("hero.sub")}</p>
+        <div class="hero-polaroid">
+          <div class="hero-media">
+            {/* HERO VIDEO: replace the placeholder below with
+            <video autoplay muted loop playsinline poster="/assets/hero-poster.jpg">
+              <source src="/assets/hero.mp4" type="video/mp4">
+            </video> */}
+            <div class="hero-ph">{t("hero.ph_note")}</div>
+          </div>
+          <div class="hero-cap">{t("hero.cap")}</div>
+          <img class="hero-sticker" src={`${base}brand/lipdukai/look-twice-saffron.svg`} alt="" />
+        </div>
       </div>
     </section>
 
@@ -215,13 +211,33 @@ const work = [1, 2, 3, 4];
 
   <footer>
     <div class="wrap foot">
-      <a class="brand" href="#top" style="color:var(--cream)"><span class="dot"></span>Not Real</a>
-      <span class="tag">{t("footer.tag")}</span>
-      <a style="color:var(--pink);font-weight:500" href="mailto:inga.bankauske@gmail.com">inga.bankauske@gmail.com</a>
-      <span class="foot-legal">
-        <a href={lang === "lt" ? `${base}lt/privatumas/` : `${base}privacy/`}>{t("footer.privacy")}</a>
-        <button type="button" data-cookie-settings>{t("footer.cookies")}</button>
-      </span>
+      <div class="foot-grid">
+        <div>
+          <div class="foot-word" role="img" aria-label="Not Real">Not<em>Real</em></div>
+          <span class="foot-tag">{t("footer.tag")}</span>
+        </div>
+        <div class="foot-col">
+          <h4>{t("footer.explore")}</h4>
+          <a href="#darbai">{t("menu.portfolio")}</a>
+          <a href="#paslaugos">{t("menu.services")}</a>
+          <a href="#faq">{t("menu.faq")}</a>
+          <a href="#kontaktai">{t("menu.contact")}</a>
+        </div>
+        <div class="foot-col">
+          <h4>{t("footer.hi")}</h4>
+          <a class="plain" href="mailto:inga.bankauske@gmail.com">inga.bankauske@gmail.com</a>
+          <a class="plain" href="https://www.instagram.com/notreal.inga/" target="_blank" rel="noopener">Instagram</a>
+          <a class="plain" href="https://www.linkedin.com/in/ingabankauske" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="plain" href="https://t.me/ingaBank" target="_blank" rel="noopener">Telegram</a>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>{t("footer.copy")}</span>
+        <span class="foot-legal">
+          <a href={lang === "lt" ? `${base}lt/privatumas/` : `${base}privacy/`}>{t("footer.privacy")}</a>
+          <button type="button" data-cookie-settings>{t("footer.cookies")}</button>
+        </span>
+      </div>
     </div>
   </footer>
 

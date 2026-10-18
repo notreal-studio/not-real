@@ -10,7 +10,8 @@
     runReveal();
     if(window.gsap && !reduced){
       gsap.to(loader,{yPercent:-100,duration:0.9,ease:'power4.inOut',onComplete:()=>loader.style.display='none'});
-      gsap.from('.hero h1',{y:40,opacity:0,duration:1,ease:'power3.out',delay:0.15});
+      gsap.from('.hero-word',{y:40,opacity:0,duration:1,ease:'power3.out',delay:0.15});
+      gsap.from('.hero-polaroid',{y:50,opacity:0,rotate:-2,duration:1.1,ease:'power3.out',delay:0.35});
     } else { loader.style.display='none'; }
   }
   if(reduced){ lcount.textContent='100'; lbar.style.width='100%'; revealSite(); }
@@ -58,9 +59,13 @@
   }));
 
   /* ---- SHOWREEL placeholder ---- */
-  document.getElementById('playReel').addEventListener('click',()=>{
-    alert(T.reel || 'Showreel placeholder.');
-  });
+  const playReel=document.getElementById('playReel');
+  if(playReel) playReel.addEventListener('click',()=>{ alert(T.reel || 'Showreel placeholder.'); });
+
+  /* ---- HEADER: solid Bordeaux over the hero, theme-coloured after scrolling ---- */
+  const hdr=document.querySelector('header');
+  const onScroll=()=>hdr.classList.toggle('scrolled',window.scrollY>60);
+  onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
 
   /* ---- SCROLL REVEAL ---- */
   function runReveal(){
