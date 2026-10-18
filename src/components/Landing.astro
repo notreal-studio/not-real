@@ -4,6 +4,8 @@ import { languages, defaultLang, langName, useTranslations, localePath, type Lan
 import { heroWorks } from "../data/works";
 import Portfolio from "./Portfolio.astro";
 import SiteFooter from "./SiteFooter.astro";
+import About from "./About.astro";
+import Services from "./Services.astro";
 
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
@@ -127,8 +129,14 @@ const work = [1, 2, 3, 4];
       <div class="hs-progress"><i></i></div>
     </section>
 
+    {/* ABOUT */}
+    <About lang={lang} />
+
     {/* PORTFOLIO */}
     <Portfolio lang={lang} />
+
+    {/* SERVICES */}
+    <Services lang={lang} />
 
     {/* FAQ */}
     <section class="block" id="faq">

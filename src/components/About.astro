@@ -1,0 +1,35 @@
+---
+import fs from "node:fs";
+import { about } from "../data/services";
+import type { Lang } from "../i18n/utils";
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+// Drop Inga's portrait at public/assets/img/about/inga.webp (4:5) and it appears here automatically.
+const portrait = fs.existsSync("public/assets/img/about/inga.webp") ? `${base}/assets/img/about/inga.webp` : null;
+---
+<section class="block about" id="about">
+  <div class="wrap about-grid">
+    <div class="about-photo reveal">
+      <div class="about-polaroid">
+        <div class="about-media">
+          {portrait
+            ? <img src={portrait} alt="Inga Bankauskė" width="800" height="1000" loading="lazy" />
+            : <div class="about-ph">{about.portrait[lang]}</div>}
+        </div>
+        <div class="about-cap">real light. real skin.</div>
+        <img class="about-sticker" src={`${base}/brand/lipdukai/what-was-she-on-saffron.svg`} alt="" loading="lazy" />
+      </div>
+    </div>
+    <div class="about-copy">
+      <div class="kicker reveal">{about.kicker[lang]}</div>
+      <h2 class="statement reveal" set:html={about.h2[lang]}></h2>
+      {about.p.map((t) => (<p class="about-p reveal">{t[lang]}</p>))}
+      <dl class="about-facts reveal">
+        {about.facts.map((f) => (<div><dt>{f.k[lang]}</dt><dd>{f.v[lang]}</dd></div>))}
+      </dl>
+      <a class="hero-cta reveal" href="#kontaktai">{about.cta[lang]}</a>
+    </div>
+  </div>
+</section>

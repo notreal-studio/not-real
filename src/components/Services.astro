@@ -1,0 +1,50 @@
+---
+import { services, servicesUi as ui, howSteps } from "../data/services";
+import type { Lang } from "../i18n/utils";
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+<section class="block services" id="paslaugos">
+  <div class="wrap">
+    <div class="kicker reveal">{ui.kicker[lang]}</div>
+    <h2 class="statement reveal" set:html={ui.h2[lang]}></h2>
+    <p class="lead reveal">{ui.lead[lang]}</p>
+
+    <div class="sv-list">
+      {services.map((s, i) => (
+        <details class="sv" name="services" open={i === 0}>
+          <summary>
+            <span class="sv-n">{s.n}</span>
+            <span class="sv-t">{s.title[lang]}</span>
+            <span class="sv-tag">{s.tag[lang]}</span>
+            <span class="sv-x" aria-hidden="true"></span>
+          </summary>
+          <div class="sv-body">
+            <div>
+              <p class="sv-lead">{s.lead[lang]}</p>
+              <div class="sv-who"><b>{ui.who[lang]}</b> {s.who[lang]}</div>
+              <div class="sv-actions">
+                <a class="hero-cta" href="#kontaktai">{ui.quote[lang]}</a>
+                {s.link && <a class="sv-link" href={`${base}${s.link.href[lang]}`}>{s.link.label[lang]} →</a>}
+              </div>
+            </div>
+            <div>
+              <h4>{ui.gets[lang]}</h4>
+              <ul class="sv-gets">{s.gets[lang].map((g) => (<li>{g}</li>))}</ul>
+            </div>
+          </div>
+        </details>
+      ))}
+    </div>
+
+    <div class="sv-how">
+      <h3>{ui.howH[lang]}</h3>
+      <ol>
+        {howSteps.map((p) => (<li><b>{p.n}</b><span class="sv-how-h">{p.h[lang]}</span><span class="sv-how-p">{p.p[lang]}</span></li>))}
+      </ol>
+      <a class="sv-book" href="#kontaktai" data-booking>{ui.book[lang]} →</a>
+    </div>
+  </div>
+</section>
