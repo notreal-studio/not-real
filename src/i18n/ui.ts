@@ -94,6 +94,8 @@ export const ui: Record<string, Record<string, string>> = {
     "form.from": "Not Real svetainė",
 
     "footer.tag": "Turinys netikras, rezultatai tikri. © 2026",
+    "footer.privacy": "Privatumo politika",
+    "footer.cookies": "Slapukų nustatymai",
 
     "js.reel": "Čia atsidarys tavo showreel. Įkelk video į assets/ ir prijunk <video> hero sekcijoj.",
     "js.sending": "Siunčiama…",
@@ -181,6 +183,8 @@ export const ui: Record<string, Record<string, string>> = {
     "form.from": "Not Real website",
 
     "footer.tag": "Fake content, real results. © 2026",
+    "footer.privacy": "Privacy policy",
+    "footer.cookies": "Cookie settings",
 
     "js.reel": "Your showreel will open here. Add a video to assets/ and connect <video> in the hero section.",
     "js.sending": "Sending…",

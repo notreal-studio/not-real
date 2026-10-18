@@ -218,6 +218,10 @@ const work = [1, 2, 3, 4];
       <a class="brand" href="#top" style="color:var(--cream)"><span class="dot"></span>Not Real</a>
       <span class="tag">{t("footer.tag")}</span>
       <a style="color:var(--pink);font-weight:500" href="mailto:inga.bankauske@gmail.com">inga.bankauske@gmail.com</a>
+      <span class="foot-legal">
+        <a href={lang === defaultLang ? `${base}privatumas/` : `${base}${lang}/privacy/`}>{t("footer.privacy")}</a>
+        <button type="button" data-cookie-settings>{t("footer.cookies")}</button>
+      </span>
     </div>
   </footer>
 

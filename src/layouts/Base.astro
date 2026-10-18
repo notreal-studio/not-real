@@ -93,14 +93,8 @@ const faqSchema = {
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
-  {/* Google Analytics 4 */}
-  <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-6TMLTSEL2S"></script>
-  <script is:inline>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-6TMLTSEL2S');
-  </script>
+  {/* Google Analytics 4 — įkeliamas tik gavus sutikimą (public/consent.js) */}
+  <script is:inline src={`${base}consent.js`}></script>
 </head>
 <body class="locked">
   <slot />
