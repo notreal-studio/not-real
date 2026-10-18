@@ -28,6 +28,9 @@ const posters = gallery.soxiPosters;
 const scenes = ["p067", "p065", "p017", "03_rolled-dress"].map(im);
 const four = ["p073", "p069", "p070", "p068"].map(im);
 const sheets = ["p072", "p071"].map(im);
+// small + large version of each photo so phones do not download the 1600 px file for a 160 px tile
+const rs = (m: { src: string; thumb: string; w: number }) => (m.thumb !== m.src ? `${u(m.thumb)} 640w, ${u(m.src)} ${Math.min(m.w, 1600)}w` : undefined);
+const SZ = "(max-width: 980px) 48vw, 24vw";
 const alt = (n: string, i: number) => `SOXI — ${n} ${i + 1}`;
 ---
 <CaseLayout lang={lang} title={c.metaTitle} desc={c.metaDesc} paths={paths} backLabel={c.back} ogImage="/assets/img/soxi-case/og.jpg">
@@ -43,7 +46,7 @@ const alt = (n: string, i: number) => `SOXI — ${n} ${i + 1}`;
         </dl>
       </div>
       <figure class="case-hero-fig">
-        <img src={u(hero.src)} width={hero.w} height={hero.h} alt="SOXI — the Omakase box, six rolled socks" fetchpriority="high" />
+        <img src={u(hero.src)} srcset={rs(hero)} sizes="(max-width: 980px) 85vw, 36vw" width={hero.w} height={hero.h} alt="SOXI — the Omakase box, six rolled socks" fetchpriority="high" />
       </figure>
     </div>
   </header>
@@ -67,7 +70,7 @@ const alt = (n: string, i: number) => `SOXI — ${n} ${i + 1}`;
       </div>
       <div class="case-duo">
         {[im("01_roll-into-socks"), im("06_six-rolls")].map((m, i) => (
-          <figure><img src={u(m.src)} width={m.w} height={m.h} alt={alt("idea", i)} loading="lazy" /></figure>
+          <figure><img src={u(m.src)} srcset={rs(m)} sizes={SZ} width={m.w} height={m.h} alt={alt("idea", i)} loading="lazy" /></figure>
         ))}
       </div>
     </div>
@@ -99,7 +102,7 @@ const alt = (n: string, i: number) => `SOXI — ${n} ${i + 1}`;
         </div>
         <div class="case-duo">
           {[im("p062"), im("p104")].map((m, i) => (
-            <figure><img src={u(m.src)} width={m.w} height={m.h} alt={alt("product", i)} loading="lazy" /></figure>
+            <figure><img src={u(m.src)} srcset={rs(m)} sizes={SZ} width={m.w} height={m.h} alt={alt("product", i)} loading="lazy" /></figure>
           ))}
         </div>
       </div>
@@ -155,14 +158,14 @@ const alt = (n: string, i: number) => `SOXI — ${n} ${i + 1}`;
         </div>
         <div class="case-duo">
           {sheets.map((m, i) => (
-            <figure><img src={u(m.src)} width={m.w} height={m.h} alt={alt("character sheet", i)} loading="lazy" /></figure>
+            <figure><img src={u(m.src)} srcset={rs(m)} sizes={SZ} width={m.w} height={m.h} alt={alt("character sheet", i)} loading="lazy" /></figure>
           ))}
         </div>
       </div>
       <h3 class="case-sub">{c.s6.fourH}</h3>
       <p class="case-lead">{c.s6.four}</p>
       <div class="case-quad">
-        {four.map((m, i) => (<figure><img src={u(m.src)} width={m.w} height={m.h} alt={alt("character", i)} loading="lazy" /></figure>))}
+        {four.map((m, i) => (<figure><img src={u(m.src)} srcset={rs(m)} sizes={SZ} width={m.w} height={m.h} alt={alt("character", i)} loading="lazy" /></figure>))}
       </div>
     </div>
   </section>
@@ -173,7 +176,7 @@ const alt = (n: string, i: number) => `SOXI — ${n} ${i + 1}`;
       <h2>{c.s7.h}</h2>
       <p class="case-lead">{c.s7.p}</p>
       <div class="case-quad">
-        {scenes.map((m, i) => (<figure><img src={u(m.src)} width={m.w} height={m.h} alt={alt("scene", i)} loading="lazy" /></figure>))}
+        {scenes.map((m, i) => (<figure><img src={u(m.src)} srcset={rs(m)} sizes={SZ} width={m.w} height={m.h} alt={alt("scene", i)} loading="lazy" /></figure>))}
       </div>
       <div class="case-notes">
         {c.s7.notes.map(([h, p]) => (<div><b>{h}</b><span>{p}</span></div>))}
@@ -188,7 +191,7 @@ const alt = (n: string, i: number) => `SOXI — ${n} ${i + 1}`;
       <ul class="case-lines">{c.s8.lines.map((t) => (<li>{t}</li>))}</ul>
       <div class="case-two">{c.s8.p.map((t) => (<p>{t}</p>))}</div>
       <div class="case-posters">
-        {posters.map((m, i) => (<figure><img src={u(m.src)} width={m.w} height={m.h} alt={alt("poster", i)} loading="lazy" /></figure>))}
+        {posters.map((m, i) => (<figure><img src={u(m.src)} srcset={rs(m)} sizes={SZ} width={m.w} height={m.h} alt={alt("poster", i)} loading="lazy" /></figure>))}
       </div>
     </div>
   </section>
@@ -216,7 +219,7 @@ const alt = (n: string, i: number) => `SOXI — ${n} ${i + 1}`;
         </table>
       </div>
       <figure class="case-video">
-        <video controls playsinline preload="none" poster={u("/assets/video/soxi-film.jpg")} src={u("/assets/video/soxi-film.mp4")}></video>
+        <video controls playsinline preload="none" poster={u("/assets/video/soxi-film.webp")} src={u("/assets/video/soxi-film.mp4")}></video>
       </figure>
     </div>
   </section>

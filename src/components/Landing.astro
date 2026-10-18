@@ -26,7 +26,7 @@ const work = [1, 2, 3, 4];
   {/* NAV */}
   <header>
     <div class="nav">
-      <a class="brand" href="#top" aria-label="Not Real"><span>Not</span><em>Real</em></a>
+      <a class="brand" href="#top"><span>Not</span> <em>Real</em></a>
       <div class="nav-actions">
         <div class="header-lang">
           {languages.map((l) => (
@@ -107,8 +107,9 @@ const work = [1, 2, 3, 4];
       <h1 class="sr-only">Not Real — {t("hero.eyebrow")}. {t("hero.tagline")}</h1>
       {heroWorks.map((w, n) => (
         <article class={`hs${w.vertical ? " is-v" : ""}`} aria-roledescription="slide" aria-label={`${n + 1} / ${heroWorks.length}: ${w.title}`}>
-          {w.vertical && <div class="hs-bg" style={`background-image:url(${base}assets/video/${w.slug}.jpg)`}></div>}
-          <video muted playsinline preload="metadata" poster={`${base}assets/video/${w.slug}.jpg`} data-src={`${base}assets/video/${w.slug}.mp4`}></video>
+          {w.vertical && <div class="hs-bg" data-bg={`${base}assets/video/${w.slug}.webp`} style={n === 0 ? `background-image:url(${base}assets/video/${w.slug}.webp)` : undefined}></div>}
+          {n === 0 && <img class="hs-poster" src={`${base}assets/video/${w.slug}.webp`} alt="" fetchpriority="high" decoding="async" />}
+          <video muted playsinline preload="metadata" poster={n === 0 ? `${base}assets/video/${w.slug}.webp` : undefined} data-poster={`${base}assets/video/${w.slug}.webp`} data-src={`${base}assets/video/${w.slug}.mp4`}></video>
           <div class="hs-cap">
             <div class="hs-title">{w.title}</div>
             <div class="hs-sub">{w.sub[lang]}</div>
@@ -179,7 +180,7 @@ const work = [1, 2, 3, 4];
             <input type="hidden" name="access_key" value="714c67de-3c23-4adc-ab9c-320426630d8a" />
             <input type="hidden" name="subject" value={t("form.subject")} />
             <input type="hidden" name="from_name" value={t("form.from")} />
-            <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
+            <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-label="Leave this empty" />
             <label for="name">{t("form.name_label")}</label>
             <input id="name" name="name" type="text" placeholder={t("form.name_ph")} required />
             <label for="email">{t("form.email_label")}</label>
@@ -197,7 +198,7 @@ const work = [1, 2, 3, 4];
   <SiteFooter lang={lang} />
 
   {/* FLOATING SOCIAL DOCK */}
-  <div class="social-dock" aria-label="Social links">
+  <nav class="social-dock" aria-label="Social links">
     <a class="sd-btn" href="https://www.instagram.com/notreal.inga/" target="_blank" rel="noopener" aria-label="Instagram">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
         <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor" stroke="none"/>
@@ -218,5 +219,5 @@ const work = [1, 2, 3, 4];
         <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/>
       </svg>
     </a>
-  </div>
+  </nav>
 </Base>

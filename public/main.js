@@ -17,11 +17,11 @@
   else {
     let p=0;
     const t=setInterval(()=>{
-      p+=Math.max(1,Math.round((100-p)*0.08));
+      p+=Math.max(2,Math.round((100-p)*0.14));
       if(p>=100){p=100;clearInterval(t);}
       lcount.textContent=p; lbar.style.width=p+'%';
-      if(p>=100) setTimeout(revealSite,250);
-    },55);
+      if(p>=100) setTimeout(revealSite,150);
+    },24);
   }
 
   /* ---- THEME TOGGLE ---- */

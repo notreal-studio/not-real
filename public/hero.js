@@ -7,7 +7,13 @@
   let i=-1, muted=true, raf=0, started=false, inView=true;
 
   const vid=(s)=>s.querySelector('video');
-  function load(s){ const v=vid(s); if(v && !v.getAttribute('src')){ v.src=v.dataset.src; } return v; }
+  function load(s){
+    const v=vid(s); if(!v) return v;
+    if(v.dataset.poster && !v.getAttribute('poster')) v.setAttribute('poster',v.dataset.poster);
+    const bg=s.querySelector('.hs-bg'); if(bg && bg.dataset.bg && !bg.style.backgroundImage) bg.style.backgroundImage='url('+bg.dataset.bg+')';
+    if(!v.getAttribute('src')) v.src=v.dataset.src;
+    return v;
+  }
 
   function tick(){
     cancelAnimationFrame(raf);

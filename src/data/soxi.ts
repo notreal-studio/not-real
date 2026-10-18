@@ -77,7 +77,7 @@ export const soxi: Record<"en" | "lt", Soxi> = {
   },
   lt: {
     metaTitle: "SOXI — Brand kit atvejo studija | Not Real",
-    metaDesc: "Prabangus kojinių prekės ženklas, suvyniotas kaip suši: kaip viena sąmojinga idėja tapo pavadinimu, brand kit, aktoriais, kampanija ir e. parduotuve viename Space.",
+    metaDesc: "Prabangus kojinių prekės ženklas, suvyniotas kaip suši: kaip viena idėja tapo pavadinimu, brand kit, aktoriais, kampanija ir e. parduotuve.",
     back: "Visi darbai", kicker: "Atvejo studija · Brand kit",
     tagline: "Prabangus kojinių prekės ženklas, suvyniotas kaip suši: nuo pavadinimo iki kampanijos viename Space.",
     facts: [["Vaidmuo", "Fotografė ir AI kūrybos direktorė"], ["Studija", "Not Real"], ["Įrankiai", "Magnific One · Claude · Seedream 5 Pro"], ["Tipas", "Koncepcinis projektas, 2026"]],

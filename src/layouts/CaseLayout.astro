@@ -12,6 +12,8 @@ const canonical = `${site}${paths[lang]}`;
 const other = languages.find((l) => l !== lang) as Lang;
 const og = `${site}${ogImage ?? `${base}og.jpg`}`;
 const home = localePath(lang, base);
+const ld = { "@context": "https://schema.org", "@type": "Article", headline: title, description: desc, image: og, inLanguage: lang, url: canonical,
+  author: { "@type": "Person", name: "Inga Bankauskė", url: `${site}/` }, publisher: { "@type": "Organization", name: "Not Real", url: `${site}/` } };
 ---
 <!DOCTYPE html>
 <html lang={lang}>
@@ -43,19 +45,19 @@ const home = localePath(lang, base);
   <meta name="twitter:image" content={og} />
   {languages.map((l) => (<link rel="alternate" hreflang={l} href={`${site}${paths[l]}`} />))}
   <link rel="alternate" hreflang="x-default" href={`${site}${paths.en}`} />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
-  <script is:inline src={`${base}consent.js`}></script>
+  <link rel="preload" href={`${base}fonts/dm-serif-display-normal-400-latin.woff2`} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={`${base}fonts/lato-normal-400-latin.woff2`} as="font" type="font/woff2" crossorigin />
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <script is:inline defer src={`${base}consent.js`}></script>
 </head>
 <body>
-  <div class="case-top">
-    <a class="brand" href={home} aria-label="Not Real"><span>Not</span><em>Real</em></a>
+  <nav class="case-top" aria-label="Site">
+    <a class="brand" href={home}><span>Not</span> <em>Real</em></a>
     <div class="case-top-r">
       <a class="case-back" href={`${home}#darbai`}>← {backLabel}</a>
       <a class="case-lang" href={paths[other]}>{langName[other]}</a>
     </div>
-  </div>
+  </nav>
   <main class="case">
     <slot />
   </main>

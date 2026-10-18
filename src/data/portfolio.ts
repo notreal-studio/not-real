@@ -21,8 +21,8 @@ const vid = (slug: string, cats: Cat[]): Item => {
   const w = works.find((x) => x.slug === slug)!;
   return {
     id: slug, type: "video", cats, title: w.title, sub: w.sub,
-    cover: `/assets/video/${slug}.jpg`, ratio: w.vertical ? 4 / 5 : 16 / 10,
-    video: { src: `/assets/video/${slug}.mp4`, poster: `/assets/video/${slug}.jpg`, vertical: w.vertical },
+    cover: `/assets/video/${slug}.webp`, ratio: w.vertical ? 4 / 5 : 16 / 10,
+    video: { src: `/assets/video/${slug}.mp4`, poster: `/assets/video/${slug}.webp`, vertical: w.vertical },
   };
 };
 const gal = (id: string, key: string, title: string, sub: Lang2, cats: Cat[], coverIdx = 0): Item => {

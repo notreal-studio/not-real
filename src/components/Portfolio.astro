@@ -48,7 +48,7 @@ const tag = (i: (typeof items)[number]) => (i.type === "case" ? t("pf.case") : t
         return it.type === "case" ? (
           <a class={cls} data-cats={it.cats.join(" ")} href={path(it.href![lang])}>{media}</a>
         ) : (
-          <button type="button" class={cls} data-cats={it.cats.join(" ")} data-open={it.id} aria-label={`${t("pf.open")}: ${it.title}`}>{media}</button>
+          <button type="button" class={cls} data-cats={it.cats.join(" ")} data-open={it.id} aria-haspopup="dialog">{media}</button>
         );
       })}
     </div>

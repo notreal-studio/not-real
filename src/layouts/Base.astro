@@ -88,13 +88,12 @@ const faqSchema = {
   ))}
   <link rel="alternate" hreflang="x-default" href={`${site}${localePath(defaultLang, base)}`} />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
-  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <link rel="preload" href={`${base}fonts/dm-serif-display-normal-400-latin.woff2`} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={`${base}fonts/lato-normal-400-latin.woff2`} as="font" type="font/woff2" crossorigin />
+  <script is:inline src={`${base}vendor/gsap.min.js`}></script>
 
   {/* Google Analytics 4 — įkeliamas tik gavus sutikimą (public/consent.js) */}
-  <script is:inline src={`${base}consent.js`}></script>
+  <script is:inline defer src={`${base}consent.js`}></script>
 </head>
 <body class="locked">
   <slot />
