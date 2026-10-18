@@ -20,12 +20,14 @@ Daugiakalbė statinė landing svetainė (Astro). Numatytoji kalba **LT** (šakny
 - **Naujas brand identity (Cellar & Silk)** — Inga (dizainerė) pristatė pilną brand book'ą (`NOT_REAL_Brand_Book_v1.pdf`, ne repo'je). Įdiegti realūs assets: `favicon.svg`, `favicon.ico`, `favicon-96x96.png`, `apple-touch-icon.png`, `web-app-manifest-192/512x512.png`, `logo.svg`, `logo-512.png`, naujas `og.jpg` — visi Bone Cream/Espresso/Bordeaux paletėje, Instrument Serif šriftu. Visi sujungti `Base.astro` `<head>` ir `site.webmanifest`.
 - **Dizaino reskin (2026-06-30 – 07-15):** `global.css` perkeltas į Cellar & Silk paletę, šriftai → Instrument Serif + Inter, šviesi/tamsi tema (tamsi numatytoji, fonas `#100A04`), naujas overlay meniu (2 stulpeliai, subkategorijos, LT/EN), social dock (Instagram, LinkedIn, WhatsApp, kontaktai), pašalinta marquee juosta.
 - **Perdavimas (2026-09-26):** projekto vystymą perima Inga; parašytas `CLAUDE.md` su struktūra, taisyklėmis ir prieigų žemėlapiu.
-- **Prieigos patikra (2026-10-18):** Inga klonavo repo naujame kompiuteryje, `npm run build` praeina; šiuo commit'u tikrinama push teisė.
+- **Prieigos patikra (2026-10-18):** Inga klonavo repo naujame kompiuteryje, `npm run build` praeina; push į `main` veikia (Inga – org narė su Write teise).
+- **Kontaktai (2026-10-18):** laikinas kontaktinis el. paštas `inga.bankauske@gmail.com` (visur vietoje `labas@not-real.ai`); Web3Forms raktas pakeistas į Ingos paskyros (laiškai ateina į jos Gmail, ištestuota); realios Instagram, LinkedIn ir Telegram (`t.me/ingaBank`) nuorodos (WhatsApp pakeistas Telegram).
 
 ## TODO — kitos sesijos darbai
 
 1. **DIDYSIS — tekstų perrašymas pagal brand book'ą.** Spalvos/šriftai jau padaryti; lieka turinys. Naujas pozicionavimas: **"NOT REAL — An AI Visual Studio"**, Ingos studija, taikoma į **"e-commerce and service brands"** tarptautiniu mastu, anglų k. editorial tonas. Reikės: (a) perrašyti `ui.ts` pagal manifestą/tone of voice/taglines, (b) apsispręsti, ar lieka LT+EN dvikalbystė, ar pereinama prie EN-pirmumo. **Nepradėti be patvirtinimo dėl apimties.**
-2. **El. paštas** — kol nenusprendi pašto providerio, placeholder `labas@not-real.ai` lieka visur (`Landing.astro`, `Base.astro`, `ui.ts`). Pastaba: brand book pavyzdžiuose minimas `studio@notreal.xyz` — tai tik draft, realus domenas yra `notreal.lt`.
+2. **El. paštas** — laikinai naudojamas `inga.bankauske@gmail.com`. Vėliau užsakyti domeno paštą (pvz. Hostinger; DNS valdomas per `ns1–4.serveriai.lt`, ne tiesiogiai Interneto vizijoje; A ir `www` CNAME neliesti), pakeisti adresą `Landing.astro`, `Base.astro`, `ui.ts` ir Web3Forms gavėją. Brand book'e minimas `studio@notreal.xyz` — tik draft.
+2a. **Smulkmenos rastos analizėje:** privatumo politika + slapukų sutikimas (GA4 veikia be sutikimo); meniu „Blogas“ nuoroda tuščia (`href="#"`); `main.js` showreel `alert` placeholder; svetainėje nėra nė vieno `<img>`/video (hero ir galerija placeholder'iai).
 3. **Google Search Console** — domenas jau galutinis, dabar gali registruoti `notreal.lt` be jokių kliūčių.
 4. **Individuali veikla / UAB registracija** — planuojama prieš pirmus klientus (reikalinga sąskaitoms — LT mokesčių reikalavimas, ne Google).
 5. **Google Business Profile** — kurti kartu su #4. Veiklos kategorija (pvz. "Marketing/Advertising agency") yra tik Maps kategorija, ne mokestinė; **PVM kodo Google neprašo**.
