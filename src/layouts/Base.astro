@@ -7,7 +7,7 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 const base = import.meta.env.BASE_URL;                 // '/' (custom domain) arba '/repo/'
-const site = (Astro.site?.href ?? "").replace(/\/$/, ""); // pvz. https://not-real.ai
+const site = (Astro.site?.href ?? "").replace(/\/$/, ""); // pvz. https://notreal.lt
 
 // JS pusės tekstai (formos žinutės, showreel) — perduodami į naršyklę
 const jsT = {
@@ -26,9 +26,9 @@ const orgSchema = {
   name: "Not Real",
   url: `${site}${base}`,
   description: t("meta.desc"),
-  email: "labas@not-real.ai",
+  email: "inga.bankauske@gmail.com",
   areaServed: "Kaunas, Lithuania",
-  sameAs: ["https://instagram.com/notreal.inga"],
+  sameAs: ["https://www.instagram.com/notreal.inga/", "https://www.linkedin.com/in/ingabankauske"],
 };
 const faqSchema = {
   "@context": "https://schema.org",

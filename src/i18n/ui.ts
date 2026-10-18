@@ -98,8 +98,8 @@ export const ui: Record<string, Record<string, string>> = {
     "js.reel": "Čia atsidarys tavo showreel. Įkelk video į assets/ ir prijunk <video> hero sekcijoj.",
     "js.sending": "Siunčiama…",
     "js.ok": "Gauta. Susisieksiu su demo greitai.",
-    "js.err": "Nepavyko. Parašyk tiesiai: labas@not-real.ai",
-    "js.neterr": "Ryšio klaida. Parašyk tiesiai: labas@not-real.ai",
+    "js.err": "Nepavyko. Parašyk tiesiai: inga.bankauske@gmail.com",
+    "js.neterr": "Ryšio klaida. Parašyk tiesiai: inga.bankauske@gmail.com",
   },
 
   // ---------------- ENGLISH ----------------
@@ -185,7 +185,7 @@ export const ui: Record<string, Record<string, string>> = {
     "js.reel": "Your showreel will open here. Add a video to assets/ and connect <video> in the hero section.",
     "js.sending": "Sending…",
     "js.ok": "Got it — I'll get back to you with a demo soon.",
-    "js.err": "Something went wrong. Email directly: labas@not-real.ai",
-    "js.neterr": "Connection error. Email directly: labas@not-real.ai",
+    "js.err": "Something went wrong. Email directly: inga.bankauske@gmail.com",
+    "js.neterr": "Connection error. Email directly: inga.bankauske@gmail.com",
   },
 };
