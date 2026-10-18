@@ -45,7 +45,7 @@ const work = [1, 2, 3, 4];
       <div class="menu-top">
         <a class="menu-nr-logo" href="#top" onclick="document.getElementById('menuClose').click()">
           <svg viewBox="0 0 120 80" width="96" height="64">
-            <text x="60" y="62" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif" font-size="64" font-weight="400" letter-spacing="6" fill="currentColor">NR</text>
+            <text x="60" y="62" text-anchor="middle" font-family="'DM Serif Display',Georgia,serif" font-size="64" font-weight="400" letter-spacing="6" fill="currentColor">NR</text>
           </svg>
         </a>
         <div class="menu-top-right">
@@ -219,7 +219,7 @@ const work = [1, 2, 3, 4];
       <span class="tag">{t("footer.tag")}</span>
       <a style="color:var(--pink);font-weight:500" href="mailto:inga.bankauske@gmail.com">inga.bankauske@gmail.com</a>
       <span class="foot-legal">
-        <a href={lang === defaultLang ? `${base}privatumas/` : `${base}${lang}/privacy/`}>{t("footer.privacy")}</a>
+        <a href={lang === "lt" ? `${base}lt/privatumas/` : `${base}privacy/`}>{t("footer.privacy")}</a>
         <button type="button" data-cookie-settings>{t("footer.cookies")}</button>
       </span>
     </div>

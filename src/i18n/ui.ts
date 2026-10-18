@@ -7,9 +7,9 @@
 //   4) sukurk puslapį src/pages/<kalba>/index.astro (žr. README).
 // ====================================================================
 
-export const languages = ["lt", "en"] as const;
+export const languages = ["en", "lt"] as const;
 export type Lang = (typeof languages)[number];
-export const defaultLang: Lang = "lt";
+export const defaultLang: Lang = "en";
 
 // Pavadinimas, rodomas kalbų perjungiklyje
 export const langName: Record<string, string> = { lt: "LT", en: "EN" };

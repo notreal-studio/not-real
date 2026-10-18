@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import { languages, langName, type Lang } from "../i18n/utils";
+import { languages, langName, localePath, type Lang } from "../i18n/utils";
 
 interface Props { lang: Lang; title: string; desc: string; paths: Record<string, string>; }
 const { lang, title, desc, paths } = Astro.props;
@@ -32,12 +32,12 @@ const other = languages.find((l) => l !== lang) as Lang;
   ))}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
   <script is:inline src={`${base}consent.js`}></script>
 </head>
 <body>
   <div class="legal-top">
-    <a class="brand" href={lang === "lt" ? base : `${base}en/`}><span class="dot"></span>Not Real</a>
+    <a class="brand" href={localePath(lang, base)}><span class="dot"></span>Not Real</a>
     <div class="lang"><a href={paths[other]}>{langName[other]}</a></div>
   </div>
   <main class="legal">

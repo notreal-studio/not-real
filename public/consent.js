@@ -5,10 +5,10 @@
   var T={
     lt:{title:'Slapukai ir analitika',
       text:'Naudojame Google Analytics, kad suprastume, kaip naudojamasi svetaine. Tai vykdoma tik gavus tavo sutikimą.',
-      more:'Privatumo politika',yes:'Sutinku',no:'Nesutinku',href:'/privatumas/'},
+      more:'Privatumo politika',yes:'Sutinku',no:'Nesutinku',href:'/lt/privatumas/'},
     en:{title:'Cookies and analytics',
       text:'We use Google Analytics to understand how the site is used. This only runs with your consent.',
-      more:'Privacy policy',yes:'Accept',no:'Decline',href:'/en/privacy/'}
+      more:'Privacy policy',yes:'Accept',no:'Decline',href:'/privacy/'}
   }[lang];
 
   function get(){try{return localStorage.getItem(KEY);}catch(e){return null;}}
