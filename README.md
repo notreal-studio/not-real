@@ -20,6 +20,7 @@ Daugiakalbė statinė landing svetainė (Astro). Numatytoji kalba **LT** (šakny
 - **Naujas brand identity (Cellar & Silk)** — Inga (dizainerė) pristatė pilną brand book'ą (`NOT_REAL_Brand_Book_v1.pdf`, ne repo'je). Įdiegti realūs assets: `favicon.svg`, `favicon.ico`, `favicon-96x96.png`, `apple-touch-icon.png`, `web-app-manifest-192/512x512.png`, `logo.svg`, `logo-512.png`, naujas `og.jpg` — visi Bone Cream/Espresso/Bordeaux paletėje, Instrument Serif šriftu. Visi sujungti `Base.astro` `<head>` ir `site.webmanifest`.
 - **Dizaino reskin (2026-06-30 – 07-15):** `global.css` perkeltas į Cellar & Silk paletę, šriftai → Instrument Serif + Inter, šviesi/tamsi tema (tamsi numatytoji, fonas `#100A04`), naujas overlay meniu (2 stulpeliai, subkategorijos, LT/EN), social dock (Instagram, LinkedIn, WhatsApp, kontaktai), pašalinta marquee juosta.
 - **Perdavimas (2026-09-26):** projekto vystymą perima Inga; parašytas `CLAUDE.md` su struktūra, taisyklėmis ir prieigų žemėlapiu.
+- **Prieigos patikra (2026-10-18):** Inga klonavo repo naujame kompiuteryje, `npm run build` praeina; šiuo commit'u tikrinama push teisė.
 
 ## TODO — kitos sesijos darbai
 
