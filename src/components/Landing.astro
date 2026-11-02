@@ -63,9 +63,14 @@ const countLabel = (g: (typeof groups)[number]) => g.countLabel?.[lang] ?? `${g.
       </div>
 
       <div class="wrap">
+        <nav class="lm-nav" aria-label={t("pf.kicker")}>
+          {groups.map((g, i) => (
+            <a class="lm-l" href={groupHref(g.slug)} data-g={i}><span class="lm-ln">{g.n}</span>{g.title[lang]}</a>
+          ))}
+        </nav>
         <div class="lm" role="region" aria-label={t("pf.marquee")} data-layouts={JSON.stringify(mosaicLayouts)} data-pool={mosaicPool.length}>
           {groups.map((g, i) => (
-            <a class="lm-t lm-g" href={groupHref(g.slug)} style={`--x:${mosaicLayouts[0][i][0]};--y:${mosaicLayouts[0][i][1]};--w:${mosaicLayouts[0][i][2]};--h:${mosaicLayouts[0][i][3]}`}>
+            <a class="lm-t lm-g" href={groupHref(g.slug)} data-g={i} style={`--x:${mosaicLayouts[0][i][0]};--y:${mosaicLayouts[0][i][1]};--w:${mosaicLayouts[0][i][2]};--h:${mosaicLayouts[0][i][3]}`}>
               <span class="lm-in">
                 <span class="lm-slides" aria-hidden="true">
                   {g.slides.map((s, k) => (<img src={`${base}${s}`} alt="" loading={k === 0 ? "eager" : "lazy"} decoding="async" class={k === 0 ? "is-on" : undefined} />))}

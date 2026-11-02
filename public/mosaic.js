@@ -21,6 +21,14 @@
   }
   if(!reduced) groupTiles.forEach((g,n)=>cycle(g,2200+n*640));
 
+  /* ---- label row above the collage: hovering a label holds the collage and lights up its tile ---- */
+  document.querySelectorAll('.lm-l').forEach(l=>{
+    const g=groupTiles[Number(l.dataset.g)];
+    const on=()=>{ root.classList.add('is-hold'); if(g) g.classList.add('is-hl'); };
+    const off=()=>{ root.classList.remove('is-hold'); if(g) g.classList.remove('is-hl'); };
+    l.addEventListener('mouseenter',on); l.addEventListener('mouseleave',off); l.addEventListener('focus',on); l.addEventListener('blur',off);
+  });
+
   if(reduced || !layouts.length || pool.length<=photoTiles.length) return;
 
   /* ---- photo tiles: fade out, rearrange, reappear elsewhere ---- */
@@ -28,7 +36,7 @@
   let cur=0, hovered=false, onScreen=false, held=false;
   const wait=(ms)=>new Promise(r=>setTimeout(r,ms));
   const phone=()=>window.matchMedia('(max-width: 700px)').matches;
-  const active=()=>onScreen && !hovered && !held && !phone() && !document.hidden;
+  const active=()=>onScreen && !hovered && !root.classList.contains('is-hold') && !held && !phone() && !document.hidden;
 
   function place(n){
     tiles.forEach((t,i)=>{ const r=layouts[n][i]; t.style.setProperty('--x',r[0]); t.style.setProperty('--y',r[1]); t.style.setProperty('--w',r[2]); t.style.setProperty('--h',r[3]); });
