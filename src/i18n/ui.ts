@@ -21,7 +21,7 @@ export const ui: Record<string, Record<string, string>> = {
     "hero.prev": "Ankstesnis", "hero.next": "Kitas", "hero.sound": "Garsas",
 
     "pf.kicker": "Portfolio",
-    "pf.h2": "Atrinkti <em class=\"br-ul\">darbai.</em>",
+    "pf.h2": "Mano <em class=\"br-ul\">darbai.</em>",
     "pf.lead": "Fotografija, filmai ir AI vizualai, kuriuose produktas atrodo toks, kokį gaus pirkėjas. Koncepciniai ir mano paties projektai.",
     "pf.view": "Žiūrėti", "pf.works": "darbų", "pf.open": "Atidaryti", "pf.close": "Uždaryti", "pf.prev": "Ankstesnis", "pf.next": "Kitas", "pf.viewer": "Peržiūra",
     "pf.marquee": "Besisukanti darbų juosta", "about.hint": "Spausk, kad padidintum ir girdėtum",
@@ -69,7 +69,7 @@ export const ui: Record<string, Record<string, string>> = {
     "hero.prev": "Previous", "hero.next": "Next", "hero.sound": "Sound",
 
     "pf.kicker": "Portfolio",
-    "pf.h2": "Selected <em class=\"br-ul\">work.</em>",
+    "pf.h2": "My <em class=\"br-ul\">work.</em>",
     "pf.lead": "Photography, film and AI visuals where the product looks exactly as the buyer will receive it. Concept work and personal projects.",
     "pf.view": "View", "pf.works": "works", "pf.open": "Open", "pf.close": "Close", "pf.prev": "Previous", "pf.next": "Next", "pf.viewer": "Viewer",
     "pf.marquee": "Rotating strip of work", "about.hint": "Tap to enlarge, with sound",
