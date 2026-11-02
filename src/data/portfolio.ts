@@ -132,28 +132,24 @@ export const groups: Group[] = [
     items: [vMedia("soxi-film"), ...vaItems], slides: ["va-09", "va-14", "va-20", "va-01", "va-12", "va-17"].map((id) => gallery.visual.find((x) => x.id === id)!.thumb) },
 ];
 
-/* ---------------- home: marquee + About video ---------------- */
+/* ---------------- home: living mosaic + About video ---------------- */
 const pick = (g: string, ids: string[]) => ids.map((id) => groups.find((x) => x.slug === g)!.items.find((m) => m.id === id)!);
-export const marqueeItems: Media[] = [
-  ...pick("photography", ["ph-06", "ph-03", "ph-04", "ph-07"]),
-  ...pick("video", ["vesper", "limone"]),
-  ...pick("photography", ["ph-18", "ph-17", "ph-09", "ph-19"]),
-  ...pick("graphic-design", ["gd-dont-walk-roll"]),
-  ...pick("video", ["dress-to-kill", "bees"]),
-  ...pick("photography", ["ph-14", "ph-16", "ph-13"]),
-  ...pick("visual-automation", ["va-09", "va-14"]),
-  ...pick("video", ["drinks"]),
-  ...pick("photography", ["ph-02", "ph-10"]),
-  ...pick("brand-identity", ["nr-04"]),
+// The mosaic cycles through this pool (first 7 are what you see on load). Same indices are used by the lightbox.
+export const mosaicPool: Media[] = [
+  ...pick("photography", ["ph-06"]), ...pick("video", ["vesper"]), ...pick("photography", ["ph-03"]),
+  ...pick("graphic-design", ["gd-dont-walk-roll"]), ...pick("photography", ["ph-18", "ph-09"]), ...pick("video", ["limone"]),
+  ...pick("photography", ["ph-04", "ph-07", "ph-19", "ph-17", "ph-14", "ph-13", "ph-16", "ph-02", "ph-10", "ph-20", "ph-08", "ph-15"]),
+  ...pick("video", ["dress-to-kill", "bees", "drinks", "midsummer"]),
+  ...pick("graphic-design", ["gd-raw-style"]), ...pick("visual-automation", ["va-09", "va-14", "va-20"]), ...pick("brand-identity", ["nr-04"]),
+];
+/* Layouts on a 12 x 8 grid: [x, y, w, h] per tile slot. Every layout tiles the grid completely (no gaps), slots change size/place between layouts. */
+export const mosaicLayouts: number[][][] = [
+  [[0, 0, 5, 5], [5, 0, 2, 3], [7, 0, 2, 3], [9, 0, 3, 5], [5, 3, 4, 5], [0, 5, 5, 3], [9, 5, 3, 3]],
+  [[4, 3, 3, 5], [0, 0, 4, 5], [4, 0, 3, 3], [7, 0, 5, 5], [10, 5, 2, 3], [7, 5, 3, 3], [0, 5, 4, 3]],
+  [[6, 0, 4, 5], [0, 3, 6, 5], [0, 0, 3, 3], [3, 0, 3, 3], [10, 0, 2, 5], [6, 5, 3, 3], [9, 5, 3, 3]],
+  [[3, 4, 5, 4], [8, 0, 4, 4], [0, 0, 4, 4], [10, 4, 2, 4], [4, 0, 4, 4], [0, 4, 3, 4], [8, 4, 2, 4]],
 ];
 export const introVideo = vMedia("inga-intro");
+export const homeLb: (Media & { solo?: boolean })[] = [...mosaicPool, { ...introVideo, solo: true }];
+export const introIndex = mosaicPool.length;
 export const soxiCover = soxiFrames.find((f) => f.id.includes("04_hero"))!;
-
-/* marquee layout: clusters of one big tile + two small ones; the home lightbox list = marquee items + the intro video */
-const usable = marqueeItems.slice(0, marqueeItems.length - (marqueeItems.length % 3));
-export const marqueeClusters = Array.from({ length: usable.length / 3 }, (_, c) => ({
-  flip: c % 2 === 1,
-  tiles: usable.slice(c * 3, c * 3 + 3).map((m, k) => ({ m, i: c * 3 + k })),
-}));
-export const homeLb: (Media & { solo?: boolean })[] = [...marqueeItems, { ...introVideo, solo: true }];
-export const introIndex = marqueeItems.length;

@@ -3,10 +3,9 @@ import Base from "../layouts/Base.astro";
 import SiteHeader from "./SiteHeader.astro";
 import SiteFooter from "./SiteFooter.astro";
 import Lightbox from "./Lightbox.astro";
-import MqTile from "./MqTile.astro";
 import { useTranslations, localePath, type Lang } from "../i18n/utils";
 import { about } from "../data/about";
-import { heroVideos, groups, marqueeClusters as clusters, homeLb, introIndex, introVideo } from "../data/portfolio";
+import { heroVideos, groups, mosaicPool, mosaicLayouts, homeLb, introIndex, introVideo } from "../data/portfolio";
 
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
@@ -63,28 +62,18 @@ const countLabel = (g: (typeof groups)[number]) => g.countLabel?.[lang] ?? `${g.
         <p class="lead reveal">{t("pf.lead")}</p>
       </div>
 
-      <div class="mq" role="region" aria-label={t("pf.marquee")}>
-        <div class="mq-track">
-          {[0, 1].map((copy) => (
-            <div class="mq-set" aria-hidden={copy === 1 ? "true" : undefined}>
-              {clusters.map((c) =>
-                c.flip ? (
-                  <>
-                    <div class="mq-pair"><MqTile m={c.tiles[1].m} i={c.tiles[1].i} cls="sm" lang={lang} hidden={copy === 1} /><MqTile m={c.tiles[2].m} i={c.tiles[2].i} cls="sm" lang={lang} hidden={copy === 1} /></div>
-                    <MqTile m={c.tiles[0].m} i={c.tiles[0].i} cls="big" lang={lang} hidden={copy === 1} />
-                  </>
-                ) : (
-                  <>
-                    <MqTile m={c.tiles[0].m} i={c.tiles[0].i} cls="big" lang={lang} hidden={copy === 1} />
-                    <div class="mq-pair"><MqTile m={c.tiles[1].m} i={c.tiles[1].i} cls="sm" lang={lang} hidden={copy === 1} /><MqTile m={c.tiles[2].m} i={c.tiles[2].i} cls="sm" lang={lang} hidden={copy === 1} /></div>
-                  </>
-                )
-              )}
-            </div>
+      <div class="wrap">
+        <div class="lm" role="region" aria-label={t("pf.marquee")} data-layouts={JSON.stringify(mosaicLayouts)} data-pool={mosaicPool.length}>
+          {mosaicLayouts[0].map((r, i) => (
+            <button type="button" class={`lm-t${mosaicPool[i].kind === "video" ? " is-video" : ""}`} data-lb={i} aria-label={mosaicPool[i].title[lang]} style={`--x:${r[0]};--y:${r[1]};--w:${r[2]};--h:${r[3]}`}>
+              <span class="lm-in">
+                <img src={`${base}${mosaicPool[i].cover}`} alt="" loading="eager" decoding="async" />
+                <span class="play" aria-hidden="true"></span>
+              </span>
+            </button>
           ))}
         </div>
       </div>
-
       <div class="wrap">
         <div class="gc-grid">
           {groups.map((g) => (
