@@ -1,24 +1,39 @@
-/* Living mosaic: a tile fades out, the whole collage slides into a new arrangement, then a new picture fades in on that tile, in its new place. */
+﻿/* Living mosaic. The five group tiles always stay (their pictures cycle inside and they link to the galleries).
+   Photo tiles do the show: one fades out, the whole collage slides into a new arrangement, then a new picture fades in on that tile, in its new place. */
 (function(){
   const root=document.querySelector('.lm'); if(!root) return;
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const tiles=[...root.querySelectorAll('.lm-t')];
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const groupTiles=[...root.querySelectorAll('.lm-g')], photoTiles=[...root.querySelectorAll('.lm-p')];
+  const tiles=[...groupTiles,...photoTiles];                 /* same order as the layout slots */
   let layouts=[], pool=[];
   try{ layouts=JSON.parse(root.dataset.layouts); }catch(e){ return; }
   try{ pool=JSON.parse(document.getElementById('lb-data').textContent).slice(0,Number(root.dataset.pool)); }catch(e){ return; }
-  if(!layouts.length || pool.length<=tiles.length) return;
 
-  const shown=new Set(tiles.map(t=>Number(t.dataset.lb)));
+  /* ---- group tiles: slow picture cycle ---- */
+  const timers=new Map();
+  function cycle(tile,delay){
+    const imgs=[...tile.querySelectorAll('.lm-slides img')]; if(imgs.length<2) return;
+    let i=imgs.findIndex(x=>x.classList.contains('is-on')); if(i<0) i=0;
+    timers.set(tile,setTimeout(function loop(){
+      imgs[i].classList.remove('is-on'); i=(i+1)%imgs.length; imgs[i].loading='eager'; imgs[i].classList.add('is-on');
+      timers.set(tile,setTimeout(loop,3800));
+    },delay));
+  }
+  if(!reduced) groupTiles.forEach((g,n)=>cycle(g,2200+n*640));
+
+  if(reduced || !layouts.length || pool.length<=photoTiles.length) return;
+
+  /* ---- photo tiles: fade out, rearrange, reappear elsewhere ---- */
+  const shown=new Set(photoTiles.map(t=>Number(t.dataset.lb)));
   let cur=0, hovered=false, onScreen=false, held=false;
   const wait=(ms)=>new Promise(r=>setTimeout(r,ms));
-  const active=()=>onScreen && !hovered && !held && !document.hidden;
+  const phone=()=>window.matchMedia('(max-width: 700px)').matches;
+  const active=()=>onScreen && !hovered && !held && !phone() && !document.hidden;
 
   function place(n){
     tiles.forEach((t,i)=>{ const r=layouts[n][i]; t.style.setProperty('--x',r[0]); t.style.setProperty('--y',r[1]); t.style.setProperty('--w',r[2]); t.style.setProperty('--h',r[3]); });
   }
-  function fresh(){
-    let k; do{ k=Math.floor(Math.random()*pool.length); }while(shown.has(k)); return k;
-  }
+  function fresh(){ let k; do{ k=Math.floor(Math.random()*pool.length); }while(shown.has(k)); return k; }
   function preload(src){ return new Promise(res=>{ const im=new Image(); im.onload=im.onerror=()=>res(); im.src=src; }); }
   function swap(tile,k){
     shown.delete(Number(tile.dataset.lb)); shown.add(k);
@@ -26,15 +41,14 @@
     tile.classList.toggle('is-video',it.kind==='video');
     tile.querySelector('img').src=it.cover;
   }
-
   async function step(){
-    const tile=tiles[Math.floor(Math.random()*tiles.length)];
-    tile.classList.add('out');                       /* 1. one tile disappears */
+    const tile=photoTiles[Math.floor(Math.random()*photoTiles.length)];
+    tile.classList.add('out');                                   /* 1. one photo disappears */
     await wait(520);
-    cur=(cur+1)%layouts.length; place(cur);          /* 2. the others slide into a new collage */
+    cur=(cur+1)%layouts.length; place(cur);                      /* 2. the collage slides into a new arrangement */
     const k=fresh(); await preload(pool[k].cover);
     await wait(1000);
-    swap(tile,k); tile.classList.remove('out');      /* 3. a new tile appears in its new place */
+    swap(tile,k); tile.classList.remove('out');                  /* 3. a new picture appears in its new place */
     await wait(650);
   }
   (async function loop(){

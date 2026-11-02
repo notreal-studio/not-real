@@ -142,14 +142,15 @@ export const mosaicPool: Media[] = [
   ...pick("video", ["dress-to-kill", "bees", "drinks", "midsummer"]),
   ...pick("graphic-design", ["gd-raw-style"]), ...pick("visual-automation", ["va-09", "va-14", "va-20"]), ...pick("brand-identity", ["nr-04"]),
 ];
-/* Layouts on a 12 x 8 grid: [x, y, w, h] per tile slot. Every layout tiles the grid completely (no gaps), slots change size/place between layouts. */
+/* Layouts on a 12 x 8 grid: [x, y, w, h] per tile. Slots 0-4 are the five group tiles (Video, Photography, Graphic design, Brand identity,
+   Visual automation: always visible, they link to the group pages), slots 5-11 are photo tiles that fade out and come back with new pictures.
+   Every layout tiles the grid completely (no gaps). */
 export const mosaicLayouts: number[][][] = [
-  [[0, 0, 5, 5], [5, 0, 2, 3], [7, 0, 2, 3], [9, 0, 3, 5], [5, 3, 4, 5], [0, 5, 5, 3], [9, 5, 3, 3]],
-  [[4, 3, 3, 5], [0, 0, 4, 5], [4, 0, 3, 3], [7, 0, 5, 5], [10, 5, 2, 3], [7, 5, 3, 3], [0, 5, 4, 3]],
-  [[6, 0, 4, 5], [0, 3, 6, 5], [0, 0, 3, 3], [3, 0, 3, 3], [10, 0, 2, 5], [6, 5, 3, 3], [9, 5, 3, 3]],
-  [[3, 4, 5, 4], [8, 0, 4, 4], [0, 0, 4, 4], [10, 4, 2, 4], [4, 0, 4, 4], [0, 4, 3, 4], [8, 4, 2, 4]],
-];
-export const introVideo = vMedia("inga-intro");
+  [[0, 0, 4, 3], [4, 0, 4, 3], [2, 5, 4, 3], [6, 5, 3, 3], [9, 5, 3, 3],   [8, 0, 2, 3], [10, 0, 2, 3], [0, 3, 3, 2], [3, 3, 3, 2], [6, 3, 3, 2], [9, 3, 3, 2], [0, 5, 2, 3]],
+  [[3, 3, 4, 3], [3, 0, 4, 3], [7, 6, 5, 2], [7, 0, 3, 3], [3, 6, 4, 2],   [0, 0, 3, 2], [0, 2, 3, 2], [10, 0, 2, 3], [0, 4, 3, 2], [0, 6, 3, 2], [7, 3, 2, 3], [9, 3, 3, 3]],
+  [[8, 5, 4, 3], [0, 0, 5, 3], [3, 5, 3, 3], [7, 0, 3, 3], [0, 5, 3, 3],   [5, 0, 2, 3], [10, 0, 2, 3], [0, 3, 4, 2], [4, 3, 4, 2], [8, 3, 2, 2], [10, 3, 2, 2], [6, 5, 2, 3]],
+  [[5, 4, 4, 4], [0, 4, 3, 4], [8, 0, 4, 4], [0, 0, 4, 4], [4, 2, 4, 2],   [4, 0, 2, 2], [6, 0, 2, 2], [3, 4, 2, 2], [3, 6, 2, 2], [9, 4, 3, 1], [9, 5, 3, 1], [9, 6, 3, 2]],
+];export const introVideo = vMedia("inga-intro");
 export const homeLb: (Media & { solo?: boolean })[] = [...mosaicPool, { ...introVideo, solo: true }];
 export const introIndex = mosaicPool.length;
 export const soxiCover = soxiFrames.find((f) => f.id.includes("04_hero"))!;

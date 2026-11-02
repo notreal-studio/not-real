@@ -54,7 +54,7 @@ const countLabel = (g: (typeof groups)[number]) => g.countLabel?.[lang] ?? `${g.
       <div class="hs-progress"><i></i></div>
     </section>
 
-    {/* ---------- PORTFOLIO: rotating mosaic + five groups ---------- */}
+    {/* ---------- PORTFOLIO: one living mosaic that contains the five group tiles ---------- */}
     <section class="block portfolio" id="darbai">
       <div class="wrap">
         <div class="kicker reveal">{t("pf.kicker")}</div>
@@ -64,36 +64,33 @@ const countLabel = (g: (typeof groups)[number]) => g.countLabel?.[lang] ?? `${g.
 
       <div class="wrap">
         <div class="lm" role="region" aria-label={t("pf.marquee")} data-layouts={JSON.stringify(mosaicLayouts)} data-pool={mosaicPool.length}>
-          {mosaicLayouts[0].map((r, i) => (
-            <button type="button" class={`lm-t${mosaicPool[i].kind === "video" ? " is-video" : ""}`} data-lb={i} aria-label={mosaicPool[i].title[lang]} style={`--x:${r[0]};--y:${r[1]};--w:${r[2]};--h:${r[3]}`}>
+          {groups.map((g, i) => (
+            <a class="lm-t lm-g" href={groupHref(g.slug)} style={`--x:${mosaicLayouts[0][i][0]};--y:${mosaicLayouts[0][i][1]};--w:${mosaicLayouts[0][i][2]};--h:${mosaicLayouts[0][i][3]}`}>
               <span class="lm-in">
-                <img src={`${base}${mosaicPool[i].cover}`} alt="" loading="eager" decoding="async" />
+                <span class="lm-slides" aria-hidden="true">
+                  {g.slides.map((s, k) => (<img src={`${base}${s}`} alt="" loading={k === 0 ? "eager" : "lazy"} decoding="async" class={k === 0 ? "is-on" : undefined} />))}
+                </span>
+                <span class="lm-gc">
+                  <span>
+                    <span class="lm-gn">{g.n}</span>
+                    <span class="lm-gt">{g.title[lang]}</span>
+                    <span class="lm-gs">{g.cardSub[lang]} · {countLabel(g)}</span>
+                  </span>
+                  <span class="lm-ga" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                </span>
+              </span>
+            </a>
+          ))}
+          {mosaicPool.slice(0, 7).map((m, k) => (
+            <button type="button" class={`lm-t lm-p${m.kind === "video" ? " is-video" : ""}`} data-lb={k} aria-label={m.title[lang]} style={`--x:${mosaicLayouts[0][5 + k][0]};--y:${mosaicLayouts[0][5 + k][1]};--w:${mosaicLayouts[0][5 + k][2]};--h:${mosaicLayouts[0][5 + k][3]}`}>
+              <span class="lm-in">
+                <img src={`${base}${m.cover}`} alt="" loading="eager" decoding="async" />
                 <span class="play" aria-hidden="true"></span>
               </span>
             </button>
           ))}
         </div>
-      </div>
-      <div class="wrap">
-        <div class="gc-grid">
-          {groups.map((g) => (
-            <a class="gc reveal" href={groupHref(g.slug)}>
-              <div class="gc-slides" aria-hidden="true">
-                {g.slides.map((s, i) => (<img src={`${base}${s}`} alt="" loading={i === 0 ? "eager" : "lazy"} decoding="async" class={i === 0 ? "is-on" : undefined} />))}
-              </div>
-              <div class="gc-cap">
-                <div>
-                  <span class="gc-n">{g.n}</span>
-                  <span class="gc-t">{g.title[lang]}</span>
-                  <span class="gc-sub">{g.cardSub[lang]} · {countLabel(g)}</span>
-                </div>
-                <span class="gc-go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
+      </div>    </section>
 
     {/* ---------- ABOUT ---------- */}
     <section class="block about" id="about">
