@@ -46,4 +46,18 @@
       }catch(err){ msg.className='form-msg err'; msg.textContent=T.neterr||'Connection error.'; }
     });
   }
+
+  /* ---- About video: plays (muted, looping) while it is on screen; the click opens the lightbox with sound ---- */
+  const av=document.querySelector('.about-vid');
+  if(av){
+    let vis=false, held=false;
+    const sync=()=>{
+      if(!vis||held||reduced){ av.pause(); return; }
+      if(!av.getAttribute('src')) av.src=av.dataset.src;
+      const p=av.play(); if(p&&p.catch) p.catch(()=>{});
+    };
+    if('IntersectionObserver' in window) new IntersectionObserver((es)=>{ vis=es[0].isIntersecting; sync(); },{threshold:0.35}).observe(av);
+    window.addEventListener('lb-open',()=>{ held=true; sync(); });
+    window.addEventListener('lb-close',()=>{ held=false; sync(); });
+  }
 })();

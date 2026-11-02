@@ -111,10 +111,12 @@ const countLabel = (g: (typeof groups)[number]) => g.countLabel?.[lang] ?? `${g.
       <div class="wrap about-grid">
         <div class="reveal">
           <div class="polaroid about-polaroid">
-            <button type="button" class="vid-btn r916" data-lb={introIndex} aria-label={`${t("pf.open")}: ${introVideo.title[lang]}`}>
-              <img src={`${base}${introVideo.cover}`} alt="" loading="lazy" decoding="async" />
-              <span class="play-lg" aria-hidden="true"></span>
-            </button>
+            <div class="vid-wrap">
+              <video class="about-vid" muted loop playsinline preload="none" poster={`${base}${introVideo.cover}`} data-src={`${base}${introVideo.video?.src}`}></video>
+              <button type="button" class="vid-open" data-lb={introIndex} aria-label={`${t("pf.open")}: ${introVideo.title[lang]}`}>
+                <span class="vid-hint">{t("about.hint")}</span>
+              </button>
+            </div>
             <div class="pc">{about.caption[lang]}</div>
           </div>
         </div>
