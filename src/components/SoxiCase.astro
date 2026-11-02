@@ -33,7 +33,7 @@ const rs = (m: { src: string; thumb: string; w: number }) => (m.thumb !== m.src 
 const SZ = "(max-width: 980px) 48vw, 24vw";
 const alt = (n: string, i: number) => `SOXI — ${n} ${i + 1}`;
 ---
-<CaseLayout lang={lang} title={c.metaTitle} desc={c.metaDesc} paths={paths} backLabel={c.back} ogImage="/assets/img/soxi-case/og.jpg">
+<CaseLayout lang={lang} title={c.metaTitle} desc={c.metaDesc} paths={paths} ogImage="/assets/img/soxi-case/og.jpg" article>
 
   <header class="case-hero">
     <div class="wrap case-hero-grid">
@@ -247,7 +247,7 @@ const alt = (n: string, i: number) => `SOXI — ${n} ${i + 1}`;
       <h2>{c.cta.h}</h2>
       <p>{c.cta.p}</p>
       <div class="case-cta-b">
-        <a class="hero-cta" href={`${lang === "lt" ? base + "/lt/" : base + "/"}#kontaktai`}>{c.cta.book}</a>
+        <a class="btn" href={`${lang === "lt" ? base + "/lt/" : base + "/"}#kontaktai`}>{c.cta.book}</a>
         <a class="case-ghost" href={`${lang === "lt" ? base + "/lt/" : base + "/"}#darbai`}>{c.cta.work}</a>
       </div>
     </div>

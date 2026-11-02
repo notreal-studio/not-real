@@ -1,146 +1,137 @@
 ---
 import Base from "../layouts/Base.astro";
-import { languages, defaultLang, langName, useTranslations, localePath, type Lang } from "../i18n/utils";
-import { heroWorks } from "../data/works";
-import Portfolio from "./Portfolio.astro";
+import SiteHeader from "./SiteHeader.astro";
 import SiteFooter from "./SiteFooter.astro";
-import About from "./About.astro";
-import Services from "./Services.astro";
+import Lightbox from "./Lightbox.astro";
+import MqTile from "./MqTile.astro";
+import { useTranslations, localePath, type Lang } from "../i18n/utils";
+import { about } from "../data/about";
+import { heroVideos, groups, marqueeClusters as clusters, homeLb, introIndex, introVideo } from "../data/portfolio";
 
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const base = import.meta.env.BASE_URL;
+const baseUrl = import.meta.env.BASE_URL;
+const base = baseUrl.replace(/\/$/, "");
+const groupHref = (slug: string) => (lang === "lt" ? base + "/lt" : base) + "/work/" + slug + "/";
+const countLabel = (g: (typeof groups)[number]) => g.countLabel?.[lang] ?? `${g.items.length} ${t("pf.works")}`;
 
-
-const work = [1, 2, 3, 4];
 ---
 <Base lang={lang}>
-  {/* LOADER */}
-  <div id="loader">
-    <div class="ln">Not<em>Real</em></div>
+  <div id="loader" class="tex-bordeaux" aria-hidden="true">
+    <span class="logo logo-lockup"></span>
     <div class="lc"><span id="lcount">0</span> — {t("loader.loading")}</div>
     <div class="lbar" id="lbar"></div>
   </div>
 
-  {/* NAV */}
-  <header>
-    <div class="nav">
-      <a class="brand" href="#top"><span>Not</span> <em>Real</em></a>
-      <div class="nav-actions">
-        <div class="header-lang">
-          {languages.map((l) => (
-            <a href={localePath(l, base)} class={l === lang ? "is-active" : ""}>{langName[l]}</a>
-          ))}
-        </div>
-        <button class="theme-toggle" id="themeToggle" aria-label={t("theme.toggle")}>
-          <svg class="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v3M12 18.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2.5 12h3M18.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke-linecap="round"/></svg>
-          <svg class="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z" stroke-linejoin="round"/></svg>
-        </button>
-        <button class="menu-btn" id="menuOpen">{t("nav.menu")}</button>
-      </div>
-    </div>
-  </header>
-
-  {/* OVERLAY MENU */}
-  <nav id="menu" aria-hidden="true">
-    <div class="menu-inner">
-
-      {/* TOP BAR */}
-      <div class="menu-top">
-        <a class="menu-nr-logo" href="#top" onclick="document.getElementById('menuClose').click()">
-          <img src={`${base}brand/logotipas/monogram-saffron.svg`} alt="Not Real" width="64" height="64" />
-        </a>
-        <div class="menu-top-right">
-          <div class="menu-lang">
-            {languages.map((l) => (
-              <a href={localePath(l, base)} class={l === lang ? "is-active" : ""}>{langName[l]}</a>
-            ))}
-          </div>
-          <button class="menu-close" id="menuClose">{t("menu.close")}</button>
-        </div>
-      </div>
-
-      {/* NAV LINKS — left-aligned in right column */}
-      <ul class="menu-links">
-        <li class="ml-item"><a href="#top" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.home")}>{t("menu.home")}</span></a></li>
-        <li class="ml-item"><a href="#paslaugos" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.services")}>{t("menu.services")}</span></a></li>
-        <li class="ml-item">
-          <a href="#darbai" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.portfolio")}>{t("menu.portfolio")}</span></a>
-          <ul class="menu-sub">
-            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.photos")}</a></li>
-            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.brandbooks")}</a></li>
-            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.video")}</a></li>
-            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.ads")}</a></li>
-          </ul>
-        </li>
-        <li class="ml-item"><a href="#about" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.about")}>{t("menu.about")}</span></a></li>
-        <li class="ml-item"><a href="#faq" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.faq")}>{t("menu.faq")}</span></a></li>
-        <li class="ml-item"><a href="#kontaktai" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.contact")}>{t("menu.contact")}</span></a></li>
-      </ul>
-      <hr class="menu-nav-divider" />
-
-      {/* BOTTOM: social left, reel right */}
-      <div class="menu-foot">
-        <div class="menu-foot-left">
-          <a class="mf-icon" href="https://www.instagram.com/notreal.inga/" target="_blank" rel="noopener" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor" stroke="none"/></svg>
-          </a>
-          <a class="mf-icon" href="https://www.linkedin.com/in/ingabankauske" target="_blank" rel="noopener" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 10v7"/></svg>
-          </a>
-          <a class="mf-icon" href="https://t.me/ingaBank" target="_blank" rel="noopener" aria-label="Telegram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 3 2.5 10.5l6 2.2L10.5 20l3-4.2 4.8 3.7L21.5 3Z"/><path d="m8.5 12.7 9-6.2"/></svg>
-          </a>
-          <a class="mf-icon" href="#kontaktai" aria-label="Rašyk mums" onclick="document.getElementById('menuClose').click()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-          </a>
-        </div>
-      </div>
-
-    </div>
-  </nav>
+  <SiteHeader lang={lang} />
 
   <main id="top">
-    {/* HERO */}
-    <section class="hero-slider" aria-roledescription="carousel" aria-label="Selected work">
-      <h1 class="sr-only">Not Real — {t("hero.eyebrow")}. {t("hero.tagline")}</h1>
-      {heroWorks.map((w, n) => (
-        <article class={`hs${w.vertical ? " is-v" : ""}`} aria-roledescription="slide" aria-label={`${n + 1} / ${heroWorks.length}: ${w.title}`}>
-          {w.vertical && <div class="hs-bg" data-bg={`${base}assets/video/${w.slug}.webp`} style={n === 0 ? `background-image:url(${base}assets/video/${w.slug}.webp)` : undefined}></div>}
-          {n === 0 && <img class="hs-poster" src={`${base}assets/video/${w.slug}.webp`} alt="" fetchpriority="high" decoding="async" />}
-          <video muted playsinline preload="metadata" poster={n === 0 ? `${base}assets/video/${w.slug}.webp` : undefined} data-poster={`${base}assets/video/${w.slug}.webp`} data-src={`${base}assets/video/${w.slug}.mp4`}></video>
+    {/* ---------- HERO: full-screen video reel ---------- */}
+    <section class="hero-slider" aria-roledescription="carousel" aria-label={t("hero.sr")}>
+      <h1 class="sr-only">{t("hero.sr")}</h1>
+      {heroVideos.map((w, n) => (
+        <article class={`hs${w.vertical ? " is-v" : ""}${n === 0 ? " is-active" : ""}`} aria-roledescription="slide" aria-label={`${n + 1} / ${heroVideos.length}: ${w.title}`}>
+          {w.vertical && <div class="hs-bg" data-bg={`${base}/assets/video/${w.slug}.webp`} style={n === 0 ? `background-image:url(${base}/assets/video/${w.slug}.webp)` : undefined}></div>}
+          {n === 0 && <img class="hs-poster" src={`${base}/assets/video/${w.slug}.webp`} alt="" fetchpriority="high" decoding="async" />}
+          <video muted playsinline preload="metadata" poster={n === 0 ? `${base}/assets/video/${w.slug}.webp` : undefined} data-poster={`${base}/assets/video/${w.slug}.webp`} data-src={`${base}/assets/video/${w.slug}.mp4`}></video>
           <div class="hs-cap">
+            <div class="hs-tag">{t("hero.tag")}</div>
             <div class="hs-title">{w.title}</div>
             <div class="hs-sub">{w.sub[lang]}</div>
           </div>
         </article>
       ))}
       <div class="hero-scrim"></div>
-      <img class="hs-sticker" src={`${base}brand/lipdukai/look-twice-saffron.svg`} alt="" />
       <div class="hs-ctrl">
-        <button type="button" class="hs-prev" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
-        <span class="hs-count" aria-live="off">01 / {String(heroWorks.length).padStart(2, "0")}</span>
-        <button type="button" class="hs-next" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
-        <button type="button" class="hs-sound" aria-label="Sound" aria-pressed="false">
-          <svg class="i-off" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9l4 6M21 9l-4 6"/></svg>
-          <svg class="i-on" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+        <button type="button" class="hs-prev" aria-label={t("hero.prev")}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <span class="hs-count" aria-live="off">01 / {String(heroVideos.length).padStart(2, "0")}</span>
+        <button type="button" class="hs-next" aria-label={t("hero.next")}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        <button type="button" class="hs-sound" aria-label={t("hero.sound")} aria-pressed="false">
+          <svg class="i-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9l4 6M21 9l-4 6"/></svg>
+          <svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
         </button>
       </div>
       <div class="hs-progress"><i></i></div>
     </section>
 
-    {/* ABOUT */}
-    <About lang={lang} />
+    {/* ---------- PORTFOLIO: rotating mosaic + five groups ---------- */}
+    <section class="block portfolio" id="darbai">
+      <div class="wrap">
+        <div class="kicker reveal">{t("pf.kicker")}</div>
+        <h2 class="statement reveal" set:html={t("pf.h2")}></h2>
+        <p class="lead reveal">{t("pf.lead")}</p>
+      </div>
 
-    {/* PORTFOLIO */}
-    <Portfolio lang={lang} />
+      <div class="mq" role="region" aria-label={t("pf.marquee")}>
+        <div class="mq-track">
+          {[0, 1].map((copy) => (
+            <div class="mq-set" aria-hidden={copy === 1 ? "true" : undefined}>
+              {clusters.map((c) =>
+                c.flip ? (
+                  <>
+                    <div class="mq-pair"><MqTile m={c.tiles[1].m} i={c.tiles[1].i} cls="sm" lang={lang} hidden={copy === 1} /><MqTile m={c.tiles[2].m} i={c.tiles[2].i} cls="sm" lang={lang} hidden={copy === 1} /></div>
+                    <MqTile m={c.tiles[0].m} i={c.tiles[0].i} cls="big" lang={lang} hidden={copy === 1} />
+                  </>
+                ) : (
+                  <>
+                    <MqTile m={c.tiles[0].m} i={c.tiles[0].i} cls="big" lang={lang} hidden={copy === 1} />
+                    <div class="mq-pair"><MqTile m={c.tiles[1].m} i={c.tiles[1].i} cls="sm" lang={lang} hidden={copy === 1} /><MqTile m={c.tiles[2].m} i={c.tiles[2].i} cls="sm" lang={lang} hidden={copy === 1} /></div>
+                  </>
+                )
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
 
-    {/* SERVICES */}
-    <Services lang={lang} />
+      <div class="wrap">
+        <div class="gc-grid">
+          {groups.map((g) => (
+            <a class="gc reveal" href={groupHref(g.slug)}>
+              <div class="gc-slides" aria-hidden="true">
+                {g.slides.map((s, i) => (<img src={`${base}${s}`} alt="" loading={i === 0 ? "eager" : "lazy"} decoding="async" class={i === 0 ? "is-on" : undefined} />))}
+              </div>
+              <div class="gc-cap">
+                <div>
+                  <span class="gc-n">{g.n}</span>
+                  <span class="gc-t">{g.title[lang]}</span>
+                  <span class="gc-sub">{g.cardSub[lang]} · {countLabel(g)}</span>
+                </div>
+                <span class="gc-go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
 
-    {/* FAQ */}
-    <section class="block" id="faq">
+    {/* ---------- ABOUT ---------- */}
+    <section class="block about" id="about">
+      <div class="wrap about-grid">
+        <div class="reveal">
+          <div class="polaroid about-polaroid">
+            <button type="button" class="vid-btn r916" data-lb={introIndex} aria-label={`${t("pf.open")}: ${introVideo.title[lang]}`}>
+              <img src={`${base}${introVideo.cover}`} alt="" loading="lazy" decoding="async" />
+              <span class="play-lg" aria-hidden="true"></span>
+            </button>
+            <div class="pc">{about.caption[lang]}</div>
+          </div>
+        </div>
+        <div>
+          <div class="kicker reveal">{about.kicker[lang]}</div>
+          <h2 class="statement reveal" set:html={about.h2[lang]}></h2>
+          {about.p.map((p, i) => (<p class={`about-p reveal${i === 0 ? " first" : ""}`}>{p[lang]}</p>))}
+          <dl class="about-facts reveal">
+            {about.facts.map((f) => (<div><dt>{f.k[lang]}</dt><dd>{f.v[lang]}</dd></div>))}
+          </dl>
+          <a class="btn reveal" href="#kontaktai">{about.cta[lang]}</a>
+        </div>
+      </div>
+    </section>
+
+    {/* ---------- FAQ ---------- */}
+    <section class="block faq" id="faq">
       <div class="wrap">
         <div class="kicker reveal">{t("faq.kicker")}</div>
         <h2 class="statement reveal" set:html={t("faq.h2")}></h2>
@@ -155,16 +146,17 @@ const work = [1, 2, 3, 4];
       </div>
     </section>
 
-    {/* CTA */}
-    <section class="block cta">
+    {/* ---------- LOOK TWICE. THEN SAY HI. ---------- */}
+    <section class="cta tex-bordeaux">
       <div class="wrap">
         <h2 class="reveal" set:html={t("cta.h2")}></h2>
-        <a class="cta-btn reveal" href="#kontaktai">{t("cta.btn")}</a>
+        <p class="reveal">{t("cta.p")}</p>
+        <a class="btn reveal" href="#kontaktai">{t("cta.btn")}</a>
       </div>
     </section>
 
-    {/* CONTACT */}
-    <section class="block" id="kontaktai" style="border-top:1px solid var(--line)">
+    {/* ---------- KEEP IN TOUCH ---------- */}
+    <section class="block" id="kontaktai">
       <div class="wrap">
         <div class="kicker reveal">{t("contact.kicker")}</div>
         <div class="contact-shell">
@@ -173,8 +165,11 @@ const work = [1, 2, 3, 4];
             <p class="lead">{t("contact.lead")}</p>
             <div class="c-links">
               <a href="mailto:inga.bankauske@gmail.com">inga.bankauske@gmail.com</a>
-              <a href="https://www.instagram.com/notreal.inga/" target="_blank" rel="noopener">{t("contact.instagram")}</a>
+              <a href="https://www.instagram.com/notreal.inga/" target="_blank" rel="noopener">Instagram</a>
+              <a href="https://www.linkedin.com/in/ingabankauske" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="https://t.me/ingaBank" target="_blank" rel="noopener">Telegram</a>
             </div>
+            <a class="btn ghost c-book" href="#kontaktai" data-booking>{t("contact.book")}</a>
           </div>
           <form id="contact-form" class="reveal">
             <input type="hidden" name="access_key" value="714c67de-3c23-4adc-ab9c-320426630d8a" />
@@ -187,7 +182,7 @@ const work = [1, 2, 3, 4];
             <input id="email" name="email" type="email" placeholder={t("form.email_ph")} required />
             <label for="message">{t("form.msg_label")}</label>
             <textarea id="message" name="message" placeholder={t("form.msg_ph")} required></textarea>
-            <button class="cbtn" type="submit">{t("form.submit")}</button>
+            <button class="btn" type="submit">{t("form.submit")}</button>
             <div class="form-msg" id="form-msg" role="status"></div>
           </form>
         </div>
@@ -196,28 +191,5 @@ const work = [1, 2, 3, 4];
   </main>
 
   <SiteFooter lang={lang} />
-
-  {/* FLOATING SOCIAL DOCK */}
-  <nav class="social-dock" aria-label="Social links">
-    <a class="sd-btn" href="https://www.instagram.com/notreal.inga/" target="_blank" rel="noopener" aria-label="Instagram">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor" stroke="none"/>
-      </svg>
-    </a>
-    <a class="sd-btn" href="https://www.linkedin.com/in/ingabankauske" target="_blank" rel="noopener" aria-label="LinkedIn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 10v7"/>
-      </svg>
-    </a>
-    <a class="sd-btn" href="https://t.me/ingaBank" target="_blank" rel="noopener" aria-label="Telegram">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21.5 3 2.5 10.5l6 2.2L10.5 20l3-4.2 4.8 3.7L21.5 3Z"/><path d="m8.5 12.7 9-6.2"/>
-      </svg>
-    </a>
-    <a class="sd-btn" href="#kontaktai" aria-label="Rašyk mums">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/>
-      </svg>
-    </a>
-  </nav>
+  <Lightbox lang={lang} items={homeLb} />
 </Base>

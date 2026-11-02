@@ -1,0 +1,23 @@
+---
+import { useTranslations, type Lang } from "../i18n/utils";
+import type { Media, Lang as L2 } from "../data/portfolio";
+
+interface Props { lang: Lang; items: (Media & { solo?: boolean })[]; }
+const { lang, items } = Astro.props;
+const t = useTranslations(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const p = (s?: string) => (s ? `${base}${s}` : undefined);
+const data = items.map((m) => ({
+  title: m.title[lang as L2], sub: m.sub?.[lang as L2] ?? "", solo: m.solo ?? false,
+  src: p(m.src), w: m.w, h: m.h,
+  video: m.video ? { src: p(m.video.src), poster: p(m.video.poster), vertical: m.video.vertical } : undefined,
+}));
+---
+<div id="lb" class="lb" role="dialog" aria-modal="true" aria-hidden="true" aria-label={t("pf.viewer")}>
+  <button type="button" class="lb-close" aria-label={t("pf.close")}>×</button>
+  <button type="button" class="lb-prev" aria-label={t("pf.prev")}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <button type="button" class="lb-next" aria-label={t("pf.next")}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+  <div class="lb-stage"></div>
+  <div class="lb-cap"><span class="lb-title"></span> <em class="lb-sub"></em> <span class="lb-count"></span></div>
+</div>
+<script type="application/json" id="lb-data" set:html={JSON.stringify(data)} />

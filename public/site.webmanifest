@@ -1,10 +1,10 @@
 {
-  "name": "NOT REAL — AI Visual Studio",
+  "name": "NOT REAL — photographer and AI visual creator",
   "short_name": "NOT REAL",
-  "description": "Real feeling. Unreal ideas. AI visuals, film and brand kits that look believable and behave impossibly.",
+  "description": "Exact visuals of the real product: photography and AI. Real feeling. Unreal ideas.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#F2EDE4",
+  "background_color": "#EBDECB",
   "theme_color": "#5C1F2A",
   "lang": "en",
   "icons": [

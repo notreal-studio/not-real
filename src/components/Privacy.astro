@@ -1,5 +1,5 @@
 ---
-import Legal from "../layouts/Legal.astro";
+import Legal from "../layouts/CaseLayout.astro";
 import type { Lang } from "../i18n/utils";
 
 interface Props { lang: Lang; }
@@ -9,7 +9,7 @@ const paths = { lt: `${base}lt/privatumas/`, en: `${base}privacy/` };
 const EMAIL = "inga.bankauske@gmail.com";
 ---
 {lang === "lt" ? (
-<Legal lang="lt" title="Privatumo politika — Not Real" desc="Kaip Not Real tvarko asmens duomenis ir naudoja slapukus." paths={paths}>
+<Legal lang="lt" title="Privatumo politika — Not Real" desc="Kaip Not Real tvarko asmens duomenis ir naudoja slapukus." paths={paths} mainClass="legal">
   <h1>Privatumo politika</h1>
   <p class="upd">Atnaujinta: 2026-10-18</p>
 
@@ -50,7 +50,7 @@ const EMAIL = "inga.bankauske@gmail.com";
   <p>Šią politiką gali tekti atnaujinti. Naujausia versija visada skelbiama šiame puslapyje.</p>
 </Legal>
 ) : (
-<Legal lang="en" title="Privacy policy — Not Real" desc="How Not Real handles personal data and uses cookies." paths={paths}>
+<Legal lang="en" title="Privacy policy — Not Real" desc="How Not Real handles personal data and uses cookies." paths={paths} mainClass="legal">
   <h1>Privacy policy</h1>
   <p class="upd">Updated: 2026-10-18</p>
 
