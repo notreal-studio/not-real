@@ -61,7 +61,7 @@
 .lm-slides img.is-on{opacity:1;transform:scale(1.09)}
 /* caption: hidden until the pointer is on the tile; then a solid paper plate that contrasts with any photo */
 .lm-gc{position:absolute;left:0;bottom:clamp(12px,4cqw,24px);z-index:1;max-width:88%;width:fit-content;padding:clamp(6px,2cqw,10px) clamp(10px,3cqw,16px) clamp(6px,2cqw,10px) clamp(12px,4cqw,22px);
-  background:var(--br-cream);color:var(--br-espresso);border-radius:0;box-shadow:none;opacity:0;transform:translateX(-10px);transition:opacity .3s ease,transform .3s ease;pointer-events:none}
+  background:var(--br-saffron);color:var(--br-espresso);border-radius:0;box-shadow:none;opacity:0;transform:translateX(-10px);transition:opacity .3s ease,transform .3s ease;pointer-events:none}
 .lm:hover .lm-gc,.lm:focus-within .lm-gc,.lm.is-hold .lm-gc{opacity:1;transform:none}
 .lm-gn,.lm-gs,.lm-ga{display:none}
 .lm-gn{display:block;font:500 10px/1 var(--body);letter-spacing:.24em;opacity:.85;margin-bottom:6px}
