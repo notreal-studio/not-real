@@ -55,9 +55,8 @@ const desc = g.intro[lang].length > 155 ? g.intro[lang].slice(0, 152).replace(/\
           <h2>{t("gp.brand.nr")}</h2>
           <div class="gp-pages">
             {nr.map(({ m, i }) => (
-              <button type="button" class="gp-card" data-lb={i} aria-haspopup="dialog">
+              <button type="button" class="gp-card" data-lb={i} aria-haspopup="dialog" aria-label={m.title[lang]}>
                 <div class="gp-media" style={`aspect-ratio:${m.ratio.toFixed(4)}`}><img src={`${base}${m.cover}`} alt="" loading="lazy" decoding="async" /></div>
-                <div class="gp-cap"><div class="gp-t">{m.title[lang]}</div></div>
               </button>
             ))}
           </div>
@@ -68,9 +67,8 @@ const desc = g.intro[lang].length > 155 ? g.intro[lang].slice(0, 152).replace(/\
           <h2>{t("gp.brand.sx")}</h2>
           <div class="gp-pages">
             {sx.map(({ m, i }) => (
-              <button type="button" class="gp-card" data-lb={i} aria-haspopup="dialog">
+              <button type="button" class="gp-card" data-lb={i} aria-haspopup="dialog" aria-label={m.title[lang]}>
                 <div class="gp-media" style={`aspect-ratio:${m.ratio.toFixed(4)}`}><img src={`${base}${m.cover}`} alt="" loading="lazy" decoding="async" /></div>
-                <div class="gp-cap"><div class="gp-t">{m.title[lang]}</div></div>
               </button>
             ))}
           </div>
@@ -83,14 +81,10 @@ const desc = g.intro[lang].length > 155 ? g.intro[lang].slice(0, 152).replace(/\
       <div class="wrap">
         <div class="gp-grid">
           {indexed.map(({ m, i }) => (
-            <button type="button" class="gp-card" data-lb={i} aria-haspopup="dialog">
+            <button type="button" class="gp-card" data-lb={i} aria-haspopup="dialog" aria-label={m.title[lang]}>
               <div class="gp-media" style={`aspect-ratio:${m.ratio.toFixed(4)}`}>
                 <img src={`${base}${m.cover}`} alt="" loading={i < 6 ? "eager" : "lazy"} decoding="async" />
                 {m.kind === "video" && <span class="gp-play" aria-hidden="true"></span>}
-              </div>
-              <div class="gp-cap">
-                <div class="gp-t">{m.title[lang]}</div>
-                {m.sub && <div class="gp-s">{m.sub[lang]}</div>}
               </div>
             </button>
           ))}
