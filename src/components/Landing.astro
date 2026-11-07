@@ -1,164 +1,108 @@
 ---
 import Base from "../layouts/Base.astro";
-import { languages, defaultLang, langName, useTranslations, localePath, type Lang } from "../i18n/utils";
+import SiteHeader from "./SiteHeader.astro";
+import SiteFooter from "./SiteFooter.astro";
+import Lightbox from "./Lightbox.astro";
+import { useTranslations, localePath, type Lang } from "../i18n/utils";
+import { about } from "../data/about";
+import { heroVideos, groups, mosaicPool, mosaicLayouts, homeLb, introIndex, introVideo } from "../data/portfolio";
 
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const base = import.meta.env.BASE_URL;
+const baseUrl = import.meta.env.BASE_URL;
+const base = baseUrl.replace(/\/$/, "");
+const groupHref = (slug: string) => (lang === "lt" ? base + "/lt" : base) + "/work/" + slug + "/";
+const countLabel = (g: (typeof groups)[number]) => g.countLabel?.[lang] ?? `${g.items.length} ${t("pf.works")}`;
 
-
-const work = [1, 2, 3, 4];
 ---
 <Base lang={lang}>
-  {/* LOADER */}
-  <div id="loader">
-    <div class="ln serif">Not <b>Real</b></div>
+  <div id="loader" class="tex-bordeaux" aria-hidden="true">
+    <span class="logo logo-lockup"></span>
     <div class="lc"><span id="lcount">0</span> — {t("loader.loading")}</div>
     <div class="lbar" id="lbar"></div>
   </div>
 
-  {/* NAV */}
-  <header>
-    <div class="nav">
-      <a class="brand" href="#top"><span class="dot"></span>Not Real</a>
-      <div class="nav-actions">
-        <div class="header-lang">
-          {languages.map((l) => (
-            <a href={localePath(l, base)} class={l === lang ? "is-active" : ""}>{langName[l]}</a>
-          ))}
-        </div>
-        <button class="theme-toggle" id="themeToggle" aria-label={t("theme.toggle")}>
-          <svg class="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v3M12 18.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2.5 12h3M18.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke-linecap="round"/></svg>
-          <svg class="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z" stroke-linejoin="round"/></svg>
-        </button>
-        <button class="menu-btn" id="menuOpen">{t("nav.menu")}</button>
-      </div>
-    </div>
-  </header>
-
-  {/* OVERLAY MENU */}
-  <nav id="menu" aria-hidden="true">
-    <div class="menu-inner">
-
-      {/* TOP BAR */}
-      <div class="menu-top">
-        <a class="menu-nr-logo" href="#top" onclick="document.getElementById('menuClose').click()">
-          <svg viewBox="0 0 120 80" width="96" height="64">
-            <text x="60" y="62" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif" font-size="64" font-weight="400" letter-spacing="6" fill="currentColor">NR</text>
-          </svg>
-        </a>
-        <div class="menu-top-right">
-          <div class="menu-lang">
-            {languages.map((l) => (
-              <a href={localePath(l, base)} class={l === lang ? "is-active" : ""}>{langName[l]}</a>
-            ))}
-          </div>
-          <button class="menu-close" id="menuClose">{t("menu.close")}</button>
-        </div>
-      </div>
-
-      {/* NAV LINKS — left-aligned in right column */}
-      <ul class="menu-links">
-        <li class="ml-item"><a href="#top" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.home")}>{t("menu.home")}</span></a></li>
-        <li class="ml-item"><a href="#paslaugos" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.services")}>{t("menu.services")}</span></a></li>
-        <li class="ml-item">
-          <a href="#darbai" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.portfolio")}>{t("menu.portfolio")}</span></a>
-          <ul class="menu-sub">
-            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.art")}</a></li>
-            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.products")}</a></li>
-            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.fashion")}</a></li>
-            <li><a href="#darbai" onclick="document.getElementById('menuClose').click()">{t("menu.sub.other")}</a></li>
-          </ul>
-        </li>
-        <li class="ml-item"><a href="#paslaugos" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.about")}>{t("menu.about")}</span></a></li>
-        <li class="ml-item"><a href="#" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.blog")}>{t("menu.blog")}</span></a></li>
-        <li class="ml-item"><a href="#faq" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.faq")}>{t("menu.faq")}</span></a></li>
-        <li class="ml-item"><a href="#kontaktai" class="ml-link" onclick="document.getElementById('menuClose').click()"><span class="ml-dot">·</span><span class="ml-text" data-text={t("menu.contact")}>{t("menu.contact")}</span></a></li>
-      </ul>
-      <hr class="menu-nav-divider" />
-
-      {/* BOTTOM: social left, reel right */}
-      <div class="menu-foot">
-        <div class="menu-foot-left">
-          <a class="mf-icon" href="https://www.instagram.com/notreal.inga/" target="_blank" rel="noopener" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor" stroke="none"/></svg>
-          </a>
-          <a class="mf-icon" href="https://www.linkedin.com/in/ingabankauske" target="_blank" rel="noopener" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 10v7"/></svg>
-          </a>
-          <a class="mf-icon" href="https://t.me/ingaBank" target="_blank" rel="noopener" aria-label="Telegram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 3 2.5 10.5l6 2.2L10.5 20l3-4.2 4.8 3.7L21.5 3Z"/><path d="m8.5 12.7 9-6.2"/></svg>
-          </a>
-          <a class="mf-icon" href="#kontaktai" aria-label="Rašyk mums" onclick="document.getElementById('menuClose').click()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-          </a>
-        </div>
-      </div>
-
-    </div>
-  </nav>
+  <SiteHeader lang={lang} />
 
   <main id="top">
-    {/* HERO */}
-    <section class="hero">
-      <div class="hero-media">
-        {/* TIKRAS VIDEO: pakeisk placeholder bloką šituo (ir įkelk failą):
-        <video autoplay muted loop playsinline poster="assets/hero-poster.jpg">
-          <source src="assets/hero.mp4" type="video/mp4">
-        </video> */}
-        <div class="hero-ph" id="heroPh"></div>
-        <div class="hero-grain"></div>
-      </div>
-      <div class="hero-scrim"></div>
-
-      <div class="hero-tag">
-        <div class="play" id="playReel">
-          <span class="circ">▶</span><span>{t("hero.play")}</span>
-        </div>
-        <div class="ph-note" style="margin-top:16px">{t("hero.ph_note")}</div>
-      </div>
-
-      <div class="wrap hero-content">
-        <div class="eyebrow reveal">{t("hero.eyebrow")}</div>
-        <h1 class="reveal" set:html={t("hero.h1")}></h1>
-        <p class="sub reveal">{t("hero.sub")}</p>
-      </div>
-    </section>
-
-    {/* GIANT SERVICES */}
-    <section class="giant" id="paslaugos">
-      <div class="wrap">
-        <div class="giant-label reveal">{t("giant.label")}</div>
-        <h2 class="giant-type reveal">{t("giant.beauty")} (<a class="gtile" href="#kontaktai" aria-label={t("giant.beauty_a")}><span class="gtile-media"><span class="gph gph-1"></span></span><span class="gcue">{t("giant.cue_l")}</span></a>) {t("giant.fashion")} (<a class="gtile" href="#kontaktai" aria-label={t("giant.fashion_a")}><span class="gtile-media"><span class="gph gph-2"></span></span><span class="gcue">{t("giant.cue_r")}</span></a>) {t("giant.wellness")} (<a class="gtile" href="#kontaktai" aria-label={t("giant.wellness_a")}><span class="gtile-media"><span class="gph gph-3"></span></span><span class="gcue">{t("giant.cue_l")}</span></a>)</h2>
-        <p class="giant-state reveal" set:html={t("giant.state")}></p>
-      </div>
-    </section>
-
-    {/* WORK */}
-    <section class="block" id="darbai">
-      <div class="wrap">
-        <div class="work-head">
-          <div>
-            <div class="kicker reveal">{t("work.kicker")}</div>
-            <h2 class="statement reveal" set:html={t("work.statement")}></h2>
+    {/* ---------- HERO: full-screen video reel ---------- */}
+    <section class="hero-slider" aria-roledescription="carousel" aria-label={t("hero.sr")}>
+      <h1 class="sr-only">{t("hero.sr")}</h1>
+      {heroVideos.map((w, n) => (
+        <article class={`hs${w.vertical ? " is-v" : ""}${n === 0 ? " is-active" : ""}`} aria-roledescription="slide" aria-label={`${n + 1} / ${heroVideos.length}: ${w.title}`}>
+          {w.vertical && <div class="hs-bg" data-bg={`${base}/assets/video/${w.slug}.webp`} style={n === 0 ? `background-image:url(${base}/assets/video/${w.slug}.webp)` : undefined}></div>}
+          {n === 0 && <img class="hs-poster" src={`${base}/assets/video/${w.slug}.webp`} alt="" fetchpriority="high" decoding="async" />}
+          <video muted playsinline preload="metadata" poster={n === 0 ? `${base}/assets/video/${w.slug}.webp` : undefined} data-poster={`${base}/assets/video/${w.slug}.webp`} data-src={`${base}/assets/video/${w.slug}.mp4`}></video>
+          <div class="hs-cap">
+            <div class="hs-tag">{t("hero.tag")}</div>
+            <div class="hs-title">{w.title}</div>
+            <div class="hs-sub">{w.sub[lang]}</div>
           </div>
-          <p class="lead reveal" style="margin-top:0">{t("work.lead")}</p>
-        </div>
-        <div class="gal">
-          {work.map((n) => (
-            <article class="gal-item reveal">
-              <div class="gal-media"><div class="gal-ph">{t(`work.${n}_ph`)}</div></div>
-              <div class="gal-cap"><span class="gi">(0{n})</span><span class="gt">{t(`work.${n}_t`)}</span><span class="gd">{t(`work.${n}_d`)}</span></div>
-              <p class="gp">{t(`work.${n}_desc`)}</p>
-            </article>
+        </article>
+      ))}
+      <div class="hero-scrim"></div>
+      <div class="hs-ctrl">
+        <button type="button" class="hs-prev" aria-label={t("hero.prev")}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <span class="hs-count" aria-live="off">01 / {String(heroVideos.length).padStart(2, "0")}</span>
+        <button type="button" class="hs-next" aria-label={t("hero.next")}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        <button type="button" class="hs-sound" aria-label={t("hero.sound")} aria-pressed="false">
+          <svg class="i-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9l4 6M21 9l-4 6"/></svg>
+          <svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+        </button>
+      </div>
+      <div class="hs-progress"><i></i></div>
+    </section>
+
+    {/* ---------- PORTFOLIO: one living mosaic that contains the five group tiles ---------- */}
+    <section class="block portfolio" id="darbai">
+      <div class="wrap">
+        <div class="kicker reveal">{t("pf.kicker")}</div>
+        <h2 class="statement reveal" set:html={t("pf.h2")}></h2>
+        <p class="lead reveal">{t("pf.lead")}</p>
+      </div>
+
+      <div class="wrap">
+        <nav class="lm-nav" aria-label={t("pf.kicker")}>
+          {groups.map((g, i) => (
+            <a class="lm-l" href={groupHref(g.slug)} data-g={i}><span class="lm-ln">{g.n}</span>{g.title[lang]}</a>
           ))}
+        </nav>
+      </div>
+      <div class="sph" role="region" aria-label={t("pf.marquee")} data-pool={mosaicPool.length}>
+        <div class="sph-view"><div class="sph-ball"></div></div>
+          <p class="sph-hint">{t("pf.sphere")}</p>
+      </div>
+    </section>
+
+    {/* ---------- ABOUT ---------- */}
+    <section class="block about" id="about">
+      <div class="wrap about-grid">
+        <div class="reveal">
+          <div class="polaroid about-polaroid">
+            <div class="vid-wrap">
+              <video class="about-vid" muted loop playsinline preload="none" poster={`${base}${introVideo.cover}`} data-src={`${base}${introVideo.video?.src}`}></video>
+              <button type="button" class="vid-open" data-lb={introIndex} aria-label={`${t("pf.open")}: ${introVideo.title[lang]}`}>
+                <span class="vid-hint">{t("about.hint")}</span>
+              </button>
+            </div>
+            <div class="pc">{about.caption[lang]}</div>
+          </div>
+        </div>
+        <div>
+          <div class="kicker reveal">{about.kicker[lang]}</div>
+          <h2 class="statement reveal" set:html={about.h2[lang]}></h2>
+          {about.p.map((p, i) => (<p class={`about-p reveal${i === 0 ? " first" : ""}`}>{p[lang]}</p>))}
+          <dl class="about-facts reveal">
+            {about.facts.map((f) => (<div><dt>{f.k[lang]}</dt><dd>{f.v[lang]}</dd></div>))}
+          </dl>
+          <a class="btn reveal" href="#kontaktai">{about.cta[lang]}</a>
         </div>
       </div>
     </section>
 
-    {/* FAQ */}
-    <section class="block" id="faq">
+    {/* ---------- FAQ ---------- */}
+    <section class="block faq" id="faq">
       <div class="wrap">
         <div class="kicker reveal">{t("faq.kicker")}</div>
         <h2 class="statement reveal" set:html={t("faq.h2")}></h2>
@@ -173,16 +117,17 @@ const work = [1, 2, 3, 4];
       </div>
     </section>
 
-    {/* CTA */}
-    <section class="block cta">
+    {/* ---------- LOOK TWICE. THEN SAY HI. ---------- */}
+    <section class="cta tex-bordeaux">
       <div class="wrap">
         <h2 class="reveal" set:html={t("cta.h2")}></h2>
-        <a class="cta-btn reveal" href="#kontaktai">{t("cta.btn")}</a>
+        <p class="reveal">{t("cta.p")}</p>
+        <a class="btn reveal" href="#kontaktai">{t("cta.btn")}</a>
       </div>
     </section>
 
-    {/* CONTACT */}
-    <section class="block" id="kontaktai" style="border-top:1px solid var(--line)">
+    {/* ---------- KEEP IN TOUCH ---------- */}
+    <section class="block" id="kontaktai">
       <div class="wrap">
         <div class="kicker reveal">{t("contact.kicker")}</div>
         <div class="contact-shell">
@@ -191,21 +136,24 @@ const work = [1, 2, 3, 4];
             <p class="lead">{t("contact.lead")}</p>
             <div class="c-links">
               <a href="mailto:inga.bankauske@gmail.com">inga.bankauske@gmail.com</a>
-              <a href="https://www.instagram.com/notreal.inga/" target="_blank" rel="noopener">{t("contact.instagram")}</a>
+              <a href="https://www.instagram.com/notreal.inga/" target="_blank" rel="noopener">Instagram</a>
+              <a href="https://www.linkedin.com/in/ingabankauske" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="https://t.me/ingaBank" target="_blank" rel="noopener">Telegram</a>
             </div>
+            <a class="btn ghost c-book" href="#kontaktai" data-booking>{t("contact.book")}</a>
           </div>
           <form id="contact-form" class="reveal">
             <input type="hidden" name="access_key" value="714c67de-3c23-4adc-ab9c-320426630d8a" />
             <input type="hidden" name="subject" value={t("form.subject")} />
             <input type="hidden" name="from_name" value={t("form.from")} />
-            <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
+            <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-label="Leave this empty" />
             <label for="name">{t("form.name_label")}</label>
             <input id="name" name="name" type="text" placeholder={t("form.name_ph")} required />
             <label for="email">{t("form.email_label")}</label>
             <input id="email" name="email" type="email" placeholder={t("form.email_ph")} required />
             <label for="message">{t("form.msg_label")}</label>
             <textarea id="message" name="message" placeholder={t("form.msg_ph")} required></textarea>
-            <button class="cbtn" type="submit">{t("form.submit")}</button>
+            <button class="btn" type="submit">{t("form.submit")}</button>
             <div class="form-msg" id="form-msg" role="status"></div>
           </form>
         </div>
@@ -213,39 +161,6 @@ const work = [1, 2, 3, 4];
     </section>
   </main>
 
-  <footer>
-    <div class="wrap foot">
-      <a class="brand" href="#top" style="color:var(--cream)"><span class="dot"></span>Not Real</a>
-      <span class="tag">{t("footer.tag")}</span>
-      <a style="color:var(--pink);font-weight:500" href="mailto:inga.bankauske@gmail.com">inga.bankauske@gmail.com</a>
-      <span class="foot-legal">
-        <a href={lang === defaultLang ? `${base}privatumas/` : `${base}${lang}/privacy/`}>{t("footer.privacy")}</a>
-        <button type="button" data-cookie-settings>{t("footer.cookies")}</button>
-      </span>
-    </div>
-  </footer>
-
-  {/* FLOATING SOCIAL DOCK */}
-  <div class="social-dock" aria-label="Social links">
-    <a class="sd-btn" href="https://www.instagram.com/notreal.inga/" target="_blank" rel="noopener" aria-label="Instagram">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor" stroke="none"/>
-      </svg>
-    </a>
-    <a class="sd-btn" href="https://www.linkedin.com/in/ingabankauske" target="_blank" rel="noopener" aria-label="LinkedIn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 10v7"/>
-      </svg>
-    </a>
-    <a class="sd-btn" href="https://t.me/ingaBank" target="_blank" rel="noopener" aria-label="Telegram">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21.5 3 2.5 10.5l6 2.2L10.5 20l3-4.2 4.8 3.7L21.5 3Z"/><path d="m8.5 12.7 9-6.2"/>
-      </svg>
-    </a>
-    <a class="sd-btn" href="#kontaktai" aria-label="Rašyk mums">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/>
-      </svg>
-    </a>
-  </div>
+  <SiteFooter lang={lang} />
+  <Lightbox lang={lang} items={homeLb} />
 </Base>

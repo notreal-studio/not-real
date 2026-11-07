@@ -1,0 +1,75 @@
+/* ===== NOT REAL — design system, brandbook 4.0.0 =====
+   Colours: Bordeaux #5C1F2A · Cream #F2EDE4 · Paper #EBDECB · Espresso #2B1D14 · Saffron #E8A83A (fill/accent only; never text on Cream or Paper).
+   Type: Newsreader 400/500 (display, one italic word) + Figtree 400/500/600 (text, labels).
+   Texture: paper + brush masks from /brand/brush (recoloured with background-color). */
+:root{
+  --br-bordeaux:#5C1F2A;--br-cream:#F2EDE4;--br-paper:#EBDECB;--br-espresso:#2B1D14;--br-saffron:#E8A83A;
+  --disp:"Newsreader",Georgia,"Times New Roman",serif;--body:"Figtree","Segoe UI",Arial,sans-serif;
+  --maxw:1280px;--hh:76px;--gutter:clamp(20px,5vw,64px);
+  /* light theme = default (paper) */
+  --bg:var(--br-paper);--bg-2:var(--br-cream);--fg:var(--br-espresso);--muted:#5B5046;--accent:var(--br-bordeaux);
+  --line:rgba(43,29,20,.18);--btn-bg:var(--br-bordeaux);--btn-fg:var(--br-cream);
+}
+[data-theme="dark"]{
+  --bg:var(--br-espresso);--bg-2:#3A2B21;--fg:var(--br-cream);--muted:#BFB3A4;--accent:var(--br-saffron);
+  --line:rgba(242,237,228,.2);--btn-bg:var(--br-saffron);--btn-fg:var(--br-espresso);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:url("/brand/brush/asset09.webp") center/cover}
+[data-theme="dark"] body::before{display:none}
+body.locked,body.lb-open{overflow:hidden}
+a{color:inherit;text-decoration:none}
+img,video{max-width:100%}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
+.block{padding:clamp(72px,12vh,140px) 0}
+
+/* type */
+h1,h2,h3,.disp{font-family:var(--disp);font-weight:400;line-height:1.05}
+em{font-style:italic}
+.kicker{font:500 12px/1 var(--body);letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:22px}
+.statement{font-size:clamp(2.5rem,6.2vw,5.2rem);line-height:1.03;letter-spacing:-.012em;max-width:17ch}
+.lead{font-size:clamp(17px,1.5vw,20px);line-height:1.6;color:var(--muted);max-width:60ch;margin-top:20px}
+.label{font:500 12px/1.2 var(--body);letter-spacing:.22em;text-transform:uppercase}
+
+/* brush devices (recoloured masks) */
+.br-ul{position:relative;display:inline-block}
+.br-ul::after{content:"";position:absolute;left:-3%;right:-5%;bottom:-.24em;height:.55em;background-color:var(--br-bordeaux);background-image:url("/brand/brush/asset11.webp");background-size:100% 100%;
+  -webkit-mask:url("/brand/brush/asset10.webp") 0 0/100% 100% no-repeat;mask:url("/brand/brush/asset10.webp") 0 0/100% 100% no-repeat;pointer-events:none}
+.br-ul.sf::after,[data-theme="dark"] .br-ul::after{background-color:var(--br-saffron)}
+.br-hw{position:relative;display:inline-block;color:var(--br-cream);padding:0 .34em;margin:0 .02em;isolation:isolate}
+.br-hw::before{content:"";position:absolute;inset:-.22em -.1em -.3em;z-index:-1;background-color:var(--br-bordeaux);background-image:url("/brand/brush/asset15.webp");background-size:100% 100%;
+  -webkit-mask:url("/brand/brush/asset14.webp") 0 0/100% 100% no-repeat;mask:url("/brand/brush/asset14.webp") 0 0/100% 100% no-repeat}
+.br-hw.sf,[data-theme="dark"] .br-hw{color:var(--br-espresso)}
+.br-hw.sf::before,[data-theme="dark"] .br-hw::before{background-color:var(--br-saffron)}
+.br-band{position:absolute;pointer-events:none;background-color:var(--br-bordeaux);background-image:url("/brand/brush/asset02.webp");background-size:100% 100%;
+  -webkit-mask:url("/brand/brush/asset01.webp") 0 0/100% 100% no-repeat;mask:url("/brand/brush/asset01.webp") 0 0/100% 100% no-repeat}
+.br-band.small{background-image:url("/brand/brush/asset04.webp");-webkit-mask-image:url("/brand/brush/asset03.webp");mask-image:url("/brand/brush/asset03.webp")}
+.tex-bordeaux{background-color:var(--br-bordeaux);background-image:url("/brand/brush/asset16.webp");background-size:cover;background-position:center;color:var(--br-cream)}
+
+/* logo (SVG used as a mask so it takes currentColor) */
+.logo{display:block;background-color:currentColor;-webkit-mask:var(--logo) center/contain no-repeat;mask:var(--logo) center/contain no-repeat}
+.logo-mark{--logo:url("/brand/logo/mark-cream.svg");aspect-ratio:656.7/472.48}
+.logo-mark.s32{--logo:url("/brand/logo/mark-small32-cream.svg");aspect-ratio:665.6/481.38}
+.logo-lockup{--logo:url("/brand/logo/lockup-cream.svg");aspect-ratio:656.7/583.81}
+.logo-word{--logo:url("/brand/logo/wordmark-cream.svg");aspect-ratio:512.71/39.54}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--btn-bg);color:var(--btn-fg);font:500 13px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;
+  padding:17px 28px;border-radius:2px;border:0;cursor:pointer;transition:transform .2s,filter .2s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 1px currentColor}
+.link-u{display:inline-block;font:500 12px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid currentColor;padding:12px 0 4px;color:var(--accent)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1!important;transform:none!important}
+  html{scroll-behavior:auto}
+}

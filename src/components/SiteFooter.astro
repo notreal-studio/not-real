@@ -1,0 +1,42 @@
+---
+import { useTranslations, localePath, type Lang } from "../i18n/utils";
+import { groups } from "../data/portfolio";
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const baseUrl = import.meta.env.BASE_URL;
+const base = baseUrl.replace(/\/$/, "");
+const home = localePath(lang, baseUrl);
+const groupHref = (slug: string) => (lang === "lt" ? base + "/lt" : base) + "/work/" + slug + "/";
+---
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <span class="logo logo-lockup foot-lockup" role="img" aria-label="NOT REAL"></span>
+        <span class="foot-tag">{t("footer.tag")}</span>
+      </div>
+      <div class="foot-col">
+        <div class="foot-h">{t("footer.explore")}</div>
+        {groups.map((g) => (<a href={groupHref(g.slug)}>{g.title[lang]}</a>))}
+        <a href={`${home}#about`}>{t("nav.about")}</a>
+        <a href={`${home}#kontaktai`}>{t("nav.contact")}</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-h">{t("footer.hi")}</div>
+        <a href="mailto:inga.bankauske@gmail.com">inga.bankauske@gmail.com</a>
+        <a href="https://www.instagram.com/notreal.inga/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.linkedin.com/in/ingabankauske" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://t.me/ingaBank" target="_blank" rel="noopener">Telegram</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>{t("footer.copy")}</span>
+      <span class="foot-legal">
+        <a href={lang === "lt" ? base + "/lt/privatumas/" : base + "/privacy/"}>{t("footer.privacy")}</a>
+        <button type="button" data-cookie-settings>{t("footer.cookies")}</button>
+      </span>
+    </div>
+  </div>
+</footer>

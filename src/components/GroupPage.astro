@@ -1,0 +1,111 @@
+---
+import CaseLayout from "../layouts/CaseLayout.astro";
+import { groups, soxiCover } from "../data/portfolio";
+import { useTranslations, localePath, type Lang } from "../i18n/utils";
+
+interface Props { lang: Lang; slug: string; }
+const { lang, slug } = Astro.props;
+const t = useTranslations(lang);
+const baseUrl = import.meta.env.BASE_URL;
+const base = baseUrl.replace(/\/$/, "");
+const prefix = lang === "lt" ? base + "/lt" : base;
+const home = localePath(lang, baseUrl);
+const g = groups.find((x) => x.slug === slug)!;
+const paths = { en: base + "/work/" + slug + "/", lt: base + "/lt/work/" + slug + "/" };
+const soxiHref = `${prefix}/work/soxi/`;
+const indexed = g.items.map((m, i) => ({ m, i }));
+const nr = indexed.filter(({ m }) => m.id.startsWith("nr-"));
+const sx = indexed.filter(({ m }) => m.id.startsWith("sx-"));
+const isBrand = slug === "brand-identity";
+const showSoxi = slug === "brand-identity" || slug === "visual-automation";
+const countText = g.countLabel?.[lang] ?? `${g.items.length} ${t("pf.works")}`;
+const desc = g.intro[lang].length > 155 ? g.intro[lang].slice(0, 152).replace(/\s+\S*$/, "") + "…" : g.intro[lang];
+---
+<CaseLayout lang={lang} title={`${g.title[lang]} — Not Real`} desc={desc} paths={paths} mainClass="gp" lbItems={g.items}>
+  <section class="gp-hero">
+    <div class="wrap">
+      <a class="gp-back" href={`${home}#darbai`}>← {t("gp.back")}</a>
+      <div class="gp-n">{g.n} / 05</div>
+      <h1 class="gp-h1"><span class="br-ul">{g.title[lang]}</span></h1>
+      <p class="gp-intro">{g.intro[lang]}</p>
+      <div class="gp-meta"><span>{countText}</span><span>{t("hero.tag")}</span></div>
+    </div>
+  </section>
+
+  {showSoxi && (
+    <section class="gp-sec">
+      <div class="wrap">
+        <div class="gp-feature">
+          <a href={soxiHref} aria-label={t("gp.soxi.h")}><img src={`${base}${soxiCover.thumb}`} width={soxiCover.w} height={soxiCover.h} alt="SOXI" loading="lazy" /></a>
+          <div>
+            <div class="label" style="color:var(--accent);margin-bottom:14px">{t("gp.soxi.win")}</div>
+            <h2>{t("gp.soxi.h")}</h2>
+            <p>{t("gp.soxi.p")}</p>
+            <a class="btn" href={soxiHref}>{t("gp.soxi.btn")}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {isBrand ? (
+    <>
+      <section class="gp-sec">
+        <div class="wrap">
+          <h2>{t("gp.brand.nr")}</h2>
+          <div class="gp-pages">
+            {nr.map(({ m, i }) => (
+              <button type="button" class="gp-card" data-lb={i} aria-haspopup="dialog" aria-label={m.title[lang]}>
+                <div class="gp-media" style={`aspect-ratio:${m.ratio.toFixed(4)}`}><img src={`${base}${m.cover}`} alt="" loading="lazy" decoding="async" /></div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section class="gp-sec">
+        <div class="wrap">
+          <h2>{t("gp.brand.sx")}</h2>
+          <div class="gp-pages">
+            {sx.map(({ m, i }) => (
+              <button type="button" class="gp-card" data-lb={i} aria-haspopup="dialog" aria-label={m.title[lang]}>
+                <div class="gp-media" style={`aspect-ratio:${m.ratio.toFixed(4)}`}><img src={`${base}${m.cover}`} alt="" loading="lazy" decoding="async" /></div>
+              </button>
+            ))}
+          </div>
+          <p class="lead" style="margin-top:22px">{t("gp.brand.note")}</p>
+        </div>
+      </section>
+    </>
+  ) : (
+    <section class="gp-sec">
+      <div class="wrap">
+        <div class="gp-grid">
+          {indexed.map(({ m, i }) => (
+            <button type="button" class="gp-card" data-lb={i} aria-haspopup="dialog" aria-label={m.title[lang]}>
+              <div class="gp-media" style={`aspect-ratio:${m.ratio.toFixed(4)}`}>
+                <img src={`${base}${m.cover}`} alt="" loading={i < 6 ? "eager" : "lazy"} decoding="async" />
+                {m.kind === "video" && <span class="gp-play" aria-hidden="true"></span>}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="gp-cta tex-bordeaux">
+    <div class="wrap">
+      <h2>{t("gp.cta.h")}</h2>
+      <a class="btn" href={`${home}#kontaktai`}>{t("gp.cta.btn")}</a>
+    </div>
+  </section>
+
+  <section class="gp-other">
+    <div class="wrap">
+      <h2>{t("gp.more")}</h2>
+      <div class="gp-links">
+        {groups.filter((x) => x.slug !== slug).map((x) => (<a href={`${prefix}/work/${x.slug}/`}>{x.title[lang]}</a>))}
+      </div>
+    </div>
+  </section>
+</CaseLayout>

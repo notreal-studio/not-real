@@ -11,7 +11,7 @@ const site = (Astro.site?.href ?? "").replace(/\/$/, ""); // pvz. https://notrea
 
 // JS pusės tekstai (formos žinutės, showreel) — perduodami į naršyklę
 const jsT = {
-  reel: t("js.reel"), sending: t("js.sending"),
+  sending: t("js.sending"),
   ok: t("js.ok"), err: t("js.err"), neterr: t("js.neterr"),
 };
 
@@ -27,7 +27,9 @@ const orgSchema = {
   url: `${site}${base}`,
   description: t("meta.desc"),
   email: "inga.bankauske@gmail.com",
-  areaServed: "Kaunas, Lithuania",
+  areaServed: ["Lithuania", "Worldwide"],
+  address: { "@type": "PostalAddress", addressLocality: "Kaunas", addressCountry: "LT" },
+  founder: { "@type": "Person", name: "Inga Bankauskė" },
   sameAs: ["https://www.instagram.com/notreal.inga/", "https://www.linkedin.com/in/ingabankauske"],
 };
 const faqSchema = {
@@ -46,7 +48,7 @@ const faqSchema = {
   <script is:inline>
     (function(){
       var saved = localStorage.getItem('theme');
-      var theme = saved || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      var theme = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       document.documentElement.setAttribute('data-theme', theme);
     })();
   </script>
@@ -88,18 +90,20 @@ const faqSchema = {
   ))}
   <link rel="alternate" hreflang="x-default" href={`${site}${localePath(defaultLang, base)}`} />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <link rel="preload" href={`${base}fonts/newsreader-latin-400-normal.woff2`} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={`${base}fonts/figtree-latin-400-normal.woff2`} as="font" type="font/woff2" crossorigin />
 
   {/* Google Analytics 4 — įkeliamas tik gavus sutikimą (public/consent.js) */}
-  <script is:inline src={`${base}consent.js`}></script>
+  <script is:inline defer src={`${base}consent.js`}></script>
 </head>
 <body class="locked">
   <slot />
 
   <script is:inline set:html={`window.__t=${JSON.stringify(jsT)};`}></script>
-  <script is:inline src={`${base}main.js`}></script>
+  <script is:inline src={`${base}site.js`}></script>
+  <script is:inline src={`${base}home.js`}></script>
+  <script is:inline src={`${base}hero.js`}></script>
+  <script is:inline src={`${base}sphere.js`}></script>
+  <script is:inline src={`${base}lightbox.js`}></script>
 </body>
 </html>

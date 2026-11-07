@@ -1,0 +1,72 @@
+---
+// Shared layout for every inner page: group pages, the SOXI case study and the legal pages.
+import "../styles/global.css";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import Lightbox from "../components/Lightbox.astro";
+import { languages, type Lang } from "../i18n/utils";
+import type { Media } from "../data/portfolio";
+
+interface Props {
+  lang: Lang; title: string; desc: string; paths: Record<string, string>;
+  ogImage?: string; mainClass?: string; article?: boolean; lbItems?: (Media & { solo?: boolean })[];
+}
+const { lang, title, desc, paths, ogImage, mainClass = "case", article = false, lbItems } = Astro.props;
+
+const base = import.meta.env.BASE_URL;
+const site = (Astro.site?.href ?? "").replace(/\/$/, "");
+const canonical = `${site}${paths[lang]}`;
+const og = `${site}${ogImage ?? `${base}og.jpg`}`;
+const ld = article
+  ? { "@context": "https://schema.org", "@type": "Article", headline: title, description: desc, image: og, inLanguage: lang, url: canonical,
+      author: { "@type": "Person", name: "Inga Bankauskė", url: `${site}/` }, publisher: { "@type": "Organization", name: "Not Real", url: `${site}/` } }
+  : null;
+---
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+  <script is:inline>
+    (function(){
+      var saved = localStorage.getItem('theme');
+      var theme = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={desc} />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" type="image/png" href={`${base}favicon-96x96.png`} sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+  <link rel="icon" href={`${base}favicon.ico`} sizes="any" />
+  <link rel="apple-touch-icon" sizes="180x180" href={`${base}apple-touch-icon.png`} />
+  <link rel="manifest" href={`${base}site.webmanifest`} />
+  <meta property="og:type" content={article ? "article" : "website"} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={desc} />
+  <meta property="og:image" content={og} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={desc} />
+  <meta name="twitter:image" content={og} />
+  {languages.map((l) => (<link rel="alternate" hreflang={l} href={`${site}${paths[l]}`} />))}
+  <link rel="alternate" hreflang="x-default" href={`${site}${paths.en}`} />
+  <link rel="preload" href={`${base}fonts/newsreader-latin-400-normal.woff2`} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={`${base}fonts/figtree-latin-400-normal.woff2`} as="font" type="font/woff2" crossorigin />
+  {ld && <script type="application/ld+json" set:html={JSON.stringify(ld)} />}
+  <script is:inline defer src={`${base}consent.js`}></script>
+</head>
+<body>
+  <SiteHeader lang={lang} solid paths={paths} />
+  <main class={mainClass}>
+    <slot />
+  </main>
+  <SiteFooter lang={lang} />
+  {lbItems && <Lightbox lang={lang} items={lbItems} />}
+  <script is:inline src={`${base}site.js`}></script>
+  {lbItems && <script is:inline src={`${base}lightbox.js`}></script>}
+  {lbItems && <script is:inline src={`${base}gallery-hang.js`}></script>}
+</body>
+</html>

@@ -1,0 +1,65 @@
+---
+import { useTranslations, languages, langName, localePath, type Lang } from "../i18n/utils";
+import { groups } from "../data/portfolio";
+
+interface Props { lang: Lang; solid?: boolean; paths?: Record<string, string>; }
+const { lang, solid = false, paths } = Astro.props;
+const t = useTranslations(lang);
+const baseUrl = import.meta.env.BASE_URL;
+const base = baseUrl.replace(/\/$/, "");
+const home = localePath(lang, baseUrl);                 // "/" or "/lt/"
+const groupHref = (slug: string) => (lang === "lt" ? base + "/lt" : base) + "/work/" + slug + "/";
+const langHref = (l: string) => paths?.[l] ?? localePath(l as Lang, baseUrl);
+---
+<header class={`site-head${solid ? " solid" : ""}`} id="siteHead">
+  <div class="head-in">
+    <a class="head-logo" href={home} aria-label="NOT REAL"><span class="logo logo-mark s32" aria-hidden="true"></span></a>
+    <nav class="head-nav" aria-label="Main">
+      <a href={`${home}#darbai`}>{t("nav.work")}</a>
+      <a href={`${home}#about`}>{t("nav.about")}</a>
+      <a href={`${home}#faq`}>{t("nav.faq")}</a>
+      <a href={`${home}#kontaktai`}>{t("nav.contact")}</a>
+    </nav>
+    <div class="head-actions">
+      <div class="head-lang">
+        {languages.map((l) => (<a href={langHref(l)} hreflang={l} class={l === lang ? "is-active" : ""} aria-label={langName[l]}>{langName[l]}</a>))}
+      </div>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label={t("theme.toggle")}>
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v3M12 18.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2.5 12h3M18.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke-linecap="round"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="menu-btn" id="menuOpen" type="button" aria-haspopup="dialog">{t("nav.menu")}</button>
+    </div>
+  </div>
+</header>
+
+<nav id="menu" class="tex-bordeaux" aria-hidden="true" aria-label="Menu" inert>
+  <div class="menu-in">
+    <div class="menu-top">
+      <a href={home} aria-label="NOT REAL" data-close><span class="logo logo-mark s32" aria-hidden="true"></span></a>
+      <div class="menu-top-r">
+        <div class="menu-lang">
+          {languages.map((l) => (<a href={langHref(l)} hreflang={l} class={l === lang ? "is-active" : ""} aria-label={langName[l]}>{langName[l]}</a>))}
+        </div>
+        <button class="menu-close" id="menuClose" type="button">{t("menu.close")}</button>
+      </div>
+    </div>
+    <ul class="menu-links">
+      <li>
+        <a class="ml" href={`${home}#darbai`} data-close>{t("nav.work")}</a>
+        <ul class="menu-sub">
+          {groups.map((g) => (<li><a href={groupHref(g.slug)} data-close>{g.title[lang]}</a></li>))}
+        </ul>
+      </li>
+      <li><a class="ml" href={`${home}#about`} data-close>{t("nav.about")}</a></li>
+      <li><a class="ml" href={`${home}#faq`} data-close>{t("nav.faq")}</a></li>
+      <li><a class="ml" href={`${home}#kontaktai`} data-close>{t("nav.contact")}</a></li>
+    </ul>
+    <div class="menu-foot">
+      <a href="https://www.instagram.com/notreal.inga/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.linkedin.com/in/ingabankauske" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://t.me/ingaBank" target="_blank" rel="noopener">Telegram</a>
+      <a href="mailto:inga.bankauske@gmail.com">inga.bankauske@gmail.com</a>
+    </div>
+  </div>
+</nav>
