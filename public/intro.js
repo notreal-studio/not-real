@@ -271,7 +271,8 @@ void main() {
   let seen=false;
   try{
     const same=document.referrer && new URL(document.referrer).origin===location.origin;
-    seen=same && sessionStorage.getItem('nr-intro')==='1';
+    const nav=(performance.getEntriesByType('navigation')[0]||{}).type;          /* a refresh (F5) always plays it again */
+    seen=same && nav!=='reload' && sessionStorage.getItem('nr-intro')==='1' && !/[?&]intro=1/.test(location.search);
     sessionStorage.setItem('nr-intro','1');
   }catch(e){}
 
