@@ -17,6 +17,7 @@
     const P=Math.max(420,W*0.62), R=P*0.96, cols=W<700?22:32, rowsMax=W<700?34:38;
     const dTh=360/cols, tw=R*dTh*RAD*0.9, th=tw*0.68, dPh=th/(0.9*R)/RAD;
     const n=Math.floor(rowsMax/dPh), rows=2*n+1;
+    G={R:R,dTh:dTh,dPh:dPh,cols:cols}; focus=null;
     view.style.perspective=P+'px';
     ball.style.setProperty('--z',(P-60)+'px');
     ball.textContent='';
@@ -27,7 +28,7 @@
         const b=document.createElement('button'); b.type='button'; b.className='sph-t'+(it.kind==='video'?' is-video':'');
         b.tabIndex=-1; b.dataset.lb=k; b.setAttribute('aria-label',it.title);
         b.style.width=tw.toFixed(1)+'px'; b.style.height=th.toFixed(1)+'px';
-        b.style.transform='rotateY('+(c*dTh).toFixed(2)+'deg) rotateX('+(-r*dPh).toFixed(2)+'deg) translateZ('+(-R).toFixed(1)+'px) translate(-50%,-50%)';
+        b._c=c; b._r=r; place(b,0,0,0,1);
         const im=document.createElement('img'); im.src=it.cover; im.alt=''; im.decoding='async'; im.draggable=false; b.appendChild(im);
         if(it.kind==='video'){ const p=document.createElement('span'); p.className='play'; p.setAttribute('aria-hidden','true'); b.appendChild(p); }
         frag.appendChild(b);
@@ -35,6 +36,27 @@
     }
     ball.appendChild(frag); built=true;
   }
+  /* a tile sits at column angle c*dTh and row angle r*dPh on the inside of the ball; dy/dp nudge it sideways/up-down, lift moves it toward the viewer, s scales it */
+  let G={R:700,dTh:11,dPh:7,cols:32};
+  function place(b,dy,dp,lift,s){
+    b.style.transform='rotateY('+(b._c*G.dTh+dy).toFixed(2)+'deg) rotateX('+(-b._r*G.dPh+dp).toFixed(2)+'deg) translateZ('+(-G.R+lift).toFixed(1)+'px) scale('+s+') translate(-50%,-50%)';
+  }
+  /* the tile under the pointer steps forward and grows by about 40%; its neighbours slide out of the way */
+  let focus=null;
+  function lift(b){
+    if(focus===b) return; focus=b;
+    ball.querySelectorAll('.sph-t').forEach(t=>{
+      if(!b){ place(t,0,0,0,1); return; }
+      let dc=t._c-b._c; if(dc>G.cols/2) dc-=G.cols; if(dc<-G.cols/2) dc+=G.cols;
+      const dr=t._r-b._r, ac=Math.abs(dc), ar=Math.abs(dr);
+      if(t===b){ place(t,0,0,G.R*0.07,1.4); return; }
+      if(ac>2||ar>2){ place(t,0,0,0,1); return; }
+      const dy=ac===0?0:Math.sign(dc)*G.dTh*(ac===1?0.62:0.3), dp=ar===0?0:-Math.sign(dr)*G.dPh*(ar===1?0.62:0.3);
+      place(t,dy,dp,0,1);
+    });
+  }
+  ball.addEventListener('mouseover',(e)=>{ const t=e.target.closest('.sph-t'); if(t&&!dragging) lift(t); });
+  view.addEventListener('mouseleave',()=>lift(null));
   function paint(){ ball.style.transform='translateZ(var(--z)) rotateX('+pitch.toFixed(2)+'deg) rotateY('+yaw.toFixed(2)+'deg)'; }
 
   /* ---- drag to turn ---- */
