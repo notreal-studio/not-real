@@ -89,7 +89,9 @@
 .sph-view{position:relative;height:clamp(480px,84vh,940px);overflow:hidden;border-radius:0;background:#1c120c;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none;outline-offset:3px}
 .sph-view.is-drag{cursor:grabbing}
 .sph-ball{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;will-change:transform}
-.sph-t{position:absolute;left:0;top:0;display:block;padding:0;border:0;border-radius:3px;overflow:hidden;background:#2a1b12;cursor:pointer;transition:transform .5s cubic-bezier(.2,.7,.2,1),filter .25s}
+.sph-t{position:absolute;left:0;top:0;display:block;padding:0;border:0;border-radius:3px;overflow:hidden;background:#2a1b12;cursor:pointer;transform-origin:0 0;transition:transform .55s cubic-bezier(.2,.7,.2,1),filter .25s}
+.sph-t video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.sph-t.is-live .play{display:none}
 .sph-t img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
 .sph-t:hover{filter:brightness(1.12)}
 .sph-t .play{position:absolute;right:6%;bottom:8%;width:22%;max-width:26px;aspect-ratio:1;border-radius:50%;background:rgba(242,237,228,.92)}
