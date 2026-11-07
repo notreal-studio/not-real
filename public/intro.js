@@ -1,193 +1,295 @@
-/* Opening sequence (about 2.5 seconds).
-   1. Light catches a glass edge: at first only a small glint in the middle of a black screen.
-   2. From it an irregular, see-through, hand-blown-glass shape unfolds and turns slowly; light slides along its edges and folds.
-      The first hero picture is already inside the glass, bent and broken into facets like a view through thick glass.
-   3. As the shape turns to face the viewer the fragments join and the picture sharpens; the shape widens, its folds flatten and its outline
-      becomes the screen frame: at the end the picture sits exactly where the first hero frame sits, and the navigation fades in.
-   The picture is the poster frame of the first hero film. When the show is over the film (already waiting on that very frame) starts to play.
-   One WebGL fragment shader does everything. No WebGL, reduced motion, or a slow load: the page simply appears with a short fade. */
+/* Opening animation (about 2.4 s), from the NOT REAL WebGL prototype: a small reflection unfolds into an irregular glass ring, light slides along its
+   edges while the first hero picture shows through it, bent; the shape then flattens into the real frame of that picture and the canvas disappears.
+   The shaders and playRefractionIntro() are the prototype's, with the page glue around them:
+   - the picture is the hero's own <img class="hs-poster"> (the poster frame of the first film); the end frame is its exact rectangle
+   - the first film is parked on that poster frame in the background and starts to play from it once the animation is over
+   - it plays on the first visit to the page (not when moving between pages of the site); no picture in time, no WebGL, reduced motion: the hero shows at once */
+
+const POSTER_T=1.5;                                          /* the poster frames were cut at 1.5 s of each film */
+
+async function playRefractionIntro({ poster, duration = 2400, onProgress } = {}) {
+  if (!(poster instanceof HTMLImageElement)) return 'no-poster';
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return 'reduced-motion';
+  if (document.visibilityState === 'hidden') return 'hidden';
+  if (!poster.complete || !poster.naturalWidth) {
+    let timer;
+    try {
+      await Promise.race([
+        poster.decode(),
+        new Promise((_, reject) => {
+          timer = setTimeout(() => reject(new Error('Poster timeout')), 650);
+        })
+      ]);
+    } catch {
+      return 'poster-unavailable';
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+  if (!poster.naturalWidth) return 'poster-unavailable';
+
+  const canvas = document.createElement('canvas');
+  canvas.className = 'refraction-overlay';
+  canvas.setAttribute('aria-hidden', 'true');
+  const gl = canvas.getContext('webgl', {
+    alpha: true, premultipliedAlpha: false, antialias: false,
+    depth: false, stencil: false, preserveDrawingBuffer: false
+  });
+  if (!gl) return 'webgl-unavailable';
+
+  const resources = [];
+  function keep(item, remove) {
+    if (!item) throw new Error('WebGL resource allocation failed');
+    resources.push(() => remove.call(gl, item));
+    return item;
+  }
+  function clean() {
+    canvas.remove();
+    for (const dispose of resources.reverse()) dispose();
+    gl.getExtension('WEBGL_lose_context')?.loseContext();
+  }
+  function shader(type, source) {
+    const object = keep(gl.createShader(type), gl.deleteShader);
+    gl.shaderSource(object, source);
+    gl.compileShader(object);
+    if (!gl.getShaderParameter(object, gl.COMPILE_STATUS)) {
+      throw new Error(gl.getShaderInfoLog(object));
+    }
+    return object;
+  }
+
+  try {
+    const program = keep(gl.createProgram(), gl.deleteProgram);
+    gl.attachShader(program, shader(gl.VERTEX_SHADER, REFRACTION_VERTEX));
+    gl.attachShader(program, shader(gl.FRAGMENT_SHADER, REFRACTION_FRAGMENT));
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(program));
+    gl.useProgram(program);
+
+    const position = gl.getAttribLocation(program, 'aPosition');
+    gl.bindBuffer(gl.ARRAY_BUFFER, keep(gl.createBuffer(), gl.deleteBuffer));
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(position);
+    gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+
+    const texture = keep(gl.createTexture(), gl.deleteTexture);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, poster);
+    if (gl.getError() !== gl.NO_ERROR) throw new Error('Poster texture upload failed');
+
+    const uniforms = Object.fromEntries(
+      ['uSize', 'uHero', 'uCrop', 'uImage', 'uProgress'].map(name => [name, gl.getUniformLocation(program, name)])
+    );
+    gl.uniform1i(uniforms.uImage, 0);
+
+    const limit = gl.getParameter(gl.MAX_VIEWPORT_DIMS);
+    const length = Number.isFinite(duration) ? Math.max(300, duration) : 2400;
+    const FREEZE = parseFloat(new URLSearchParams(location.search).get('introP'));   /* ?introP=0.5 freezes the show at that point (0..1), for checking */
+    return await new Promise(resolve => {
+      let frame = 0;
+      let done = false;
+      let start;
+      function finish(reason) {
+        if (done) return;
+        done = true;
+        cancelAnimationFrame(frame);
+        canvas.removeEventListener('webglcontextlost', onLost);
+        document.removeEventListener('visibilitychange', onHidden);
+        clean();
+        resolve(reason);
+      }
+      function onLost() { finish('webgl-context-lost'); }
+      function onHidden() {
+        if (document.visibilityState === 'hidden') finish('hidden');
+      }
+      function tick(time) {
+        if (done) return;
+        const w = canvas.clientWidth;
+        const h = canvas.clientHeight;
+        const rect = poster.getBoundingClientRect();
+        if (!w || !h || !rect.width || !rect.height || rect.bottom <= 0 || rect.top >= h) {
+          finish('hero-outside-viewport');
+          return;
+        }
+        const scale = Math.min(devicePixelRatio || 1, 1.5, 1440 / w, 1080 / h, limit[0] / w, limit[1] / h);
+        const width = Math.max(1, Math.round(w * scale));
+        const height = Math.max(1, Math.round(h * scale));
+        if (canvas.width !== width || canvas.height !== height) {
+          canvas.width = width;
+          canvas.height = height;
+        }
+        gl.viewport(0, 0, width, height);
+
+        const sx = width / w;
+        const sy = height / h;
+        gl.uniform2f(uniforms.uSize, width, height);
+        gl.uniform4f(uniforms.uHero, rect.left * sx, rect.top * sy, rect.width * sx, rect.height * sy);
+        /* the hero picture is object-fit: cover, centred; for another object-position change the origin here */
+        const ratio = (rect.width / rect.height) / (poster.naturalWidth / poster.naturalHeight);
+        const cropW = Math.min(1, ratio);
+        const cropH = Math.min(1, 1 / ratio);
+        gl.uniform4f(uniforms.uCrop, (1 - cropW) / 2, (1 - cropH) / 2, cropW, cropH);
+
+        start ??= time;
+        const progress = isFinite(FREEZE) ? FREEZE : Math.min(1, (time - start) / length);
+        gl.uniform1f(uniforms.uProgress, progress);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        if (onProgress) onProgress(progress);
+        if (isFinite(FREEZE)) return;
+        if (progress < 1) frame = requestAnimationFrame(tick);
+        else finish('finished');
+      }
+      canvas.addEventListener('webglcontextlost', onLost);
+      document.addEventListener('visibilitychange', onHidden);
+      document.body.append(canvas);
+      tick(performance.now());
+    });
+  } catch (error) {
+    clean();
+    console.warn('NOT REAL intro fallback', error);
+    return 'webgl-error';
+  }
+}
+
+/* ------------------------- shaders (from the prototype, unchanged) ------------------------- */
+var REFRACTION_VERTEX=`
+attribute vec2 aPosition;
+void main() {
+  gl_Position = vec4(aPosition, 0.0, 1.0);
+}
+`;
+var REFRACTION_FRAGMENT=`
+precision highp float;
+
+uniform vec2 uSize;
+uniform vec4 uHero;       // x, y, width, height in canvas pixels, top-left origin
+uniform vec4 uCrop;       // image crop origin and size in normalized texture coordinates
+uniform sampler2D uImage;
+uniform float uProgress;
+
+float band(float distance, float width) {
+  float x = distance / width;
+  return exp(-x * x);
+}
+
+vec3 poster(vec2 point) {
+  return texture2D(uImage, uCrop.xy + clamp(point, 0.0, 1.0) * uCrop.zw).rgb;
+}
+
+void main() {
+  float t = uProgress;
+  vec2 screen = vec2(gl_FragCoord.x, uSize.y - gl_FragCoord.y);
+  vec2 target = uHero.xy + 0.5 * uHero.zw;
+  vec2 center = mix(uSize * vec2(0.5, 0.51), target, smoothstep(0.52, 0.86, t));
+  vec2 point = screen - center;
+  float distance = length(point);
+  vec2 direction = distance > 0.001 ? point / distance : vec2(1.0, 0.0);
+  float angle = atan(direction.y, direction.x);
+  float rotation = mix(-1.05, 0.83, smoothstep(0.04, 0.77, t));
+  float a = angle - rotation;
+
+  float bloom = smoothstep(0.07, 0.53, t);
+  float align = smoothstep(0.56, 0.91, t);
+  float glass = 1.0 - align;
+  float size = min(uSize.x, uSize.y);
+  float twist = a + 0.48 * band(distance, size * 0.32);
+  float lobes = 0.56 * cos(twist * 6.0) + 0.34 * sin(a * 3.0 - 0.55);
+  float flower = size * (0.044 + 0.257 * bloom) * (1.0 + 0.25 * lobes);
+  float rectangle = min(
+    uHero.z * 0.5 / max(abs(direction.x), 0.0001),
+    uHero.w * 0.5 / max(abs(direction.y), 0.0001)
+  );
+  float radius = mix(flower, rectangle, align);
+  float k = min(2.0, distance / max(radius, 1.0));
+  float edge = radius - distance;
+
+  // Distorted sampling gives the glass its refraction. At align=1 the
+  // coordinates equal the underlying CSS object-fit: cover poster exactly.
+  float ripple = sin(6.0 * a + 3.1 * k + 0.8 * sin(3.0 * a));
+  float rib = sin(9.0 * a - 8.0 * k + 0.45 * cos(3.0 * a));
+  vec2 bend = direction * k * (0.31 + 0.28 * pow(k, 3.0));
+  bend += vec2(ripple * 0.071, rib * 0.058) * k;
+  vec2 uv = mix(vec2(0.5) + bend, (screen - uHero.xy) / uHero.zw, align);
+  float split = 0.013 * glass * k * k * cos(3.0 * a);
+  vec3 image = vec3(poster(uv + vec2(split, 0.0)).r,
+                    poster(uv).g,
+                    poster(uv - vec2(split, 0.0)).b);
+
+  float glint = pow(max(0.0, cos(a + 0.94 + t * 2.8)), 9.0);
+  float glint2 = pow(max(0.0, cos(a - 2.2 - t * 2.2)), 13.0);
+  float light = 0.21 + 0.73 * glint + 0.55 * glint2;
+  float rim = light * band(edge - 1.5, 1.5);
+  float inner = light * 0.54 * band(edge - 5.0 - 4.0 * sin(5.0 * a), 2.3);
+  float fold = light * 0.54 * band(k - (0.78 + 0.10 * cos(6.0 * a + 0.7)), 0.018);
+  float seam = light * 0.41 * band(sin(3.0 * a + 3.0 * k), 0.059) * band(k - 0.68, 0.34);
+  float shine = (rim + inner + fold + seam) * glass * smoothstep(0.07, 0.31, t);
+  float shade = 0.22 + 0.56 * max(0.0, 1.0 - k * k) + 0.12 * ripple + 0.08 * rib;
+  float illumination = mix(0.16, 0.95, smoothstep(0.16, 0.64, t));
+  vec3 crystal = image * mix(clamp(shade * illumination, 0.06, 1.0), 1.0, align);
+  crystal += shine * vec3(1.0, 0.93, 0.82);
+
+  float halo = band(edge, 20.0) * bloom * glass;
+  vec3 backdrop = vec3(0.036, 0.035, 0.046) + halo * vec3(0.08, 0.053, 0.035) * light;
+  float backdropAlpha = 1.0 - smoothstep(0.79, 0.98, t);
+  float inside = smoothstep(-1.1, 1.1, edge) * smoothstep(0.035, 0.21, t);
+  float photoAlpha = inside * (1.0 - smoothstep(0.94, 1.0, t));
+  float outAlpha = photoAlpha + backdropAlpha * (1.0 - photoAlpha);
+  // Canvas requests straight alpha. Composite the two layers, then unpremultiply.
+  vec3 rgb = (crystal * photoAlpha + backdrop * backdropAlpha * (1.0 - photoAlpha))
+             / max(outAlpha, 0.0001);
+  gl_FragColor = vec4(clamp(rgb, 0.0, 1.0), outAlpha);
+}
+`;
+
+/* ------------------------- page glue ------------------------- */
 (function(){
-  const cv=document.getElementById('intro-cv'), box=document.getElementById('loader');
-  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const box=document.getElementById('loader');
+  const poster=document.querySelector('.hs-poster');
   const hv=document.querySelector('.hs.is-active video, .hs video');
-  const POSTER_T=1.5;                                        /* the poster frames were cut at 1.5 s of each film */
-  let finished=false;
-  function done(){
+  let finished=false, shown=false;
+  function hideLoader(fast){
+    if(!box) return;
+    if(fast){ box.style.display='none'; return; }
+    box.classList.add('gone'); setTimeout(()=>{ box.style.display='none'; },700);
+  }
+  function done(reason){
     if(finished) return; finished=true;
     document.body.classList.remove('intro-on');
-    if(box){ box.classList.add('gone'); setTimeout(()=>{ box.style.display='none'; },700); }
+    hideLoader(shown);
     window.__introRunning=false;
+    window.__introResult=reason;
     window.dispatchEvent(new Event('intro-done'));
   }
   window.__introRunning=false;
-  if(!cv||!box||!hv||reduced) return;
-  const gl=cv.getContext('webgl',{antialias:false,alpha:false,powerPreference:'high-performance'});
-  if(!gl) return;
-  const posterUrl=hv.dataset.poster||hv.getAttribute('poster');
-  if(!posterUrl) return;
+
+  /* once per visit: moving between the pages of the site (language switch, back from a gallery) goes straight to the hero */
+  let seen=false;
+  try{
+    const same=document.referrer && new URL(document.referrer).origin===location.origin;
+    seen=same && sessionStorage.getItem('nr-intro')==='1';
+    sessionStorage.setItem('nr-intro','1');
+  }catch(e){}
+
+  if(!box||!poster||!hv||seen||matchMedia('(prefers-reduced-motion: reduce)').matches||document.visibilityState==='hidden'){ return; }
   window.__introRunning=true; document.body.classList.add('intro-on');
 
-  const VS='attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
-  const FS=`precision highp float;
-uniform vec2 uRes; uniform sampler2D uTex; uniform float uVA;
-uniform float uR, uM, uAmp, uSwirl, uPh, uRef, uLine, uVS, uFrag, uTurn, uGlint, uCorner, uSpin; uniform vec2 uBox;
-const float PI=3.14159265;
-mat2 rot(float a){ float c=cos(a), s=sin(a); return mat2(c,-s,s,c); }
-float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }
-float flower(vec2 p,float R,float amp,float ph,float k){
-  float a=atan(p.y,p.x);
-  float r=R*(1.+amp*(.2*sin(5.*a+ph)+.11*sin(3.*a-ph*1.3+k)+.06*sin(8.*a+ph*.7)));
-  return length(p)-r;
-}
-float sdBox(vec2 p,vec2 b,float r){ vec2 q=abs(p)-b+r; return length(max(q,0.))+min(max(q.x,q.y),0.)-r; }
-/* layer k of the shape: k=0 is the outer edge, higher k are the thinner folds drifting inside it */
-float layer(vec2 p,float k){
-  float sc=1.-.15*k;
-  vec2 q=rot(uSpin*(.8+.45*k)*(mod(k,2.)<1.?1.:-1.)+k*.9)*p;
-  float dF=flower(q,uR*sc,uAmp*(1.+.12*k),uPh*(1.+.22*k)+k*1.7,uPh*.6+k);
-  vec2 bx=uBox*(1.-.07*k)-.02*k;
-  float dB=sdBox(p,bx,uCorner*min(bx.x,bx.y));
-  return mix(dF,dB,uM);
-}
-void main(){
-  float m=min(uRes.x,uRes.y);
-  vec2 p=(gl_FragCoord.xy*2.-uRes)/m;
-  vec2 ps=vec2(p.x/mix(.64,1.,uTurn),p.y);               /* the glass is still turned away: seen from the side it is narrower */
-  float d=layer(ps,0.);
-  float e=.004;
-  vec2 g=vec2(layer(ps+vec2(e,0.),0.)-layer(ps-vec2(e,0.),0.), layer(ps+vec2(0.,e),0.)-layer(ps-vec2(0.,e),0.));
-  vec2 n=g/(length(g)+1e-5);
-  float edge=exp(min(d,0.)*(7./max(.35,uR*3.)));
-  float rad=length(p), ang=atan(p.y,p.x);
-  /* a polar swirl in the middle, as light folds through the thickest part of the glass */
-  float seg=2.*PI/7., a2=abs(mod(ang+uPh*.25,seg)-seg*.5);
-  float k=uSwirl*smoothstep(uR*.95,.05,rad);
-  vec2 pk=vec2(cos(a2),sin(a2))*rad*(1.-.42*k);
-  vec2 pp=mix(p,pk,k*.85);
-  /* thick glass: the picture is cut into bent facets while the shape is turned away; they join as it faces us */
-  vec2 fr=rot(uPh*.3)*pp*5.5; vec2 id=floor(fr); vec2 fu=fract(fr)-.5;
-  vec2 fo=(vec2(hash(id),hash(id+7.3))-.5)*.2+fu*.11;
-  pp+=fo*uFrag*(.45+.55*smoothstep(0.,-.25,d));
-  pp*=1.+.16*uFrag*dot(p,p);
-  vec2 off=-n*edge*.09*uRef;
-  float ca=uRes.x/uRes.y, sx=min(1.,ca/uVA), sy=min(1.,uVA/ca);
-  vec3 col=vec3(0.);
-  for(int c=0;c<3;c++){
-    float f=1.+.45*float(c-1);
-    vec2 s=(((pp+off*f)/uVS)*m+uRes)/(2.*uRes);
-    vec2 uv=.5+(s-.5)*vec2(sx,sy);
-    float v=texture2D(uTex,uv)[c];
-    if(c==0) col.r=v; else if(c==1) col.g=v; else col.b=v;
-  }
-  float depth=smoothstep(0.,.35,-d);
-  col*=mix(1.,mix(.74,1.,depth),uRef);
-  col+=vec3(.03,.022,.012)*edge*uRef;
-  float inside=smoothstep(.006,-.006,d);
-  vec3 outc=vec3(0.);
-  float o=max(d,0.);
-  outc+=vec3(.95,.72,.45)*(.05*exp(-o*7.)*(.55+.45*sin(o*46.-uPh*3.)))*uLine;
-  outc+=vec3(1.,.85,.6)*.1*exp(-o*38.)*uLine;
-  col=mix(outc,col,inside);
-  /* the edge and the folds: thin lines of light, with a bright spot that slides along them */
-  float slide=pow(.5+.5*cos(atan(ps.y,ps.x)-uPh*1.7),5.);
-  float line=smoothstep(.0055,0.,abs(d))*(.5+1.1*slide);
-  for(int i=1;i<4;i++){
-    float di=layer(ps,float(i));
-    float sl=pow(.5+.5*cos(atan(ps.y,ps.x)-uPh*(1.3+.3*float(i))+float(i)*2.1),4.);
-    line+=smoothstep(.0042,0.,abs(di))*(.55+.9*sl)*(.85-.12*float(i))*smoothstep(.02,-.04,d);
-  }
-  col+=vec3(1.,.9,.7)*line*uLine;
-  /* the first glint: a tiny reflection with a cross of light */
-  float streak=exp(-abs(p.x)*70.)*exp(-abs(p.y)*7.)+exp(-abs(p.y)*70.)*exp(-abs(p.x)*7.);
-  col+=vec3(1.,.93,.78)*(exp(-rad*34.)*1.1+streak*.55)*uGlint;
-  /* a little festive sparkle inside the glass */
-  vec2 sq=(rot(uPh*.2)*p)*34.; vec2 sg=floor(sq); float sh=hash(sg); float dot_=smoothstep(.5,.05,length(fract(sq)-.5)*2.);
-  float tw=pow(max(0.,sin(uPh*5.+sh*40.)),14.);
-  col+=vec3(1.,.95,.85)*step(.985,sh)*tw*dot_*.6*inside*uLine;
-  gl_FragColor=vec4(col,1.);
-}`;
-  function sh(t,s){ const o=gl.createShader(t); gl.shaderSource(o,s); gl.compileShader(o); if(!gl.getShaderParameter(o,gl.COMPILE_STATUS)){ console.warn(gl.getShaderInfoLog(o)); return null; } return o; }
-  const vs=sh(gl.VERTEX_SHADER,VS), fs=sh(gl.FRAGMENT_SHADER,FS);
-  if(!vs||!fs){ done(); return; }
-  const pr=gl.createProgram(); gl.attachShader(pr,vs); gl.attachShader(pr,fs); gl.linkProgram(pr);
-  if(!gl.getProgramParameter(pr,gl.LINK_STATUS)){ done(); return; }
-  gl.useProgram(pr);
-  const buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf); gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
-  const loc=gl.getAttribLocation(pr,'a'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
-  const U={}; ['uRes','uTex','uVA','uR','uM','uAmp','uSwirl','uPh','uRef','uLine','uBox','uVS','uFrag','uTurn','uGlint','uCorner','uSpin'].forEach(n=>{ U[n]=gl.getUniformLocation(pr,n); });
-  const tex=gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D,tex);
-  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
-  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
-  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
-  gl.uniform1i(U.uTex,0);
-
-  function size(){
-    const dpr=Math.min(window.devicePixelRatio||1, innerWidth<700?1.25:1.5);
-    cv.width=Math.round(innerWidth*dpr); cv.height=Math.round(innerHeight*dpr); gl.viewport(0,0,cv.width,cv.height);
-  }
-  size(); window.addEventListener('resize',size);
-
-  /* ---- the first film waits quietly on its poster frame, so playback can carry on from exactly that picture ---- */
+  /* the first film waits quietly on its poster frame, so playback carries on from exactly that picture */
   if(!hv.getAttribute('src')) hv.src=hv.dataset.src;
   hv.preload='auto'; hv.muted=true;
   hv.addEventListener('loadedmetadata',()=>{ try{ hv.currentTime=POSTER_T; }catch(e){} },{once:true});
   window.__heroStartAt=POSTER_T;
 
-  /* ---- the picture: the poster frame, exactly what the hero shows before its film plays ---- */
-  const img=new Image(); let vAspect=16/9, ready=false;
-  img.onload=()=>{ vAspect=img.naturalWidth/img.naturalHeight; ready=true; };
-  img.onerror=()=>{ done(); };
-  img.src=posterUrl;
-  const wait0=performance.now();
-  let t0=0;
+  /* the canvas covers the page from its first frame: take the plain loader cover away then (the canvas has its own dark backdrop) */
+  new MutationObserver((m,o)=>{ if(document.querySelector('.refraction-overlay')){ o.disconnect(); shown=true; hideLoader(true); } }).observe(document.body,{childList:true});
 
-  const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
-  const sm=(a,b,x)=>{ const t=clamp((x-a)/(b-a),0,1); return t*t*(3-2*t); };
-  const outCubic=(x)=>1-Math.pow(1-clamp(x,0,1),3);
-  const inOut=(x)=>{ x=clamp(x,0,1); return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2; };
-
-  const T_END=2.65, T_FADE=2.3, FREEZE=parseFloat(new URLSearchParams(location.search).get('introT'));
-  function frame(now){
-    if(finished) return;
-    if(!t0){
-      if(ready){
-        gl.bindTexture(gl.TEXTURE_2D,tex);
-        try{ gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,img); }catch(e){ done(); return; }
-        t0=now;
-      }
-      else if(now-wait0>3500){ done(); return; }          /* picture too slow to load: skip the show */
-      else { requestAnimationFrame(frame); return; }
-    }
-    const t=isFinite(FREEZE)?FREEZE:(now-t0)/1000;           /* ?introT=1.2 freezes the show at that second (for checking) */
-    const ar=innerWidth/innerHeight;
-    /* timeline (seconds): 0-.3 the glint, .25-1.4 the glass unfolds and turns, 1.2-2.3 it widens into the frame, 2.3-2.65 hand-over */
-    const bloom=outCubic((t-.25)/1.15);
-    const R=.01+bloom*.46;
-    const morph=sm(1.1,1.8,t);
-    const swell=inOut((t-1.25)/1.05);
-    const b0=[R*1.3,R*.94], b1=[ar,1.];
-    const bx=[b0[0]+(b1[0]-b0[0])*swell, b0[1]+(b1[1]-b0[1])*swell];
-    gl.uniform2f(U.uRes,cv.width,cv.height);
-    gl.uniform1f(U.uVA,vAspect);
-    gl.uniform1f(U.uR,R+swell*1.6);
-    gl.uniform1f(U.uM,morph);
-    gl.uniform1f(U.uAmp,1.-.4*sm(.9,1.6,t));
-    gl.uniform1f(U.uSwirl,.7*(1.-sm(.3,1.2,t)));
-    gl.uniform1f(U.uPh,t*1.9);
-    gl.uniform1f(U.uSpin,t*.16);
-    gl.uniform1f(U.uRef,(1.-.3*sm(.8,1.5,t))*(1.-sm(1.65,2.25,t)));
-    gl.uniform1f(U.uLine,sm(.12,.55,t)*(1.-sm(1.85,2.3,t)));
-    gl.uniform1f(U.uFrag,1.-sm(.35,1.5,t));
-    gl.uniform1f(U.uTurn,sm(.25,1.5,t));
-    gl.uniform1f(U.uGlint,sm(0.,.25,t)*(1.-.85*sm(.45,1.3,t)));
-    gl.uniform1f(U.uCorner,.18*(1.-swell));
-    gl.uniform2f(U.uBox,bx[0],bx[1]);
-    gl.uniform1f(U.uVS,.46+.1*bloom+.44*swell);               /* the picture is small inside the glass and grows to the frame with it */
-    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
-    cv.style.opacity=t<T_FADE?'1':String(1-clamp((t-T_FADE)/(T_END-T_FADE),0,1));
-    if(t>=T_END-.3 && document.body.classList.contains('intro-on')) document.body.classList.remove('intro-on');   /* the navigation and captions fade in */
-    if(t>=T_END){ done(); return; }
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
+  playRefractionIntro({
+    poster,
+    duration:2400,
+    onProgress:(p)=>{ if(p>0.82) document.body.classList.remove('intro-on'); }   /* the navigation and captions fade in at the end */
+  }).then(done,()=>done('error'));
 })();
