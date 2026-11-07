@@ -7,6 +7,7 @@
   if(!pool.length) return;
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const RAD=Math.PI/180;
+  const POSTER_T=1.5;                                /* the video thumbnails were cut at 1.5 s */
   const SPEED=4;                                     /* degrees per second: one turn in 90 seconds */
 
   let yaw=0, pitch=0, vYaw=0, built=false, size='';
@@ -61,9 +62,12 @@
       b.style.width=w.toFixed(1)+'px'; b.style.height=h.toFixed(1)+'px';
       if(it&&it.kind==='video'&&it.video&&it.video.src){          /* a video starts playing a moment after the tile has come forward, and the tile takes the film's real shape */
         vt=setTimeout(()=>{ if(focus!==b) return;
-          const v=document.createElement('video'); v.src=it.video.src; v.poster=it.video.poster||it.cover; v.muted=true; v.loop=true; v.playsInline=true;
-          
-          b.appendChild(v); b.classList.add('is-live'); vid=v; const pp=v.play(); if(pp&&pp.catch) pp.catch(()=>{});
+          const v=document.createElement('video'); v.muted=true; v.loop=true; v.playsInline=true; v.preload='auto';
+          /* the thumbnail is the frame at 1.5 s: wait there, then play from that very frame; the video fades in over the picture only once it is really running */
+          v.addEventListener('loadedmetadata',()=>{ try{ v.currentTime=Math.min(POSTER_T,Math.max(0,(v.duration||POSTER_T)-0.5)); }catch(e){} });
+          v.addEventListener('seeked',function once(){ v.removeEventListener('seeked',once); if(focus!==b||vid!==v) return; const pp=v.play(); if(pp&&pp.catch) pp.catch(()=>{}); });
+          v.addEventListener('playing',()=>{ if(focus===b&&vid===v){ v.classList.add('on'); b.classList.add('is-live'); } });
+          v.src=it.video.src; b.appendChild(v); vid=v;
         },400);
       }
       const im=b.querySelector('img'); if(im&&it&&it.src&&it.kind!=='video'){ const hi=new Image(); hi.onload=()=>{ if(focus===b) im.src=it.src; }; hi.src=it.src; }
