@@ -17,6 +17,7 @@ const indexed = g.items.map((m, i) => ({ m, i }));
 const nr = indexed.filter(({ m }) => m.id.startsWith("nr-"));
 const sx = indexed.filter(({ m }) => m.id.startsWith("sx-"));
 const isBrand = slug === "brand-identity";
+const useOrb = slug === "video" || slug === "photography" || slug === "graphic-design";
 const showSoxi = slug === "brand-identity" || slug === "visual-automation";
 const countText = g.countLabel?.[lang] ?? `${g.items.length} ${t("pf.works")}`;
 const desc = g.intro[lang].length > 155 ? g.intro[lang].slice(0, 152).replace(/\s+\S*$/, "") + "…" : g.intro[lang];
@@ -84,7 +85,7 @@ const desc = g.intro[lang].length > 155 ? g.intro[lang].slice(0, 152).replace(/\
   ) : (
     <section class="gp-sec">
       <div class="wrap">
-        <div class="gp-grid">
+        <div class="gp-grid" data-orb={useOrb ? t("pf.sphere") : undefined}>
           {indexed.map(({ m, i }) => (
             <button type="button" class="gp-card" data-lb={i} aria-haspopup="dialog" aria-label={m.title[lang]}>
               <div class="gp-media" style={`aspect-ratio:${m.ratio.toFixed(4)}`}>
