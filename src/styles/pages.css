@@ -17,7 +17,7 @@
 .gp-sec{padding:clamp(24px,4vh,48px) 0 clamp(56px,9vh,110px)}
 .gp-sec>.wrap>h2{font-size:clamp(1.8rem,3.6vw,2.8rem);margin-bottom:clamp(20px,3vw,34px)}
 /* Orbit globe: the pictures sit on a turning ball, all facing us (orb.js) */
-.orb-view{position:relative;height:clamp(540px,84vh,900px);overflow:hidden;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.orb-view{position:relative;z-index:0;isolation:isolate;height:clamp(540px,84vh,900px);overflow:hidden;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
 .orb-view.is-drag{cursor:grabbing}
 .orb-c{position:absolute;left:0;top:0;display:block;padding:0;border:0;border-radius:6px;overflow:hidden;background:#241811;cursor:pointer;box-shadow:0 14px 34px rgba(0,0,0,.38),0 1px 0 rgba(255,255,255,.06);will-change:transform,filter}
 .orb-c img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
