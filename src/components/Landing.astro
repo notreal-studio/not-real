@@ -68,11 +68,12 @@ const countLabel = (g: (typeof groups)[number]) => g.countLabel?.[lang] ?? `${g.
             <a class="lm-l" href={groupHref(g.slug)} data-g={i}><span class="lm-ln">{g.n}</span>{g.title[lang]}</a>
           ))}
         </nav>
-        <div class="sph" role="region" aria-label={t("pf.marquee")} data-pool={mosaicPool.length}>
-          <div class="sph-view"><div class="sph-ball"></div></div>
+      </div>
+      <div class="sph" role="region" aria-label={t("pf.marquee")} data-pool={mosaicPool.length}>
+        <div class="sph-view"><div class="sph-ball"></div></div>
           <p class="sph-hint">{t("pf.sphere")}</p>
-        </div>
-      </div>    </section>
+      </div>
+    </section>
 
     {/* ---------- ABOUT ---------- */}
     <section class="block about" id="about">
