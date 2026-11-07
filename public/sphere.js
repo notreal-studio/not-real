@@ -44,15 +44,25 @@
   /* the tile under the pointer steps forward and grows by about 40%; its neighbours slide out of the way */
   let focus=null;
   function lift(b){
-    if(focus===b) return; focus=b;
-    /* the picture keeps its own shape: the area of a 2.8 times scaled tile, but with the photo's real width:height */
-    let big={x:1,y:1};
-    if(b){ const it=pool[Number(b.dataset.lb)], ratio=it&&it.ratio>0?it.ratio:G.tw/G.th, area=(2.8*G.tw)*(2.8*G.th), w=Math.sqrt(area*ratio), h=w/ratio; big={x:w/G.tw,y:h/G.th}; }
+    if(focus===b) return;
+    if(focus){ /* put the previous tile back: normal box, small picture */
+      const pit=pool[Number(focus.dataset.lb)], pim=focus.querySelector('img');
+      focus.style.width=G.tw.toFixed(1)+'px'; focus.style.height=G.th.toFixed(1)+'px';
+      if(pim&&pit) pim.src=pit.cover;
+    }
+    focus=b;
+    /* the tile itself changes size (not a stretched transform): same area as a tile scaled 2.8 times, but in the photo's real width:height,
+       and the full original picture is shown (object-fit: cover then has nothing left to crop) */
+    if(b){
+      const it=pool[Number(b.dataset.lb)], ratio=it&&it.w&&it.h?it.w/it.h:(it&&it.ratio>0?it.ratio:G.tw/G.th), area=(2.8*G.tw)*(2.8*G.th), w=Math.sqrt(area*ratio), h=w/ratio;
+      b.style.width=w.toFixed(1)+'px'; b.style.height=h.toFixed(1)+'px';
+      const im=b.querySelector('img'); if(im&&it&&it.src&&it.kind!=='video'){ const hi=new Image(); hi.onload=()=>{ if(focus===b) im.src=it.src; }; hi.src=it.src; }
+    }
     ball.querySelectorAll('.sph-t').forEach(t=>{
       if(!b){ place(t,0,0,0,1,1); return; }
       let dc=t._c-b._c; if(dc>G.cols/2) dc-=G.cols; if(dc<-G.cols/2) dc+=G.cols;
       const dr=t._r-b._r, ac=Math.abs(dc), ar=Math.abs(dr);
-      if(t===b){ place(t,0,0,G.R*0.07,big.x,big.y); return; }
+      if(t===b){ place(t,0,0,G.R*0.05,1,1); return; }
       if(ac>2||ar>2){ place(t,0,0,0,1,1); return; }
       const dy=ac===0?0:Math.sign(dc)*G.dTh*(ac===1?0.62:0.3), dp=ar===0?0:-Math.sign(dr)*G.dPh*(ar===1?0.62:0.3);
       place(t,dy,dp,0,1,1);
