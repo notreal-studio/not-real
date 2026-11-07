@@ -68,32 +68,9 @@ const countLabel = (g: (typeof groups)[number]) => g.countLabel?.[lang] ?? `${g.
             <a class="lm-l" href={groupHref(g.slug)} data-g={i}><span class="lm-ln">{g.n}</span>{g.title[lang]}</a>
           ))}
         </nav>
-        <div class="lm" role="region" aria-label={t("pf.marquee")} data-layouts={JSON.stringify(mosaicLayouts)} data-pool={mosaicPool.length}>
-          {groups.map((g, i) => (
-            <a class="lm-t lm-g" href={groupHref(g.slug)} data-g={i} style={`--x:${mosaicLayouts[0][i][0]};--y:${mosaicLayouts[0][i][1]};--w:${mosaicLayouts[0][i][2]};--h:${mosaicLayouts[0][i][3]}`}>
-              <span class="lm-in">
-                <span class="lm-slides" aria-hidden="true">
-                  {g.slides.map((s, k) => (<img src={`${base}${s}`} alt="" loading={k === 0 ? "eager" : "lazy"} decoding="async" class={k === 0 ? "is-on" : undefined} />))}
-                </span>
-                <span class="lm-gc">
-                  <span>
-                    <span class="lm-gn">{g.n}</span>
-                    <span class="lm-gt">{g.title[lang]}</span>
-                    <span class="lm-gs">{g.cardSub[lang]} · {countLabel(g)}</span>
-                  </span>
-                  <span class="lm-ga" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-                </span>
-              </span>
-            </a>
-          ))}
-          {mosaicPool.slice(0, 7).map((m, k) => (
-            <button type="button" class={`lm-t lm-p${m.kind === "video" ? " is-video" : ""}`} data-lb={k} aria-label={m.title[lang]} style={`--x:${mosaicLayouts[0][5 + k][0]};--y:${mosaicLayouts[0][5 + k][1]};--w:${mosaicLayouts[0][5 + k][2]};--h:${mosaicLayouts[0][5 + k][3]}`}>
-              <span class="lm-in">
-                <img src={`${base}${m.cover}`} alt="" loading="eager" decoding="async" />
-                <span class="play" aria-hidden="true"></span>
-              </span>
-            </button>
-          ))}
+        <div class="sph" role="region" aria-label={t("pf.marquee")} data-pool={mosaicPool.length}>
+          <div class="sph-view"><div class="sph-ball"></div></div>
+          <p class="sph-hint">{t("pf.sphere")}</p>
         </div>
       </div>    </section>
 
