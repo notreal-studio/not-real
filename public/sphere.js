@@ -42,9 +42,12 @@
     b.style.transform='rotateY('+(b._c*G.dTh+dy).toFixed(2)+'deg) rotateX('+(-b._r*G.dPh+dp).toFixed(2)+'deg) translateZ('+(-G.R+lift).toFixed(1)+'px) scale('+sx.toFixed(3)+','+sy.toFixed(3)+') translate(-50%,-50%)';
   }
   /* the tile under the pointer steps forward and grows by about 40%; its neighbours slide out of the way */
-  let focus=null;
+  let focus=null, vid=null, vt=0;
+  function sizeFor(ratio){ const area=(2.8*G.tw)*(2.8*G.th), w=Math.sqrt(area*ratio); return [w,w/ratio]; }
+  function stopVideo(){ clearTimeout(vt); if(vid){ const par=vid.parentNode; vid.pause(); vid.remove(); if(par) par.classList.remove('is-live'); vid=null; } }
   function lift(b){
     if(focus===b) return;
+    stopVideo();
     if(focus){ /* put the previous tile back: normal box, small picture */
       const pit=pool[Number(focus.dataset.lb)], pim=focus.querySelector('img');
       focus.style.width=G.tw.toFixed(1)+'px'; focus.style.height=G.th.toFixed(1)+'px';
@@ -56,6 +59,13 @@
     if(b){
       const it=pool[Number(b.dataset.lb)], ratio=it&&it.w&&it.h?it.w/it.h:(it&&it.ratio>0?it.ratio:G.tw/G.th), area=(2.8*G.tw)*(2.8*G.th), w=Math.sqrt(area*ratio), h=w/ratio;
       b.style.width=w.toFixed(1)+'px'; b.style.height=h.toFixed(1)+'px';
+      if(it&&it.kind==='video'&&it.video&&it.video.src){          /* a video starts playing a moment after the tile has come forward, and the tile takes the film's real shape */
+        vt=setTimeout(()=>{ if(focus!==b) return;
+          const v=document.createElement('video'); v.src=it.video.src; v.poster=it.video.poster||it.cover; v.muted=true; v.loop=true; v.playsInline=true;
+          v.onloadedmetadata=()=>{ if(focus!==b||!v.videoWidth) return; const s=sizeFor(v.videoWidth/v.videoHeight); b.style.width=s[0].toFixed(1)+'px'; b.style.height=s[1].toFixed(1)+'px'; };
+          b.appendChild(v); b.classList.add('is-live'); vid=v; const pp=v.play(); if(pp&&pp.catch) pp.catch(()=>{});
+        },400);
+      }
       const im=b.querySelector('img'); if(im&&it&&it.src&&it.kind!=='video'){ const hi=new Image(); hi.onload=()=>{ if(focus===b) im.src=it.src; }; hi.src=it.src; }
     }
     ball.querySelectorAll('.sph-t').forEach(t=>{
