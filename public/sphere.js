@@ -55,11 +55,19 @@
       if(pim&&pit) pim.src=pit.cover;
     }
     focus=b;
+    let shY=0, shP=0;                                  /* nudge (degrees) that keeps an enlarged tile inside the visible area */
+    if(b){ cur=0; vYaw=0; }                            /* the ball stands still the moment a tile is picked */
     /* the tile itself changes size (not a stretched transform): same area as a tile scaled 2.8 times, but in the photo's real width:height,
        and the full original picture is shown (object-fit: cover then has nothing left to crop) */
     if(b){
       const it=pool[Number(b.dataset.lb)], ratio=it&&it.w&&it.h?it.w/it.h:(it&&it._r?it._r:(it&&it.ratio>0?it.ratio:G.tw/G.th)), area=(2.8*G.tw)*(2.8*G.th), w=Math.sqrt(area*ratio), h=w/ratio;
       b.style.width=w.toFixed(1)+'px'; b.style.height=h.toFixed(1)+'px';
+      /* tiles near the top, bottom or sides would be cut off by the edge of the view: slide them just far enough inwards */
+      const P=parseFloat(view.style.perspective)||700, limX=Math.atan2(view.clientWidth/2,P)/RAD*0.96, limY=Math.atan2(view.clientHeight/2,P)/RAD*0.96;
+      const hx=(w/G.R)/RAD/2*1.1, hy=(h/G.R)/RAD/2*1.1;
+      const psi=(((b._c*G.dTh+yaw)%360)+540)%360-180, phi=-b._r*G.dPh+pitch*Math.cos(psi*RAD);
+      const mx=Math.max(0,limX-hx), my=Math.max(0,limY-hy);
+      shY=Math.max(-mx,Math.min(mx,psi))-psi; shP=Math.max(-my,Math.min(my,phi))-phi;
       if(it&&it.kind==='video'&&it.video&&it.video.src){          /* a video starts playing a moment after the tile has come forward, and the tile takes the film's real shape */
         vt=setTimeout(()=>{ if(focus!==b) return;
           const v=document.createElement('video'); v.muted=true; v.loop=true; v.playsInline=true; v.preload='auto';
@@ -76,7 +84,7 @@
       if(!b){ place(t,0,0,0,1,1); return; }
       let dc=t._c-b._c; if(dc>G.cols/2) dc-=G.cols; if(dc<-G.cols/2) dc+=G.cols;
       const dr=t._r-b._r, ac=Math.abs(dc), ar=Math.abs(dr);
-      if(t===b){ place(t,0,0,G.R*0.05,1,1); return; }
+      if(t===b){ place(t,shY,shP,G.R*0.05,1,1); return; }
       if(ac>2||ar>2){ place(t,0,0,0,1,1); return; }
       const dy=ac===0?0:Math.sign(dc)*G.dTh*(ac===1?0.62:0.3), dp=ar===0?0:-Math.sign(dr)*G.dPh*(ar===1?0.62:0.3);
       place(t,dy,dp,0,1,1);
