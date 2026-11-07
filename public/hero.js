@@ -32,7 +32,7 @@
     load(slides[(i+1)%slides.length]);            // metadata only (preload="metadata")
     if(v){
       v.muted=muted; v.loop=false;
-      try{ v.currentTime=0; }catch(e){}
+      if(!(n===0&&!v.paused&&v.currentTime>0.05)) { try{ v.currentTime=0; }catch(e){} }   /* the opening already started the first film: carry on, do not restart */
       v.onended=()=>show(i+1);
       if(!reduced && inView){ const p=v.play(); if(p&&p.catch) p.catch(()=>{}); }
     }
@@ -45,6 +45,7 @@
   if(!document.body.classList.contains('locked')) start();
   else new MutationObserver((m,o)=>{ if(!document.body.classList.contains('locked')){ o.disconnect(); start(); } })
     .observe(document.body,{attributes:true,attributeFilter:['class']});
+  window.addEventListener('intro-done',start);
   setTimeout(start,9000);                           // safety net
 
   const next=root.querySelector('.hs-next'), prevB=root.querySelector('.hs-prev');

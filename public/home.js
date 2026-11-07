@@ -21,7 +21,8 @@
     loader.classList.add('gone'); setTimeout(()=>{ loader.style.display='none'; },900);
   }
   if(!loader){ reveal(); }
-  else if(reduced){ lcount.textContent='100'; lbar.style.width='100%'; reveal(); }
+  else if(window.__introRunning){ window.addEventListener('intro-done',reveal); setTimeout(reveal,12000); }   /* the opening sequence (intro.js) runs the show */
+  else if(!lcount||!lbar||reduced){ reveal(); }
   else {
     let p=0;
     const t=setInterval(()=>{
