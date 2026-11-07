@@ -57,12 +57,12 @@
     /* the tile itself changes size (not a stretched transform): same area as a tile scaled 2.8 times, but in the photo's real width:height,
        and the full original picture is shown (object-fit: cover then has nothing left to crop) */
     if(b){
-      const it=pool[Number(b.dataset.lb)], ratio=it&&it.w&&it.h?it.w/it.h:(it&&it.ratio>0?it.ratio:G.tw/G.th), area=(2.8*G.tw)*(2.8*G.th), w=Math.sqrt(area*ratio), h=w/ratio;
+      const it=pool[Number(b.dataset.lb)], ratio=it&&it.w&&it.h?it.w/it.h:(it&&it._r?it._r:(it&&it.ratio>0?it.ratio:G.tw/G.th)), area=(2.8*G.tw)*(2.8*G.th), w=Math.sqrt(area*ratio), h=w/ratio;
       b.style.width=w.toFixed(1)+'px'; b.style.height=h.toFixed(1)+'px';
       if(it&&it.kind==='video'&&it.video&&it.video.src){          /* a video starts playing a moment after the tile has come forward, and the tile takes the film's real shape */
         vt=setTimeout(()=>{ if(focus!==b) return;
           const v=document.createElement('video'); v.src=it.video.src; v.poster=it.video.poster||it.cover; v.muted=true; v.loop=true; v.playsInline=true;
-          v.onloadedmetadata=()=>{ if(focus!==b||!v.videoWidth) return; const s=sizeFor(v.videoWidth/v.videoHeight); b.style.width=s[0].toFixed(1)+'px'; b.style.height=s[1].toFixed(1)+'px'; };
+          
           b.appendChild(v); b.classList.add('is-live'); vid=v; const pp=v.play(); if(pp&&pp.catch) pp.catch(()=>{});
         },400);
       }
@@ -123,5 +123,7 @@
     }
     requestAnimationFrame(tick);
   }
+  /* learn each film's real shape up front, so the tile grows to its final size once, before the video starts */
+  pool.forEach(it=>{ if(it.kind==='video'&&it.video&&it.video.src){ const m=document.createElement('video'); m.preload='metadata'; m.muted=true; m.onloadedmetadata=()=>{ if(m.videoWidth) it._r=m.videoWidth/m.videoHeight; m.removeAttribute('src'); m.load(); }; m.src=it.video.src; } });
   build(); paint(); requestAnimationFrame(tick);
 })();
