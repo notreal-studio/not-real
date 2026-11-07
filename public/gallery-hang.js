@@ -1,7 +1,7 @@
 /* Gallery pages: every card hangs from its own thread. When a card scrolls into view it lowers itself slowly
    from above (the thread lengthens with it), then it keeps swaying a hair (CSS). No effect under reduced motion. */
 (function(){
-  const grids=[...document.querySelectorAll('.gp-grid,.gp-pages')]; if(!grids.length) return;
+  const grids=[...document.querySelectorAll('.gp-grid:not([data-orb]),.gp-pages')]; if(!grids.length) return;
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const HOLE=9.5;                       /* hole centre, px below the card's top edge */
   const rnd=(a,b)=>a+Math.random()*(b-a);

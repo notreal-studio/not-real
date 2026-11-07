@@ -17,11 +17,7 @@ const countLabel = (g: (typeof groups)[number]) => g.countLabel?.[lang] ?? `${g.
 
 ---
 <Base lang={lang}>
-  <div id="loader" class="tex-bordeaux" aria-hidden="true">
-    <span class="logo logo-lockup"></span>
-    <div class="lc"><span id="lcount">0</span> — {t("loader.loading")}</div>
-    <div class="lbar" id="lbar"></div>
-  </div>
+  <div id="loader" aria-hidden="true"></div>
 
   <SiteHeader lang={lang} />
 

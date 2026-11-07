@@ -1,9 +1,11 @@
 /* ===== LOADER ===== */
-#loader{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;transition:transform .8s cubic-bezier(.76,0,.24,1)}
-#loader.gone{transform:translateY(-100%)}
-#loader .logo-lockup{width:clamp(130px,18vw,190px)}
-#loader .lc{font:500 11px/1 var(--body);letter-spacing:.3em;text-transform:uppercase;opacity:.75}
-#loader .lbar{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--br-saffron)}
+#loader{position:fixed;inset:0;z-index:200;background:#09090c;transition:opacity .5s ease}
+#loader.gone{opacity:0;pointer-events:none}
+/* the opening animation's WebGL canvas (from the prototype) */
+.refraction-overlay{position:fixed;inset:0;width:100%;height:100%;z-index:1000;pointer-events:none}
+/* while the opening plays the page chrome waits, then fades in */
+.site-head,.hs-cap,.hs-ctrl,.hs-progress,.hero-scrim{transition:opacity .9s ease}
+body.intro-on .site-head,body.intro-on .hs-cap,body.intro-on .hs-ctrl,body.intro-on .hs-progress,body.intro-on .hero-scrim{opacity:0}
 
 /* ===== HEADER ===== */
 .site-head{position:fixed;inset:0 0 auto 0;z-index:90;color:var(--br-cream);transition:background .3s,color .3s,box-shadow .3s}
