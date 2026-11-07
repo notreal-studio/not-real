@@ -77,8 +77,8 @@
   .lm{aspect-ratio:auto;display:grid;gap:12px;overflow:visible}
   .lm-t{position:static;width:auto;height:auto;padding:0}
   .lm-g{aspect-ratio:4/3}
-  .lm-nav{display:none}
-  .lm-nav+.lm{margin-top:clamp(36px,6vw,64px)}
+  .lm-nav{gap:6px 22px}
+  .lm-l{font-size:1.2rem;padding:8px 0}
   .lm-gc{opacity:1;transform:none}
   .lm-g .lm-in::after{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(to top,rgba(43,29,20,.45),transparent 55%);pointer-events:none}
   .lm-p{display:none}
