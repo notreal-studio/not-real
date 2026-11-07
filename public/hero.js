@@ -32,7 +32,9 @@
     load(slides[(i+1)%slides.length]);            // metadata only (preload="metadata")
     if(v){
       v.muted=muted; v.loop=false;
-      if(!(n===0&&!v.paused&&v.currentTime>0.05)) { try{ v.currentTime=0; }catch(e){} }   /* the opening already started the first film: carry on, do not restart */
+      /* after the opening sequence the first film is already parked on its poster frame: start from that frame, no jump */
+      const at=(n===0&&window.__heroStartAt!=null)?window.__heroStartAt:0; window.__heroStartAt=null;
+      if(Math.abs(v.currentTime-at)>0.05){ try{ v.currentTime=at; }catch(e){} }
       v.onended=()=>show(i+1);
       if(!reduced && inView){ const p=v.play(); if(p&&p.catch) p.catch(()=>{}); }
     }
