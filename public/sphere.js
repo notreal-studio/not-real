@@ -7,7 +7,7 @@
   if(!pool.length) return;
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const RAD=Math.PI/180;
-  const SPEED=2.2;                                   /* degrees per second: one turn in about 2.7 minutes */
+  const SPEED=2.65;                                  /* degrees per second: one turn in about 2.3 minutes */
 
   let yaw=0, pitch=0, vYaw=0, built=false, size='';
   let hovering=false, dragging=false, onScreen=false, held=false, moved=0;
