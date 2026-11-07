@@ -29,12 +29,12 @@
     i=n; const s=slides[i]; s.classList.add('is-active');
     const v=load(s);
     if(cnt) cnt.textContent=String(i+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
-    load(slides[(i+1)%slides.length]);            // metadata only (preload="metadata")
+    setTimeout(()=>load(slides[(i+1)%slides.length]),900);   // metadata only; a moment later so the opening's hand-over stays smooth
     if(v){
       v.muted=muted; v.loop=false;
       /* after the opening sequence the first film is already parked on its poster frame: start from that frame, no jump */
       const at=(n===0&&window.__heroStartAt!=null)?window.__heroStartAt:0; window.__heroStartAt=null;
-      if(Math.abs(v.currentTime-at)>0.05){ try{ v.currentTime=at; }catch(e){} }
+      if(v.paused && Math.abs(v.currentTime-at)>0.05){ try{ v.currentTime=at; }catch(e){} }   /* already playing (the opening started it just before the end): leave it */
       v.onended=()=>show(i+1);
       if(!reduced && inView){ const p=v.play(); if(p&&p.catch) p.catch(()=>{}); }
     }

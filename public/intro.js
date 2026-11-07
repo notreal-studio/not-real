@@ -251,7 +251,7 @@ void main() {
   const box=document.getElementById('loader');
   const poster=document.querySelector('.hs-poster');
   const hv=document.querySelector('.hs.is-active video, .hs video');
-  let finished=false, shown=false;
+  let finished=false, shown=false, early=false;
   function hideLoader(fast){
     if(!box) return;
     if(fast){ box.style.display='none'; return; }
@@ -291,6 +291,10 @@ void main() {
   playRefractionIntro({
     poster,
     duration:2400,
-    onProgress:(p)=>{ if(p>0.82) document.body.classList.remove('intro-on'); }   /* the navigation and captions fade in at the end */
+    onProgress:(p)=>{
+      if(p>0.82) document.body.classList.remove('intro-on');            /* the navigation and captions fade in at the end */
+      /* the film starts a moment before the canvas goes (the canvas still covers it), so no start-up hitch is left for the hand-over */
+      if(p>0.9 && !early){ early=true; if(hv.readyState>=3){ window.__heroStartAt=null; const pp=hv.play(); if(pp&&pp.catch) pp.catch(()=>{}); } }
+    }
   }).then(done,()=>done('error'));
 })();
