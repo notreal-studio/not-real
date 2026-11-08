@@ -30,6 +30,9 @@
 
 /* ===== PORTFOLIO: one living mosaic (photo tiles fade out, the collage re-arranges, new tiles appear elsewhere; the five group tiles stay and link to the galleries) ===== */
 .portfolio .lead{margin-top:18px}
+.pf-copy{max-width:46em;margin-top:22px}
+.pf-copy p{font-size:clamp(16px,1.35vw,19px);line-height:1.65;color:var(--muted);margin-top:14px}
+.pf-copy .pf-l1{font-family:var(--disp);font-size:clamp(1.5rem,2.6vw,2.2rem);line-height:1.2;color:var(--fg);margin-top:0;margin-bottom:6px}
 .lm{position:relative;aspect-ratio:3/2;margin-top:clamp(36px,6vw,64px);overflow:hidden}
 .lm-t{position:absolute;display:block;left:calc(var(--x) * 100% / 12);top:calc(var(--y) * 100% / 8);width:calc(var(--w) * 100% / 12);height:calc(var(--h) * 100% / 8);
   padding:clamp(4px,.55vw,8px);border:0;background:none;cursor:pointer;color:inherit;transition:left 1s cubic-bezier(.65,0,.2,1),top 1s cubic-bezier(.65,0,.2,1),width 1s cubic-bezier(.65,0,.2,1),height 1s cubic-bezier(.65,0,.2,1)}

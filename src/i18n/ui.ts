@@ -21,8 +21,10 @@ export const ui: Record<string, Record<string, string>> = {
     "hero.prev": "Ankstesnis", "hero.next": "Kitas", "hero.sound": "Garsas",
 
     "pf.kicker": "Portfolio",
-    "pf.h2": "Mano <em class=\"br-ul\">darbai.</em>",
-    "pf.lead": "Fotografija, filmai ir AI vizualai, kuriuose produktas atrodo toks, kokį gaus pirkėjas. Koncepciniai ir mano paties projektai.",
+    "pf.h2": "<span class=\"br-ul\">Portfolio</span>",
+    "pf.l1": "Tikras produktas. Netikėtas scenarijus.",
+    "pf.l2": "Fotografuoju ir filmuoju produktus. Su AI kuriu scenas, kurias realybėje būtų sunku pastatyti. Galiu keisti aplinką, šviesą ir veikėjus, kartu tiksliai perteikdama produkto formą, medžiagas ir detales.",
+    "pf.l3": "Nuo pirmo reklamos kadro iki vizualinio identiteto gairių kuriu nuoseklų stilių, kad tavo prekės ženklą atpažintų ir prisimintų.",
     "pf.view": "Žiūrėti", "pf.works": "darbų", "pf.open": "Atidaryti", "pf.close": "Uždaryti", "pf.prev": "Ankstesnis", "pf.next": "Kitas", "pf.viewer": "Peržiūra",
     "pf.marquee": "Besisukanti darbų sfera", "pf.sphere": "Tempk, kad pasuktum. Spausk nuotrauką, kad padidintum.", "about.hint": "Spausk, kad padidintum ir girdėtum",
 
@@ -46,7 +48,7 @@ export const ui: Record<string, Record<string, string>> = {
     "footer.tag": "Real feeling. Unreal ideas.", "footer.explore": "Naršyk", "footer.hi": "Parašyk",
     "footer.copy": "© 2026 NOT REAL · Inga Bankauskė", "footer.privacy": "Privatumo politika", "footer.cookies": "Slapukų nustatymai",
 
-    "gp.back": "Visi darbai", "gp.works": "darbų", "gp.more": "Kiti darbai",
+    "gp.back": "Visi darbai", "gp.by": "Sukūrė Inga Bankauskė, NOT REAL studija", "gp.sub.soxi.d": "Konceptinis kojinių prekės ženklas. 1 vieta „Magnific One Brand Kit“ konkurse, 2026.", "gp.sub.nr.d": "Studijos prekės ženklas: logotipai, spalvos, šriftai ir brandbook 4.0.0.", "gp.sub.open": "Atidaryti", "gp.works": "darbų", "gp.more": "Kiti darbai",
     "gp.cta.h": "Turi projektą?", "gp.cta.btn": "Paprašyti pasiūlymo",
     "gp.brand.nr": "NOT REAL brandbook 4.0.0", "gp.brand.sx": "SOXI Brand Guidelines", "gp.brand.note": "Parodyti tik pasirinkti puslapiai.",
     "gp.soxi.h": "SOXI atvejo studija", "gp.soxi.p": "Nuo pavadinimo iki kampanijos viename Space: taisyklės, produktas, personažai, scenos, plakatai, e. parduotuvė ir filmas.", "gp.soxi.btn": "Skaityti atvejo studiją",
@@ -69,8 +71,10 @@ export const ui: Record<string, Record<string, string>> = {
     "hero.prev": "Previous", "hero.next": "Next", "hero.sound": "Sound",
 
     "pf.kicker": "Portfolio",
-    "pf.h2": "My <em class=\"br-ul\">work.</em>",
-    "pf.lead": "Photography, film and AI visuals where the product looks exactly as the buyer will receive it. Concept work and personal projects.",
+    "pf.h2": "<span class=\"br-ul\">Portfolio</span>",
+    "pf.l1": "A real product. An unexpected scenario.",
+    "pf.l2": "I photograph and film products. With AI, I build scenes that would be difficult to stage in real life. I can change the setting, lighting and cast while keeping the product's shape, materials and details true to life.",
+    "pf.l3": "From the first campaign image to the brand guidelines, I build a consistent style that makes your brand recognisable and memorable.",
     "pf.view": "View", "pf.works": "works", "pf.open": "Open", "pf.close": "Close", "pf.prev": "Previous", "pf.next": "Next", "pf.viewer": "Viewer",
     "pf.marquee": "Rotating sphere of work", "pf.sphere": "Drag to turn. Click a picture to enlarge.", "about.hint": "Tap to enlarge, with sound",
 
@@ -94,7 +98,7 @@ export const ui: Record<string, Record<string, string>> = {
     "footer.tag": "Real feeling. Unreal ideas.", "footer.explore": "Explore", "footer.hi": "Say hi",
     "footer.copy": "© 2026 NOT REAL · Inga Bankauskė", "footer.privacy": "Privacy policy", "footer.cookies": "Cookie settings",
 
-    "gp.back": "All work", "gp.works": "works", "gp.more": "More work",
+    "gp.back": "All work", "gp.by": "Created by Inga Bankauskė, NOT REAL studio", "gp.sub.soxi.d": "A concept sock brand. 1st place at the Magnific One Brand Kit contest, 2026.", "gp.sub.nr.d": "The studio brand: logos, colours, type and the brandbook 4.0.0.", "gp.sub.open": "Open", "gp.works": "works", "gp.more": "More work",
     "gp.cta.h": "Have a project in mind?", "gp.cta.btn": "Ask for a quote",
     "gp.brand.nr": "NOT REAL brandbook 4.0.0", "gp.brand.sx": "SOXI Brand Guidelines", "gp.brand.note": "Selected pages only.",
     "gp.soxi.h": "SOXI case study", "gp.soxi.p": "From a name to a campaign inside one Space: rules, product, cast, scenes, posters, e-shop and film.", "gp.soxi.btn": "Read the case study",

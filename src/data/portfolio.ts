@@ -5,7 +5,7 @@ import { gallery, soxiFrames, type Img } from "./gallery";
 export type L = { en: string; lt: string };
 export type Lang = "en" | "lt";
 
-export interface Video { slug: string; title: string; sub: L; vertical: boolean }
+export interface Video { slug: string; title: string; titleLt?: string; sub: L; vertical: boolean }
 export interface Media {
   id: string;
   kind: "image" | "video";
@@ -23,12 +23,12 @@ export interface Group {
 
 /* ---------------- videos ---------------- */
 export const videos: Video[] = [
-  { slug: "bubblegum-city",     title: "Bubblegum City",      sub: { en: "Concept film",                lt: "Koncepcinis filmas" },                 vertical: false },
-  { slug: "beyond-the-elements",title: "Beyond the Elements", sub: { en: "Outerwear film",              lt: "Lauko drabužių filmas" },              vertical: false },
-  { slug: "the-armchair",       title: "The Armchair",        sub: { en: "From product to interior",    lt: "Nuo produkto iki interjero" },         vertical: false },
-  { slug: "piazza",             title: "Piazza",              sub: { en: "Fashion film + 3D scene",     lt: "Mados filmas + 3D scena" },            vertical: false },
-  { slug: "sofa-360",           title: "Sofa, 360°",          sub: { en: "Product visualisation",       lt: "Produkto vizualizacija" },             vertical: false },
-  { slug: "scene-08",           title: "Scene 08",            sub: { en: "Concept film",                lt: "Koncepcinis filmas" },                 vertical: false },
+  { slug: "bubblegum-city", title: "Oops, My Bad", titleLt: "Ups, netyčia", sub: { en: "Personal AI film", lt: "Asmeninis AI filmas" }, vertical: false },
+  { slug: "beyond-the-elements", title: "Element", titleLt: "Stichija", sub: { en: "AI outerwear commercial", lt: "AI viršutinių drabužių reklama" }, vertical: false },
+  { slug: "the-armchair", title: "A Room Built Around It", titleLt: "Interjeras aplink jį", sub: { en: "AI product visualisation", lt: "AI produkto vizualizacija" }, vertical: false },
+  { slug: "piazza", title: "From Model to Motion", titleLt: "Nuo modelio iki judesio", sub: { en: "AI fashion film created from a 3D model", lt: "AI mados filmas, sukurtas iš 3D modelio" }, vertical: false },
+  { slug: "sofa-360", title: "The Turn", titleLt: "Apsisukimas", sub: { en: "360° product visualisation", lt: "360° produkto vizualizacija" }, vertical: false },
+  { slug: "scene-08", title: "Crime Scene Presentation", titleLt: "Nusikaltimo vietos pristatymas", sub: { en: "AI cinematic environment", lt: "AI kinematografinė aplinka" }, vertical: false },
   { slug: "vesper",             title: "Vesper",              sub: { en: "Headphones · concept ad",     lt: "Ausinės · koncepcinė reklama" },       vertical: true },
   { slug: "drinks",             title: "Splash",              sub: { en: "Drinks, in motion",           lt: "Gėrimai judesyje" },                   vertical: true },
   { slug: "limone",             title: "Limone",              sub: { en: "Beverage · concept ad",       lt: "Gėrimas · koncepcinė reklama" },       vertical: true },
@@ -45,7 +45,7 @@ export const heroVideos = heroSlugs.map((s) => videos.find((v) => v.slug === s)!
 
 const vMedia = (slug: string): Media => {
   const v = videos.find((x) => x.slug === slug)!;
-  return { id: slug, kind: "video", title: { en: v.title, lt: v.title }, sub: v.sub, cover: `/assets/video/${slug}.webp`, ratio: v.vertical ? 4 / 5 : 16 / 10,
+  return { id: slug, kind: "video", title: { en: v.title, lt: v.titleLt ?? v.title }, sub: v.sub, cover: `/assets/video/${slug}.webp`, ratio: v.vertical ? 4 / 5 : 16 / 10,
     video: { src: `/assets/video/${slug}.mp4`, poster: `/assets/video/${slug}.webp`, vertical: v.vertical } };
 };
 const iMedia = (m: Img, title: L, sub?: L): Media => ({ id: m.id, kind: "image", title, sub, cover: m.thumb, ratio: m.w / m.h, src: m.src, w: m.w, h: m.h });
@@ -106,23 +106,23 @@ const vaItems = gallery.visual.map((m, i) => iMedia(m, { en: `SOXI, frame ${i + 
 /* ---------------- the five groups ---------------- */
 export const groups: Group[] = [
   { slug: "video", n: "01", title: { en: "Video", lt: "Video" },
-    intro: { en: "Short films and ads where the product, the light and the feeling stay real, and one idea nobody ordered moves the story.",
-             lt: "Trumpi filmai ir reklamos, kuriuose produktas, šviesa ir jausmas lieka tikri, o viena niekieno neužsakyta idėja judina istoriją." },
+    intro: { en: "AI films and video ads can make even the most improbable story feel as though it really happened. Your product or service can take the lead. A good story makes people feel something and helps them remember your brand.",
+             lt: "AI filmuose ir vaizdo reklamose net neįtikėtina istorija gali atrodyti taip, lyg būtų nutikusi iš tiesų. Jos herojumi gali tapti jūsų produktas ar paslauga. Gera istorija sukelia emociją ir padeda žiūrovams prisiminti jūsų prekės ženklą." },
     cardSub: { en: "Films and ads", lt: "Filmai ir reklamos" },
     items: videos.map((v) => vMedia(v.slug)), slides: ["bubblegum-city", "vesper", "the-armchair", "limone", "beyond-the-elements", "dress-to-kill"].map((s) => `/assets/video/${s}.webp`) },
-  { slug: "photography", n: "02", title: { en: "Photography", lt: "Fotografija" },
-    intro: { en: "Photography and AI visuals built to one rule: the product looks exactly as the buyer will receive it. Real light, real material, one system.",
-             lt: "Fotografija ir AI vizualai pagal vieną taisyklę: produktas atrodo toks, kokį gaus pirkėjas. Tikra šviesa, tikra medžiaga, viena sistema." },
+  { slug: "photography", n: "02", title: { en: "Photo / AI Images", lt: "Foto / AI foto" },
+    intro: { en: "The same product or service can tell a different story depending on where it’s seen. An online shop needs a clear image, a catalogue needs a cohesive series, and social media needs a shot worth pausing for.\n\nPhotography and AI make it possible to start with a simple shot on white, explore new angles or colours, use light to bring out textures and build a scene that once existed only in your imagination. Each image is tailored to where it will appear, with your brand’s style tying them together.",
+             lt: "Tas pats produktas ar paslauga skirtingose vietose turi pasakoti skirtingas istorijas. E. parduotuvei reikia aiškaus vaizdo, katalogui – vientisos serijos, o socialiniams tinklams – kadro, prie kurio norisi stabtelėti.\n\nFotografija ir AI leidžia pradėti nuo paprasto kadro baltame fone, keisti rakursą ar spalvas, šviesa išryškinti tekstūras ir sukurti sceną, kurią iki šiol tik įsivaizdavote. Vaizdai pritaikomi tam, kur bus rodomi, o visus juos sieja jūsų prekės ženklo stilius." },
     cardSub: { en: "Campaign and product", lt: "Kampanijos ir produktai" },
     items: photographyItems, slides: ["ph-06", "ph-07", "ph-18", "ph-17", "ph-09", "ph-16"].map((id) => ph(id).thumb) },
   { slug: "graphic-design", n: "03", title: { en: "Graphic design", lt: "Grafinis dizainas" },
-    intro: { en: "Posters, type and campaign lines that carry the brand where a photograph alone cannot.",
-             lt: "Plakatai, tipografija ir kampanijų frazės, kurios perduoda prekės ženklą ten, kur vien nuotraukos neužtenka." },
+    intro: { en: "Packaging catches the eye, a catalogue helps people choose, and on screen, motion sets the pace at which a message unfolds.\n\nAI makes it possible to explore several design directions from a single sketch, including styles you might not have considered at first. The chosen direction is refined to fit your brand’s visual identity. Motion design comes in where movement can catch the eye and draw attention to what matters most.",
+             lt: "Pakuotė patraukia žvilgsnį, katalogas padeda išsirinkti, o ekrane judesys leidžia žinutę atskleisti pasirinktu ritmu.\n\nSu AI iš vieno eskizo galima greitai išbandyti kelias dizaino kryptis, net ir tokias, apie kurias iš pradžių nepagalvotumėte. Pasirinkta kryptis derinama prie jūsų prekės ženklo vizualinio identiteto. Animuota grafika (motion design) pasitelkiama ten, kur judesys padeda patraukti dėmesį ir išryškinti tai, kas svarbiausia." },
     cardSub: { en: "Posters and type", lt: "Plakatai ir tipografija" },
     items: graphicItems, slides: gd.map((m) => m.thumb) },
   { slug: "brand-identity", n: "04", title: { en: "Brand identity", lt: "Prekės ženklo identitetas" },
-    intro: { en: "From a name to a system: logo, colour, type, voice and the rules that keep every image on brand. Two brandbooks, shown in selected pages.",
-             lt: "Nuo pavadinimo iki sistemos: logotipas, spalvos, šriftai, balsas ir taisyklės, laikančios kiekvieną vaizdą prekės ženklo stiliuje. Du brand book'ai, parodyti pasirinktais puslapiais." },
+    intro: { en: "What makes your product or service distinctive deserves to be seen. Brand identity starts with understanding who it is for, what makes it valuable and why someone would choose it. Research into the audience, competitors and existing communication helps establish a distinctive direction and translate it into design.\n\nThat direction takes shape through the logo, colours, typography, graphics, photography and tone of voice. These elements are developed together and tested where customers encounter the brand: on packaging, websites, social media and advertising.\n\nThe brand guidelines bring these decisions together through practical rules and examples. They give you and your creative collaborators a shared reference, so every new piece of content does not require a fresh decision about how the brand should look or sound. There is room for new ideas, with a consistent and recognisable identity to build on.",
+             lt: "Jūsų produkto ar paslaugos išskirtinumas turi būti matomas. Prekės ženklo identiteto kūrimas prasideda nuo jo esmės: kam jis skirtas, kuo vertingas ir kodėl žmogus turėtų pasirinkti būtent jį. Auditorijos, konkurentų ir esamos komunikacijos analizė padeda atrasti savą kryptį ir suteikti jai aiškią kūrybinę išraišką.\n\nŠi kryptis atsiskleidžia logotipe, spalvose, šriftuose, grafikoje, fotografijoje ir bendravimo tone. Sprendimai derinami tarpusavyje ir išbandomi ten, kur prekės ženklą sutinka klientas: ant pakuotės, svetainėje, socialiniuose tinkluose ar reklamoje.\n\nVisa tai sujungiama į prekės ženklo vadovą – brandbooką. Jame pateikiamos naudojimo taisyklės ir konkretūs pavyzdžiai, kad kuriant naują turinį nereikėtų kaskart iš naujo spręsti, kaip jūsų prekės ženklas turi atrodyti ir kalbėti. Tai bendras pagrindas jums ir su jumis dirbantiems kūrėjams: laisvė plėtoti naujas idėjas, išlaikant savitą, vientisą ir atpažįstamą įvaizdį." },
     cardSub: { en: "Logos and brandbooks", lt: "Logotipai ir brand book'ai" }, countLabel: { en: "2 brandbooks", lt: "2 brand book'ai" },
     items: [...nrPages, ...sxPages], slides: [...gallery.brandNR.slice(0, 4), ...gallery.brandSX.slice(0, 2)].map((m) => m.thumb) },
   { slug: "visual-automation", n: "05", title: { en: "Visual automation", lt: "Vizualų automatizavimas" },
