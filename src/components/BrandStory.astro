@@ -20,7 +20,7 @@ const swatches = [
   { n: { lt: "Espresso", en: "Espresso" }, hex: "#2B1D14", fg: "#F2EDE4" },
   { n: { lt: "Šafranas", en: "Saffron" }, hex: "#E8A83A", fg: "#2B1D14" },
 ];
-const perRow = (t: string) => (t === "pair" ? 2 : t === "trio" ? 3 : t === "grid" ? 4 : 1);
+const perRow = (t: string) => (t === "pair" ? 2 : t === "trio" || t === "onphoto" ? 3 : t === "grid" ? 4 : 1);
 const chunks = (a: string[], n: number) => a.reduce<string[][]>((o, v, i) => { if (i % n === 0) o.push([]); o[o.length - 1].push(v); return o; }, []);
 const typoNote = { lt: "Pagrindinė mintis – „Newsreader“, paaiškinimas – „Figtree“. Vienas žodis kursyvu ir pabrauktas.", en: "The main thought is set in Newsreader, the explanation in Figtree. One word in italics and underlined." };
 ---
@@ -106,6 +106,7 @@ const typoNote = { lt: "Pagrindinė mintis – „Newsreader“, paaiškinimas �
                       {row.map((id) => (
                         <button type="button" class="bs-fig" style={`--r:${(findImg(id).w / findImg(id).h).toFixed(4)}`} data-lb={idx(id)} aria-haspopup="dialog" aria-label={st.name}>
                           <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt="" loading="lazy" decoding="async" />
+                          {b.type === "onphoto" && <span class="logo logo-mark bs-mark" aria-hidden="true"></span>}
                         </button>
                       ))}
                     </div>

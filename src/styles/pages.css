@@ -98,6 +98,7 @@
 .bs-r-wide{max-width:680px}
 .bs-jr{display:flex;gap:clamp(8px,1.2vw,14px);align-items:stretch}
 .bs-jr .bs-fig{flex:var(--r,1.5) 1 0;min-width:0}
+.bs-mark{position:absolute;left:5%;bottom:7%;width:10%;color:var(--br-cream);filter:drop-shadow(0 1px 4px rgba(0,0,0,.5));pointer-events:none}
 .bs-jr .bs-fig img{height:100%;object-fit:cover}
 .bs-bb{display:grid;gap:clamp(8px,1.2vw,14px);margin-top:clamp(16px,2.4vw,26px);max-width:880px}
 .bs-bbrow{margin-top:0}

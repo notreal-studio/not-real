@@ -16,7 +16,7 @@ const all: Img[] = [...Object.values(gallery).flat(), ...soxiFrames, ...bookPage
   return m;
 };
 
-export type BlockType = "pair" | "trio" | "seq" | "grid" | "wide" | "bb" | "logos" | "palette" | "typo";
+export type BlockType = "pair" | "trio" | "seq" | "grid" | "wide" | "bb" | "logos" | "palette" | "typo" | "onphoto";
 export interface Block { type: BlockType; ids: string[]; cap?: L; link?: { to: "soxi" | "not-real"; t: L } }
 export type Para = L & { k?: L };            // k = bold lead-in word(s)
 export interface Sec { n: string; h: L; p: Para[]; blocks: Block[] }
@@ -167,7 +167,7 @@ export const nrStory: Story = {
       ],
       blocks: [
         { type: "logos", ids: [], cap: { lt: "Trys logotipo variantai: NR simbolis, užrašas ir junginys", en: "The three logo versions: the NR symbol, the wordmark and the combination" } },
-        { type: "pair", ids: ["nb-10", "nb-11"], cap: { lt: "Brandbooke: apsaugos zona ir logotipas ant skirtingų fonų", en: "In the brandbook: clear zone and the logo on different backgrounds" } },
+        { type: "onphoto", ids: ["ph-16", "ph-19", "ph-14"], cap: { lt: "Logotipas ant nuotraukos: tik NR simbolis, mažas, rami vieta kampe", en: "The logo on a photograph: only the NR symbol, small, in a calm corner" } },
       ] },
     { n: "03", h: { lt: "Spalvų sistema ir tekstūros", en: "Colour system and textures" },
       p: [
@@ -193,7 +193,6 @@ export const nrStory: Story = {
       ],
       blocks: [
         { type: "typo", ids: [], cap: { lt: "„Newsreader“ ir „Figtree“, kursyvas su pabraukimu ir tono pavyzdžiai", en: "Newsreader and Figtree, italics with an underline and examples of tone" } },
-        { type: "pair", ids: ["nb-19", "nb-23"], cap: { lt: "Brandbooke: šriftų derinys ir žodžio paryškinimas", en: "In the brandbook: the type pairing and the highlighted word" } },
       ] },
     { n: "05", h: { lt: "Produkto tikslumas ir AI kūryba", en: "Product accuracy and AI creation" },
       p: [
