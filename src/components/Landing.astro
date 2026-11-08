@@ -52,8 +52,7 @@ const countLabel = (g: (typeof groups)[number]) => g.countLabel?.[lang] ?? `${g.
     {/* ---------- PORTFOLIO: one living mosaic that contains the five group tiles ---------- */}
     <section class="block portfolio" id="darbai">
       <div class="wrap">
-        <div class="kicker reveal">{t("pf.kicker")}</div>
-        <h2 class="statement reveal" set:html={t("pf.h2")}></h2>
+        <h2 class="statement reveal" id="darbai-h" set:html={t("pf.h2")}></h2>
         <div class="pf-copy reveal">
           <p class="pf-l1">{t("pf.l1")}</p>
           <p>{t("pf.l2")}</p>

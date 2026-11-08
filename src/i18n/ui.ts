@@ -21,7 +21,7 @@ export const ui: Record<string, Record<string, string>> = {
     "hero.prev": "Ankstesnis", "hero.next": "Kitas", "hero.sound": "Garsas",
 
     "pf.kicker": "Portfolio",
-    "pf.h2": "Mano <em class=\"br-ul\">darbai.</em>",
+    "pf.h2": "<span class=\"br-ul\">Portfolio</span>",
     "pf.l1": "Tikras produktas. Netikėtas scenarijus.",
     "pf.l2": "Fotografuoju ir filmuoju produktus. Su AI kuriu scenas, kurias realybėje būtų sunku pastatyti. Galiu keisti aplinką, šviesą ir veikėjus, kartu tiksliai perteikdama produkto formą, medžiagas ir detales.",
     "pf.l3": "Nuo pirmo reklamos kadro iki vizualinio identiteto gairių kuriu nuoseklų stilių, kad tavo prekės ženklą atpažintų ir prisimintų.",
@@ -71,7 +71,7 @@ export const ui: Record<string, Record<string, string>> = {
     "hero.prev": "Previous", "hero.next": "Next", "hero.sound": "Sound",
 
     "pf.kicker": "Portfolio",
-    "pf.h2": "My <em class=\"br-ul\">work.</em>",
+    "pf.h2": "<span class=\"br-ul\">Portfolio</span>",
     "pf.l1": "A real product. An unexpected scenario.",
     "pf.l2": "I photograph and film products. With AI, I build scenes that would be difficult to stage in real life. I can change the setting, lighting and cast while keeping the product's shape, materials and details true to life.",
     "pf.l3": "From the first campaign image to the brand guidelines, I build a consistent style that makes your brand recognisable and memorable.",
