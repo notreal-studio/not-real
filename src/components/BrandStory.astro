@@ -65,13 +65,16 @@ const pairs = (b: Block) => b.ids.reduce<string[][]>((a, id, i) => { if (i % 2 =
               ))}
             </div>
           ) : (
-            <div class={`bs-row bs-${b.type}`}>
-              {b.ids.map((id) => (
-                <button type="button" class="bs-fig" data-lb={idx(id)} aria-haspopup="dialog" aria-label="SOXI">
-                  <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt="" loading="lazy" decoding="async" />
-                </button>
-              ))}
-            </div>
+            <>
+              <div class={`bs-row bs-${b.type}`}>
+                {b.ids.map((id) => (
+                  <button type="button" class="bs-fig" data-lb={idx(id)} aria-haspopup="dialog" aria-label="SOXI">
+                    <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt="" loading="lazy" decoding="async" />
+                  </button>
+                ))}
+              </div>
+              {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
+            </>
           )
         ))}
         </div>

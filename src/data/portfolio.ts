@@ -15,6 +15,7 @@ export interface Media {
   ratio: number;                 // width / height of the card picture
   src?: string; w?: number; h?: number;                        // images
   video?: { src: string; poster: string; vertical: boolean };  // videos
+  grp?: string;                  // lightbox group: the viewer only steps through items of the same group
 }
 export interface Group {
   slug: string; n: string; title: L; intro: L; cardSub: L; countLabel?: L;

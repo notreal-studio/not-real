@@ -72,6 +72,7 @@
 .bs-seq{margin:clamp(16px,2.4vw,26px) 0 0}
 .bs-seqrow{grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;margin-top:0}
 .bs-arr{font-size:clamp(1.4rem,3vw,2.4rem);color:var(--accent)}
+.bs-cap{margin-top:8px;font:500 11px/1.4 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .bs-seq figcaption{margin-top:10px;font:500 11px/1.4 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .bs-spiral{aspect-ratio:1;background:#f2e8d6;cursor:default}
 .bs-spiral img{position:absolute;width:640%;max-width:none;height:auto;left:calc(50% - 0.40 * 640%);top:calc(50% - 0.495 * var(--r) * 640%)}
