@@ -20,7 +20,7 @@ const all: Img[] = [...Object.values(gallery).flat(), ...soxiFrames, ...bookPage
   return m;
 };
 
-export type BlockType = "pair" | "trio" | "seq" | "grid" | "wide" | "bb" | "logos" | "palette" | "typo" | "onphoto" | "bands" | "checks" | "mockups" | "labelled";
+export type BlockType = "pair" | "trio" | "seq" | "grid" | "wide" | "bb" | "logos" | "palette" | "typo" | "onphoto" | "bands" | "checks" | "mockups" | "labelled" | "slides";
 export interface Block { type: BlockType; ids: string[]; cap?: L; labels?: L[]; link?: { to: "soxi" | "not-real"; t: L } }
 export type Para = L & { k?: L };            // k = bold lead-in word(s)
 export interface Sec { n: string; h: L; p: Para[]; blocks: Block[] }
@@ -224,6 +224,7 @@ export const nrStory: Story = {
       blocks: [
         { type: "wide", ids: ["ex-li"], cap: { lt: "LinkedIn profilis: juosta su NR avataru ir antrašte", en: "The LinkedIn profile: the banner with the NR avatar and the headline" } },
         { type: "grid", ids: ["ex-s1", "ex-s2", "ex-s3", "ex-end"], cap: { lt: "Karuselės skaidrės 4:5 ir pabaigos kadras: tas pats popierius, bordo juosta ir NR ženklas", en: "Carousel slides 4:5 and the closing frame: the same paper, the bordeaux band and the NR mark" } },
+        { type: "slides", ids: [], cap: { lt: "Ta pati skaidrė keturiomis spalvomis: kreminė, bordo, espresso ir šafranas derinasi su ta pačia teptuko juosta ir tuo pačiu šriftu", en: "The same slide in four colours: cream, bordeaux, espresso and saffron work with the same brush band and the same type" } },
       ] },
   ],
 };

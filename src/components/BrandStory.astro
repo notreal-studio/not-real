@@ -32,6 +32,12 @@ const checks = [
   { lt: "Proporcijos ir ženklinimas", en: "Proportions and labelling" }, { lt: "Tekstai", en: "Texts" }, { lt: "Kompozicija", en: "Composition" }, { lt: "Vaizdo kokybė", en: "Image quality" },
 ];
 const mock = { ph: findImg("ph-08") };
+const slideWays = [
+  { cls: "bs-sl-cream", name: { lt: "Kreminė", en: "Cream" }, sf: false },
+  { cls: "bs-sl-bord tex-bordeaux", name: { lt: "Bordo", en: "Bordeaux" }, sf: true },
+  { cls: "bs-sl-esp", name: { lt: "Espresso", en: "Espresso" }, sf: true },
+  { cls: "bs-sl-saf", name: { lt: "Šafranas", en: "Saffron" }, sf: false },
+];
 const chunks = (a: string[], n: number) => a.reduce<string[][]>((o, v, i) => { if (i % n === 0) o.push([]); o[o.length - 1].push(v); return o; }, []);
 const typoNote = { lt: "Pagrindinė mintis – „Newsreader“, paaiškinimas – „Figtree“. Vienas žodis kursyvu ir pabrauktas.", en: "The main thought is set in Newsreader, the explanation in Figtree. One word in italics and underlined." };
 ---
@@ -128,6 +134,23 @@ const typoNote = { lt: "Pagrindinė mintis – „Newsreader“, paaiškinimas �
                     <div class="bs-mk-t bs-mk-reel" style="--r:.5625"><img src={`${base}${mock.ph.thumb}`} alt="" loading="lazy" decoding="async" /><p><span class="br-hw sf">{lang === "lt" ? "Pažiūrėk du kartus." : "Look twice."}</span></p></div>
                     <div class="bs-mk-t bs-mk-end" style="--r:1.7778"><span class="logo logo-lockup"></span><small>notreal.lt</small></div>
                   </div>
+                </div>
+                {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
+              </>
+            ) : b.type === "slides" ? (
+              <>
+                <div class="bs-slides" aria-hidden="true">
+                  {slideWays.map((w) => (
+                    <div class={`bs-sl ${w.cls}`}>
+                      <div class="bs-sl-in">
+                        <p class="bs-sl-h">Real <span class={w.sf ? "br-ul sf" : "br-ul"}><em>first.</em></span></p>
+                        <p class="bs-sl-s">Real light. Real skin. Real feeling.</p>
+                      </div>
+                      <span class="br-band bs-sl-band"></span>
+                      <span class="bs-sl-bt">Then one idea nobody ordered.</span>
+                      <span class="bs-sl-tag">{w.name[lang]}</span>
+                    </div>
+                  ))}
                 </div>
                 {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
               </>
