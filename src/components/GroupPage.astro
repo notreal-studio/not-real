@@ -1,5 +1,7 @@
 ---
 import CaseLayout from "../layouts/CaseLayout.astro";
+import BrandStory from "./BrandStory.astro";
+import { storyMedia } from "../data/brandstory";
 import { groups, soxiCover } from "../data/portfolio";
 import { useTranslations, localePath, type Lang } from "../i18n/utils";
 
@@ -18,12 +20,14 @@ const nr = indexed.filter(({ m }) => m.id.startsWith("nr-"));
 const sx = indexed.filter(({ m }) => m.id.startsWith("sx-"));
 const isBrand = slug === "brand-identity";
 const useOrb = slug === "video" || slug === "photography" || slug === "graphic-design";
-const showSoxi = slug === "brand-identity" || slug === "visual-automation";
+const showSoxi = slug === "visual-automation";
+const nrItems = nr.map(({ m }) => m);
+const lbList = isBrand ? [...nrItems, ...storyMedia()] : g.items;   // brand page: the brandbook cards first, then every picture of the SOXI story
 const introParas = g.intro[lang].split("\n\n");
 const introFlat = introParas.join(" ");
 const desc = introFlat.length > 155 ? introFlat.slice(0, 152).replace(/\s+\S*$/, "") + "…" : introFlat;
 ---
-<CaseLayout lang={lang} title={`${g.title[lang]} — Not Real`} desc={desc} paths={paths} mainClass="gp" lbItems={g.items}>
+<CaseLayout lang={lang} title={`${g.title[lang]} — Not Real`} desc={desc} paths={paths} mainClass="gp" lbItems={lbList}>
   <section class="gp-hero">
     <div class="wrap">
       <a class="gp-back" href={`${home}#darbai`}>← {t("gp.back")}</a>
@@ -57,23 +61,12 @@ const desc = introFlat.length > 155 ? introFlat.slice(0, 152).replace(/\s+\S*$/,
 
   {isBrand ? (
     <>
+      <BrandStory lang={lang} base={base} offset={nrItems.length} />
       <section class="gp-sec">
         <div class="wrap">
           <h2>{t("gp.brand.nr")}</h2>
           <div class="gp-pages">
             {nr.map(({ m, i }) => (
-              <button type="button" class="gp-card" data-lb={i} aria-haspopup="dialog" aria-label={m.title[lang]}>
-                <div class="gp-media" style={`aspect-ratio:${m.ratio.toFixed(4)}`}><img src={`${base}${m.cover}`} alt="" loading="lazy" decoding="async" /></div>
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-      <section class="gp-sec">
-        <div class="wrap">
-          <h2>{t("gp.brand.sx")}</h2>
-          <div class="gp-pages">
-            {sx.map(({ m, i }) => (
               <button type="button" class="gp-card" data-lb={i} aria-haspopup="dialog" aria-label={m.title[lang]}>
                 <div class="gp-media" style={`aspect-ratio:${m.ratio.toFixed(4)}`}><img src={`${base}${m.cover}`} alt="" loading="lazy" decoding="async" /></div>
               </button>
