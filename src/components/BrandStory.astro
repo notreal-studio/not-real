@@ -1,82 +1,196 @@
 ---
-// The SOXI brand-identity story on the Brand identity page: text and pictures in the order they should be seen.
-import { story, storyIds, findImg, BOOK_PAGES, type Block } from "../data/brandstory";
+// A brand story on the Brand identity pages (SOXI, NOT REAL): intro, then collapsible sections, each with its text and pictures.
+// Besides pictures a block can be a live example drawn with the site's own parts (logos, palette, type), so the identity is shown in use.
+import { findImg, idsOf, shown, type Story } from "../data/brandstory";
 import type { Lang } from "../i18n/utils";
 
-interface Props { lang: Lang; base: string; offset: number; }
-const { lang, base, offset } = Astro.props;
-const idx = (id: string) => offset + storyIds.indexOf(id);
-const bookIdx = offset + storyIds.length;   // first page of the whole brandbook in the lightbox list
+interface Props { lang: Lang; base: string; offset: number; st: Story; }
+const { lang, base, offset, st } = Astro.props;
+const prefix = lang === "lt" ? base + "/lt" : base;
+const to = (k: string) => `${prefix}/work/brand-identity/${k}/`;
+const ids = idsOf(st);
+const idx = (id: string) => offset + ids.indexOf(id);
+const bookIdx = offset + ids.length;   // first brandbook page in the lightbox list (its own group)
 const logo = findImg("02_logo");
-const heroImg = findImg(story.hero);
-const pairs = (b: Block) => b.ids.reduce<string[][]>((a, id, i) => { if (i % 2 === 0) a.push([id]); else a[a.length - 1].push(id); return a; }, []);
+const heroImg = findImg(st.hero);
+const swatches = [
+  { n: { lt: "Bordo", en: "Bordeaux" }, hex: "#5C1F2A", fg: "#F2EDE4", tex: "tex-bordeaux" },
+  { n: { lt: "Kreminė", en: "Cream" }, hex: "#F2EDE4", fg: "#2B1D14", tex: "tex-cream" },
+  { n: { lt: "Popierius", en: "Paper" }, hex: "#EBDECB", fg: "#2B1D14", tex: "tex-paper" },
+  { n: { lt: "Espresso", en: "Espresso" }, hex: "#2B1D14", fg: "#F2EDE4", tex: "" },
+  { n: { lt: "Šafranas", en: "Saffron" }, hex: "#E8A83A", fg: "#2B1D14", tex: "" },
+];
+const perRow = (t: string) => (t === "pair" ? 2 : t === "trio" || t === "onphoto" || t === "labelled" ? 3 : t === "grid" ? 4 : 1);
+const bandTiles = [
+  { tile: "#F2EDE4", tex: "tex-cream", band: "#5C1F2A", fg: "#F2EDE4", t: { lt: "Bordo ant kreminės", en: "Bordeaux on cream" } },
+  { tile: "#5C1F2A", tex: "tex-bordeaux", band: "#F2EDE4", fg: "#5C1F2A", t: { lt: "Kreminė ant bordo", en: "Cream on bordeaux" } },
+  { tile: "#2B1D14", tex: "", band: "#E8A83A", fg: "#2B1D14", t: { lt: "Šafranas ant espresso", en: "Saffron on espresso" } },
+];
+const checks = [
+  { lt: "Šviesos kryptis", en: "Direction of light" }, { lt: "Šešėliai", en: "Shadows" }, { lt: "Atspindžiai", en: "Reflections" },
+  { lt: "Medžiagų tekstūra", en: "Material texture" }, { lt: "Natūrali oda", en: "Natural skin" }, { lt: "Produkto forma ir spalva", en: "Product shape and colour" },
+  { lt: "Proporcijos ir ženklinimas", en: "Proportions and labelling" }, { lt: "Tekstai", en: "Texts" }, { lt: "Kompozicija", en: "Composition" }, { lt: "Vaizdo kokybė", en: "Image quality" },
+];
+const mock = { ph: findImg("ph-08") };
+const slideWays = [
+  { cls: "bs-sl-cream", sf: false, name: { lt: "Kreminė", en: "Cream" }, h1: "Real", em: "first.", sub: "Real light. Real skin. Real feeling.", band: "Then one idea nobody ordered." },
+  { cls: "bs-sl-bord tex-bordeaux", sf: true, name: { lt: "Bordo", en: "Bordeaux" }, h1: "Real light.", em: "Unreal", h2: "ideas.", sub: "AI visuals · Product · Video", band: "See the work" },
+  { cls: "bs-sl-esp", sf: true, name: { lt: "Espresso", en: "Espresso" }, h1: "Feeling", em: "before", h2: "technique.", sub: "One saffron highlight per slide.", band: "Save this carousel" },
+  { cls: "bs-sl-saf", sf: false, name: { lt: "Šafranas", en: "Saffron" }, h1: "Show the", em: "trick", h2: "later.", sub: "Rules, not a rulebook.", band: "Say hi" },
+];
+const chunks = (a: string[], n: number) => a.reduce<string[][]>((o, v, i) => { if (i % n === 0) o.push([]); o[o.length - 1].push(v); return o; }, []);
+const typoNote = { lt: "Pagrindinė mintis – „Newsreader“, paaiškinimas – „Figtree“. Vienas žodis kursyvu ir pabrauktas.", en: "The main thought is set in Newsreader, the explanation in Figtree. One word in italics and underlined." };
 ---
 <section class="gp-sec bs" aria-labelledby="bs-h">
   <div class="wrap">
     <div class="bs-top">
       <div class="bs-head">
-        <h2 id="bs-h" class="bs-title">{story.h[lang]}</h2>
-        <p class="bs-lead">{story.lead[lang]}</p>
-        <p class="bs-win">{story.win[lang]}</p>
-        <button type="button" class="btn bs-book" data-lb={bookIdx} aria-haspopup="dialog">{story.book[lang]} · {BOOK_PAGES}</button>
+        <h2 id="bs-h" class="bs-title">{st.h[lang]}</h2>
+        <p class="bs-lead">{st.lead[lang]}</p>
+        <p class="bs-win">{st.win[lang]}</p>
+        <button type="button" class="btn bs-book" data-lb={bookIdx} aria-haspopup="dialog">{st.bookLabel[lang]} · {shown(st.book)}</button>
       </div>
-      <button type="button" class="bs-fig bs-hero" data-lb={idx(story.hero)} aria-haspopup="dialog" aria-label="SOXI">
-        <img src={`${base}${heroImg.src}`} width={heroImg.w} height={heroImg.h} alt="" loading="eager" decoding="async" />
+      <button type="button" class="bs-fig bs-hero" data-lb={idx(st.hero)} aria-haspopup="dialog" aria-label={st.name}>
+        <img src={`${base}${heroImg.src}`} width={heroImg.w} height={heroImg.h} alt={st.name + " brandbook"} loading="eager" decoding="async" />
       </button>
     </div>
 
-    {story.sections.map((s) => (
+    {st.sections.map((s) => (
       <details class="bs-sec">
         <summary class="bs-sh"><span class="bs-n">{s.n}</span><h3>{s.h[lang]}</h3><span class="bs-pm" aria-hidden="true"></span></summary>
         <div class="bs-body">
-        <div class="bs-txt">{s.p.map((para) => (<p>{para[lang]}</p>))}</div>
-        {s.n === "06" && <button type="button" class="btn bs-book" data-lb={bookIdx} aria-haspopup="dialog">{story.book[lang]} · {BOOK_PAGES}</button>}
+        <div class="bs-txt">{s.p.map((para) => (<p>{para.k && <strong>{para.k[lang]} </strong>}{para[lang]}</p>))}</div>
         {s.blocks.map((b) => (
-          b.type === "seq" ? (
-            <figure class="bs-seq">
-              <div class="bs-seqrow">
-                {b.ids.map((id, i) => (
-                  <>
-                    {i > 0 && <span class="bs-arr" aria-hidden="true">→</span>}
-                    {id === "@spiral" ? (
-                      <div class="bs-fig bs-spiral" style={`--r:${(logo.h / logo.w).toFixed(4)}`} aria-hidden="true">
-                        <img src={`${base}${logo.src}`} alt="" loading="lazy" decoding="async" />
-                      </div>
-                    ) : (
-                      <button type="button" class="bs-fig" data-lb={idx(id)} aria-haspopup="dialog" aria-label="SOXI">
-                        <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt="" loading="lazy" decoding="async" />
-                      </button>
-                    )}
-                  </>
-                ))}
-              </div>
-              {b.cap && <figcaption>{b.cap[lang]}</figcaption>}
-            </figure>
-          ) : b.type === "bb" ? (
-            <div class="bs-bb">
-              {pairs(b).map((pr) => (
-                <div class="bs-bbrow">
-                  {pr.map((id) => (
-                    <button type="button" class="bs-fig" data-lb={idx(id)} aria-haspopup="dialog" aria-label="SOXI">
-                      <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt="" loading="lazy" decoding="async" />
-                    </button>
+          <>
+            {b.type === "seq" ? (
+              <figure class="bs-seq">
+                <div class="bs-seqrow">
+                  {b.ids.map((id, i) => (
+                    <>
+                      {i > 0 && <span class="bs-arr" aria-hidden="true">→</span>}
+                      {id === "@spiral" ? (
+                        <div class="bs-fig bs-spiral" style={`--r:${(logo.h / logo.w).toFixed(4)}`} aria-hidden="true">
+                          <img src={`${base}${logo.src}`} alt="" loading="lazy" decoding="async" />
+                        </div>
+                      ) : (
+                        <button type="button" class="bs-fig" data-lb={idx(id)} aria-haspopup="dialog" aria-label={st.name}>
+                          <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt="" loading="lazy" decoding="async" />
+                        </button>
+                      )}
+                    </>
                   ))}
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div class={`bs-row bs-${b.type}`}>
-              {b.ids.map((id) => (
-                <button type="button" class="bs-fig" data-lb={idx(id)} aria-haspopup="dialog" aria-label="SOXI">
-                  <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt="" loading="lazy" decoding="async" />
-                </button>
-              ))}
-            </div>
-          )
+                {b.cap && <figcaption>{b.cap[lang]}</figcaption>}
+              </figure>
+            ) : b.type === "logos" ? (
+              <>
+                <div class="bs-row bs-trio bs-logos" aria-hidden="true">
+                  <div class="bs-lg bs-lg-bord tex-bordeaux"><span class="logo logo-mark"></span></div>
+                  <div class="bs-lg bs-lg-cream tex-cream"><span class="logo logo-word"></span></div>
+                  <div class="bs-lg bs-lg-esp"><span class="logo logo-lockup"></span></div>
+                </div>
+                {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
+              </>
+            ) : b.type === "palette" ? (
+              <>
+                <div class="bs-pal">
+                  {swatches.map((c) => (<div class={`bs-sw ${c.tex}`} style={`background-color:${c.hex};color:${c.fg}`}><b>{c.n[lang]}</b><span>{c.hex}</span></div>))}
+                </div>
+                <div class="bs-row bs-trio bs-ex">
+                  <div class="bs-ex-c tex-cream"><p class="bs-ex-t">Real <span class="br-ul"><em>first.</em></span></p></div>
+                  <div class="bs-ex-c tex-cream"><p class="bs-ex-t">Unreal <span class="br-hw">ideas.</span></p></div>
+                  <div class="bs-ex-c tex-bordeaux"><p class="bs-ex-t">Real light.</p></div>
+                </div>
+                {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
+              </>
+            ) : b.type === "bands" ? (
+              <>
+                <div class="bs-row bs-trio bs-bands" aria-hidden="true">
+                  {bandTiles.map((c) => (
+                    <div class={`bs-bt ${c.tex}`} style={`background-color:${c.tile}`}>
+                      <span class="br-band bs-band" style={`background-color:${c.band}`}></span>
+                      <b style={`color:${c.fg}`}>{c.t[lang]}</b>
+                    </div>
+                  ))}
+                </div>
+                {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
+              </>
+            ) : b.type === "checks" ? (
+              <>
+                <ul class="bs-checks">{checks.map((c) => (<li>{c[lang]}</li>))}</ul>
+                {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
+              </>
+            ) : b.type === "mockups" ? (
+              <>
+                <div class="bs-mk" aria-hidden="true">
+                  <div class="bs-mk-banner tex-bordeaux">
+                    <span class="logo logo-mark"></span>
+                    <p>Real light. <em>Unreal</em> ideas.</p>
+                    <small>{lang === "lt" ? "Fotografė ir AI vizualų kūrėja" : "Photographer and AI visual creator"}</small>
+                  </div>
+                  <div class="bs-mk-row">
+                    <div class="bs-mk-t bs-mk-slide" style="--r:.8"><p>Real <span class="br-ul"><em>first.</em></span></p><small>{lang === "lt" ? "Viena mintis kiekvienoje skaidrėje." : "One thought on every slide."}</small><span class="logo logo-mark bs-mk-mark"></span></div>
+                    <div class="bs-mk-t bs-mk-slide tex-bordeaux" style="--r:.8"><p>Real light.<br /><em>Unreal</em> ideas.</p><span class="logo logo-mark bs-mk-mark"></span></div>
+                    <div class="bs-mk-t bs-mk-reel" style="--r:.5625"><img src={`${base}${mock.ph.thumb}`} alt="" loading="lazy" decoding="async" /><p><span class="br-hw sf">{lang === "lt" ? "Pažiūrėk du kartus." : "Look twice."}</span></p></div>
+                    <div class="bs-mk-t bs-mk-end" style="--r:1.7778"><span class="logo logo-lockup"></span><small>notreal.lt</small></div>
+                  </div>
+                </div>
+                {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
+              </>
+            ) : b.type === "slides" ? (
+              <>
+                <div class="bs-slides" aria-hidden="true">
+                  {slideWays.map((w) => (
+                    <div class={`bs-sl ${w.cls}`}>
+                      <div class="bs-sl-in">
+                        <p class="bs-sl-h">{w.h1} <span class={w.sf ? "br-ul sf" : "br-ul"}><em>{w.em}</em></span>{w.h2 ? <> {w.h2}</> : null}</p>
+                        <p class="bs-sl-s">{w.sub}</p>
+                      </div>
+                      <span class="br-band bs-sl-band"></span>
+                      <span class="bs-sl-bt">{w.band}</span>
+                      <span class="bs-sl-tag">{w.name[lang]}</span>
+                    </div>
+                  ))}
+                </div>
+                {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
+              </>
+            ) : b.type === "typo" ? (
+              <>
+                <div class="bs-row bs-typo">
+                  <div class="bs-ty bs-ty-a tex-bordeaux">
+                    <p class="bs-ty-h">Real feeling. <span class="br-ul"><em>Unreal</em></span> ideas.</p>
+                    <p class="bs-ty-b">{typoNote[lang]}</p>
+                  </div>
+                  <div class="bs-ty bs-ty-b2 tex-cream"><p class="bs-ty-q">Look twice. Then say hi.</p></div>
+                  <div class="bs-ty bs-ty-b2 tex-cream"><p class="bs-ty-q">{lang === "lt" ? "Tikras produktas. Netikėtas scenarijus." : "A real product. An unexpected scenario."}</p></div>
+                </div>
+                {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
+              </>
+            ) : (
+              <>
+                <div class={`bs-rows bs-r-${b.type}`}>
+                  {chunks(b.ids, perRow(b.type)).map((row) => (
+                    <div class="bs-jr">
+                      {row.map((id) => (
+                        <button type="button" class="bs-fig" style={`--r:${(findImg(id).w / findImg(id).h).toFixed(4)}`} data-lb={idx(id)} aria-haspopup="dialog" aria-label={st.name}>
+                          <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt={b.cap ? b.cap[lang] : ""} loading="lazy" decoding="async" />
+                          {b.type === "onphoto" && b.marks && <span class={`logo logo-mark bs-m bs-m-${b.marks[b.ids.indexOf(id)]}`} aria-hidden="true"></span>}
+                          {b.labels && b.labels[b.ids.indexOf(id)] && <span class="bs-lab">{b.labels[b.ids.indexOf(id)][lang]}</span>}
+                        </button>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+                {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
+              </>
+            )}
+            {b.link && <p class="bs-link"><a href={to(b.link.to)}>{b.link.t[lang]}</a></p>}
+          </>
         ))}
         </div>
       </details>
     ))}
-    <p class="bs-credit">{story.credit[lang]}</p>
+    {st.foot && <p class="bs-next"><a class="btn" href={to(st.foot.to)}>{st.foot.t[lang]} →</a></p>}
+    <p class="bs-credit">{st.credit[lang]}</p>
   </div>
 </section>
