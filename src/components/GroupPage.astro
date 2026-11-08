@@ -33,7 +33,7 @@ const descBase = sub === "soxi" ? story.lead[lang] : sub === "notreal" ? t("gp.s
 const desc = descBase.length > 155 ? descBase.slice(0, 152).replace(/\s+\S*$/, "") + "…" : descBase;
 ---
 <CaseLayout lang={lang} title={`${subName || g.title[lang]} — Not Real`} desc={desc} paths={paths} mainClass="gp" lbItems={lbList}>
-  <section class="gp-hero">
+  <section class={sub ? "gp-hero gp-sub" : "gp-hero"}>
     <div class="wrap">
       {sub ? (
         <a class="gp-back" href={`${prefix}/work/${slug}/`}>← {g.title[lang]}</a>

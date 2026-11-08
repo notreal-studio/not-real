@@ -12,14 +12,16 @@ const pairs = (b: Block) => b.ids.reduce<string[][]>((a, id, i) => { if (i % 2 =
 ---
 <section class="gp-sec bs" aria-labelledby="bs-h">
   <div class="wrap">
-    <div class="bs-head">
-      <h2 id="bs-h" class="bs-title">{story.h[lang]}</h2>
-      <p class="bs-lead">{story.lead[lang]}</p>
-      <p class="bs-win">{story.win[lang]}</p>
+    <div class="bs-top">
+      <div class="bs-head">
+        <h2 id="bs-h" class="bs-title">{story.h[lang]}</h2>
+        <p class="bs-lead">{story.lead[lang]}</p>
+        <p class="bs-win">{story.win[lang]}</p>
+      </div>
+      <button type="button" class="bs-fig bs-hero" data-lb={idx(story.hero)} aria-haspopup="dialog" aria-label="SOXI">
+        <img src={`${base}${heroImg.src}`} width={heroImg.w} height={heroImg.h} alt="" loading="eager" decoding="async" />
+      </button>
     </div>
-    <button type="button" class="bs-fig bs-hero" data-lb={idx(story.hero)} aria-haspopup="dialog" aria-label="SOXI">
-      <img src={`${base}${heroImg.src}`} width={heroImg.w} height={heroImg.h} alt="" loading="eager" decoding="async" />
-    </button>
 
     {story.sections.map((s) => (
       <details class="bs-sec">
