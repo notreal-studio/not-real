@@ -54,7 +54,11 @@ const countLabel = (g: (typeof groups)[number]) => g.countLabel?.[lang] ?? `${g.
       <div class="wrap">
         <div class="kicker reveal">{t("pf.kicker")}</div>
         <h2 class="statement reveal" set:html={t("pf.h2")}></h2>
-        <p class="lead reveal">{t("pf.lead")}</p>
+        <div class="pf-copy reveal">
+          <p class="pf-l1">{t("pf.l1")}</p>
+          <p>{t("pf.l2")}</p>
+          <p>{t("pf.l3")}</p>
+        </div>
       </div>
 
       <div class="wrap">

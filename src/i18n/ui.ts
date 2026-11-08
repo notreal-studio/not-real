@@ -22,7 +22,9 @@ export const ui: Record<string, Record<string, string>> = {
 
     "pf.kicker": "Portfolio",
     "pf.h2": "Mano <em class=\"br-ul\">darbai.</em>",
-    "pf.lead": "Fotografija, filmai ir AI vizualai, kuriuose produktas atrodo toks, kokį gaus pirkėjas. Koncepciniai ir mano paties projektai.",
+    "pf.l1": "Tikras produktas. Netikėtas scenarijus.",
+    "pf.l2": "Fotografuoju ir filmuoju produktus. Su AI kuriu scenas, kurias realybėje būtų sunku pastatyti. Galiu keisti aplinką, šviesą ir veikėjus, kartu tiksliai perteikdama produkto formą, medžiagas ir detales.",
+    "pf.l3": "Nuo pirmo reklamos kadro iki vizualinio identiteto gairių kuriu nuoseklų stilių, kad tavo prekės ženklą atpažintų ir prisimintų.",
     "pf.view": "Žiūrėti", "pf.works": "darbų", "pf.open": "Atidaryti", "pf.close": "Uždaryti", "pf.prev": "Ankstesnis", "pf.next": "Kitas", "pf.viewer": "Peržiūra",
     "pf.marquee": "Besisukanti darbų sfera", "pf.sphere": "Tempk, kad pasuktum. Spausk nuotrauką, kad padidintum.", "about.hint": "Spausk, kad padidintum ir girdėtum",
 
@@ -70,7 +72,9 @@ export const ui: Record<string, Record<string, string>> = {
 
     "pf.kicker": "Portfolio",
     "pf.h2": "My <em class=\"br-ul\">work.</em>",
-    "pf.lead": "Photography, film and AI visuals where the product looks exactly as the buyer will receive it. Concept work and personal projects.",
+    "pf.l1": "A real product. An unexpected scenario.",
+    "pf.l2": "I photograph and film products. With AI, I build scenes that would be difficult to stage in real life. I can change the setting, lighting and cast while keeping the product's shape, materials and details true to life.",
+    "pf.l3": "From the first campaign image to the brand guidelines, I build a consistent style that makes your brand recognisable and memorable.",
     "pf.view": "View", "pf.works": "works", "pf.open": "Open", "pf.close": "Close", "pf.prev": "Previous", "pf.next": "Next", "pf.viewer": "Viewer",
     "pf.marquee": "Rotating sphere of work", "pf.sphere": "Drag to turn. Click a picture to enlarge.", "about.hint": "Tap to enlarge, with sound",
 
