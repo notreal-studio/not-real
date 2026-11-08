@@ -174,9 +174,7 @@ const typoNote = { lt: "Pagrindinė mintis – „Newsreader“, paaiškinimas �
                       {row.map((id) => (
                         <button type="button" class="bs-fig" style={`--r:${(findImg(id).w / findImg(id).h).toFixed(4)}`} data-lb={idx(id)} aria-haspopup="dialog" aria-label={st.name}>
                           <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt="" loading="lazy" decoding="async" />
-                          {b.type === "onphoto" && b.ids.indexOf(id) % 3 === 0 && <span class="logo logo-mark bs-mark bs-mark-a" aria-hidden="true"></span>}
-                          {b.type === "onphoto" && b.ids.indexOf(id) % 3 === 1 && <span class="bs-badge tex-bordeaux" aria-hidden="true"><span class="logo logo-mark"></span></span>}
-                          {b.type === "onphoto" && b.ids.indexOf(id) % 3 === 2 && <span class="bs-tag tex-cream" aria-hidden="true"><span class="logo logo-lockup"></span></span>}
+                          {b.type === "onphoto" && b.marks && <span class={`logo logo-mark bs-m bs-m-${b.marks[b.ids.indexOf(id)]}`} aria-hidden="true"></span>}
                           {b.labels && b.labels[b.ids.indexOf(id)] && <span class="bs-lab">{b.labels[b.ids.indexOf(id)][lang]}</span>}
                         </button>
                       ))}

@@ -21,7 +21,7 @@ const all: Img[] = [...Object.values(gallery).flat(), ...soxiFrames, ...bookPage
 };
 
 export type BlockType = "pair" | "trio" | "seq" | "grid" | "wide" | "bb" | "logos" | "palette" | "typo" | "onphoto" | "bands" | "checks" | "mockups" | "labelled" | "slides";
-export interface Block { type: BlockType; ids: string[]; cap?: L; labels?: L[]; link?: { to: "soxi" | "not-real"; t: L } }
+export interface Block { type: BlockType; ids: string[]; cap?: L; labels?: L[]; marks?: ("tl"|"tr"|"bl"|"br")[]; link?: { to: "soxi" | "not-real"; t: L } }
 export type Para = L & { k?: L };            // k = bold lead-in word(s)
 export interface Sec { n: string; h: L; p: Para[]; blocks: Block[] }
 export interface Story { name: string; h: L; lead: L; win: L; hero: string; bookLabel: L; book: BookDef; credit: L; foot?: { to: "soxi" | "not-real"; t: L }; sections: Sec[] }
@@ -171,7 +171,7 @@ export const nrStory: Story = {
       ],
       blocks: [
         { type: "logos", ids: [], cap: { lt: "Trys logotipo variantai: NR simbolis, užrašas ir junginys", en: "The three logo versions: the NR symbol, the wordmark and the combination" } },
-        { type: "onphoto", ids: ["ph-16", "ph-19", "ph-14"], cap: { lt: "Logotipas ant nuotraukų: simbolis, apvalus ženkliukas ir popierinė etiketė, kiekvienoje vietoje kitaip, bet visada ramiame kampe", en: "The logo on photographs: the symbol, a round badge and a paper label, each placed differently but always in a calm corner" } },
+        { type: "onphoto", ids: ["ph-16", "ph-19", "ph-14"], marks: ["tl", "br", "tr"], cap: { lt: "Ant nuotraukos – tik simbolis NR, mažas (apie 8 % kadro pločio), kampe be rašto. Kampas parenkamas skaičiuojant kodu: blogiausi 5 % taškų po simboliu duoda bent 3 : 1 (WCAG 1.4.11)", en: "On a photograph only the NR symbol, small (about 8 % of the frame width), in a corner free of detail. The corner is chosen by code: the worst 5 % of pixels under the symbol give at least 3:1 (WCAG 1.4.11)" } },
       ] },
     { n: "03", h: { lt: "Spalvų sistema ir tekstūros", en: "Colour system and textures" },
       p: [

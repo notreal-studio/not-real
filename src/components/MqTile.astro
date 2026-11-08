@@ -1,0 +1,12 @@
+---
+import type { Media } from "../data/portfolio";
+import type { Lang } from "../i18n/utils";
+
+interface Props { m: Media; i: number; cls: "big" | "sm"; lang: Lang; hidden?: boolean; }
+const { m, i, cls, lang, hidden = false } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+<button type="button" class={`mq-t ${cls}`} data-lb={i} tabindex={hidden ? -1 : undefined} aria-label={hidden ? undefined : m.title[lang]}>
+  <img src={`${base}${m.cover}`} alt="" loading="lazy" decoding="async" />
+  {m.kind === "video" && <span class="play" aria-hidden="true"></span>}
+</button>
