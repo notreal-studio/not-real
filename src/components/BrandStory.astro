@@ -1,36 +1,35 @@
 ---
-// The SOXI brand-identity story on the Brand identity page: text and pictures in the order they should be seen.
-import { story, storyIds, findImg, BOOK_PAGES, type Block } from "../data/brandstory";
+// A brand story on the Brand identity pages (SOXI, NOT REAL): intro, then collapsible sections, each with its text and pictures.
+import { findImg, idsOf, type Story } from "../data/brandstory";
 import type { Lang } from "../i18n/utils";
 
-interface Props { lang: Lang; base: string; offset: number; }
-const { lang, base, offset } = Astro.props;
-const idx = (id: string) => offset + storyIds.indexOf(id);
-const bookIdx = offset + storyIds.length;   // first page of the whole brandbook in the lightbox list
+interface Props { lang: Lang; base: string; offset: number; st: Story; }
+const { lang, base, offset, st } = Astro.props;
+const ids = idsOf(st);
+const idx = (id: string) => offset + ids.indexOf(id);
+const bookIdx = offset + ids.length;   // first brandbook page in the lightbox list (its own group)
 const logo = findImg("02_logo");
-const heroImg = findImg(story.hero);
-const pairs = (b: Block) => b.ids.reduce<string[][]>((a, id, i) => { if (i % 2 === 0) a.push([id]); else a[a.length - 1].push(id); return a; }, []);
+const heroImg = findImg(st.hero);
 ---
 <section class="gp-sec bs" aria-labelledby="bs-h">
   <div class="wrap">
     <div class="bs-top">
       <div class="bs-head">
-        <h2 id="bs-h" class="bs-title">{story.h[lang]}</h2>
-        <p class="bs-lead">{story.lead[lang]}</p>
-        <p class="bs-win">{story.win[lang]}</p>
-        <button type="button" class="btn bs-book" data-lb={bookIdx} aria-haspopup="dialog">{story.book[lang]} · {BOOK_PAGES}</button>
+        <h2 id="bs-h" class="bs-title">{st.h[lang]}</h2>
+        <p class="bs-lead">{st.lead[lang]}</p>
+        <p class="bs-win">{st.win[lang]}</p>
+        <button type="button" class="btn bs-book" data-lb={bookIdx} aria-haspopup="dialog">{st.bookLabel[lang]} · {st.book.pages}</button>
       </div>
-      <button type="button" class="bs-fig bs-hero" data-lb={idx(story.hero)} aria-haspopup="dialog" aria-label="SOXI">
+      <button type="button" class="bs-fig bs-hero" data-lb={idx(st.hero)} aria-haspopup="dialog" aria-label={st.name}>
         <img src={`${base}${heroImg.src}`} width={heroImg.w} height={heroImg.h} alt="" loading="eager" decoding="async" />
       </button>
     </div>
 
-    {story.sections.map((s) => (
+    {st.sections.map((s) => (
       <details class="bs-sec">
         <summary class="bs-sh"><span class="bs-n">{s.n}</span><h3>{s.h[lang]}</h3><span class="bs-pm" aria-hidden="true"></span></summary>
         <div class="bs-body">
-        <div class="bs-txt">{s.p.map((para) => (<p>{para[lang]}</p>))}</div>
-        {s.n === "06" && <button type="button" class="btn bs-book" data-lb={bookIdx} aria-haspopup="dialog">{story.book[lang]} · {BOOK_PAGES}</button>}
+        <div class="bs-txt">{s.p.map((para) => (<p>{para.k && <strong>{para.k[lang]} </strong>}{para[lang]}</p>))}</div>
         {s.blocks.map((b) => (
           b.type === "seq" ? (
             <figure class="bs-seq">
@@ -43,7 +42,7 @@ const pairs = (b: Block) => b.ids.reduce<string[][]>((a, id, i) => { if (i % 2 =
                         <img src={`${base}${logo.src}`} alt="" loading="lazy" decoding="async" />
                       </div>
                     ) : (
-                      <button type="button" class="bs-fig" data-lb={idx(id)} aria-haspopup="dialog" aria-label="SOXI">
+                      <button type="button" class="bs-fig" data-lb={idx(id)} aria-haspopup="dialog" aria-label={st.name}>
                         <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt="" loading="lazy" decoding="async" />
                       </button>
                     )}
@@ -52,23 +51,11 @@ const pairs = (b: Block) => b.ids.reduce<string[][]>((a, id, i) => { if (i % 2 =
               </div>
               {b.cap && <figcaption>{b.cap[lang]}</figcaption>}
             </figure>
-          ) : b.type === "bb" ? (
-            <div class="bs-bb">
-              {pairs(b).map((pr) => (
-                <div class="bs-bbrow">
-                  {pr.map((id) => (
-                    <button type="button" class="bs-fig" data-lb={idx(id)} aria-haspopup="dialog" aria-label="SOXI">
-                      <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt="" loading="lazy" decoding="async" />
-                    </button>
-                  ))}
-                </div>
-              ))}
-            </div>
           ) : (
             <>
               <div class={`bs-row bs-${b.type}`}>
                 {b.ids.map((id) => (
-                  <button type="button" class="bs-fig" data-lb={idx(id)} aria-haspopup="dialog" aria-label="SOXI">
+                  <button type="button" class="bs-fig" data-lb={idx(id)} aria-haspopup="dialog" aria-label={st.name}>
                     <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt="" loading="lazy" decoding="async" />
                   </button>
                 ))}
@@ -80,6 +67,6 @@ const pairs = (b: Block) => b.ids.reduce<string[][]>((a, id, i) => { if (i % 2 =
         </div>
       </details>
     ))}
-    <p class="bs-credit">{story.credit[lang]}</p>
+    <p class="bs-credit">{st.credit[lang]}</p>
   </div>
 </section>
