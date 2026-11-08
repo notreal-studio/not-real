@@ -22,8 +22,9 @@ const pairs = (b: Block) => b.ids.reduce<string[][]>((a, id, i) => { if (i % 2 =
     </button>
 
     {story.sections.map((s) => (
-      <article class="bs-sec">
-        <header class="bs-sh"><span class="bs-n">{s.n}</span><h3>{s.h[lang]}</h3></header>
+      <details class="bs-sec">
+        <summary class="bs-sh"><span class="bs-n">{s.n}</span><h3>{s.h[lang]}</h3><span class="bs-pm" aria-hidden="true"></span></summary>
+        <div class="bs-body">
         <div class="bs-txt">{s.p.map((para) => (<p>{para[lang]}</p>))}</div>
         {s.blocks.map((b) => (
           b.type === "seq" ? (
@@ -68,7 +69,8 @@ const pairs = (b: Block) => b.ids.reduce<string[][]>((a, id, i) => { if (i % 2 =
             </div>
           )
         ))}
-      </article>
+        </div>
+      </details>
     ))}
     <p class="bs-credit">{story.credit[lang]}</p>
   </div>
