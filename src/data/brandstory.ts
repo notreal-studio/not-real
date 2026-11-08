@@ -16,8 +16,8 @@ const all: Img[] = [...Object.values(gallery).flat(), ...soxiFrames, ...bookPage
   return m;
 };
 
-export type BlockType = "pair" | "trio" | "seq" | "grid" | "wide" | "bb" | "logos" | "palette" | "typo" | "onphoto";
-export interface Block { type: BlockType; ids: string[]; cap?: L; link?: { to: "soxi" | "not-real"; t: L } }
+export type BlockType = "pair" | "trio" | "seq" | "grid" | "wide" | "bb" | "logos" | "palette" | "typo" | "onphoto" | "bands" | "checks" | "mockups" | "labelled";
+export interface Block { type: BlockType; ids: string[]; cap?: L; labels?: L[]; link?: { to: "soxi" | "not-real"; t: L } }
 export type Para = L & { k?: L };            // k = bold lead-in word(s)
 export interface Sec { n: string; h: L; p: Para[]; blocks: Block[] }
 export interface Story { name: string; h: L; lead: L; win: L; hero: string; bookLabel: L; book: BookDef; credit: L; foot?: { to: "soxi" | "not-real"; t: L }; sections: Sec[] }
@@ -180,7 +180,7 @@ export const nrStory: Story = {
       ],
       blocks: [
         { type: "palette", ids: [], cap: { lt: "Penkios spalvos, popieriaus tekstūra ir teptuko paryškinimai", en: "Five colours, the paper texture and the brush highlights" } },
-        { type: "pair", ids: ["nb-22", "nb-24"], cap: { lt: "Brandbooke: teptuko juostos ir biblioteka", en: "In the brandbook: brush bands and the library" } },
+        { type: "bands", ids: [], cap: { lt: "Teptuko juostos: spalvą keičia fonas, todėl vienas failas tinka visoms", en: "Brush bands: the background changes the colour, so one file works for all" } },
       ] },
     { n: "04", h: { lt: "Tipografija ir komunikacijos tonas", en: "Typography and tone of voice" },
       p: [
@@ -205,8 +205,8 @@ export const nrStory: Story = {
       ],
       blocks: [
         { type: "pair", ids: ["p104", "va-09"], cap: { lt: "Atskaitos vaizdas baltame fone → tas pats produktas scenoje", en: "The reference on white → the same product in a scene" }, link: { to: "soxi", t: { lt: "Visas pavyzdys: SOXI projektas →", en: "The full example: the SOXI project →" } } },
-        { type: "trio", ids: ["nb-45", "nb-46", "nb-50"], cap: { lt: "Brandbooke: etalonai – šviesa, medžiagos, oda", en: "In the brandbook: references – light, materials, skin" } },
-        { type: "pair", ids: ["nb-51", "nb-52"], cap: { lt: "„Netinka“ pavyzdys ir AI politika", en: "A “not like that” example and the AI policy" } },
+        { type: "labelled", ids: ["ph-14", "ph-06", "ph-19"], labels: [{ lt: "Šviesos kryptis", en: "Direction of light" }, { lt: "Medžiagų tekstūra", en: "Material texture" }, { lt: "Natūrali oda", en: "Natural skin" }], cap: { lt: "Į ką žiūriu vertindama AI vaizdą", en: "What I look at when I judge an AI image" } },
+        { type: "checks", ids: [], cap: { lt: "Ką tikrinu prieš atiduodama darbą", en: "What I check before a piece leaves the studio" } },
       ] },
     { n: "06", h: { lt: "Brandbookas kasdienėje veikloje", en: "The brandbook in everyday work" },
       p: [
@@ -218,8 +218,7 @@ export const nrStory: Story = {
           en: "Shared principles link different formats and leave room for new ideas. That is how I develop the NOT REAL style while keeping the individuality of each client’s project." },
       ],
       blocks: [
-        { type: "trio", ids: ["nb-37", "nb-38", "nb-41"], cap: { lt: "LinkedIn juosta, karuselės skaidrės ir Reels viršelis", en: "The LinkedIn banner, carousel slides and a Reels cover" } },
-        { type: "pair", ids: ["nb-39", "nb-56"], cap: { lt: "Šablonai ir pabaigos kadrai", en: "Templates and closing frames" } },
+        { type: "mockups", ids: [], cap: { lt: "Taip identitetas dirba kasdien: LinkedIn juosta, karuselės skaidrės, Reels viršelis ir pabaigos kadras", en: "How the identity works day to day: a LinkedIn banner, carousel slides, a Reels cover and a closing frame" } },
       ] },
   ],
 };

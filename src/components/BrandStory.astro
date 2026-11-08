@@ -20,7 +20,18 @@ const swatches = [
   { n: { lt: "Espresso", en: "Espresso" }, hex: "#2B1D14", fg: "#F2EDE4" },
   { n: { lt: "Šafranas", en: "Saffron" }, hex: "#E8A83A", fg: "#2B1D14" },
 ];
-const perRow = (t: string) => (t === "pair" ? 2 : t === "trio" || t === "onphoto" ? 3 : t === "grid" ? 4 : 1);
+const perRow = (t: string) => (t === "pair" ? 2 : t === "trio" || t === "onphoto" || t === "labelled" ? 3 : t === "grid" ? 4 : 1);
+const bandTiles = [
+  { tile: "#F2EDE4", band: "#5C1F2A", fg: "#F2EDE4", t: { lt: "Bordo ant kreminės", en: "Bordeaux on cream" } },
+  { tile: "#5C1F2A", band: "#F2EDE4", fg: "#5C1F2A", t: { lt: "Kreminė ant bordo", en: "Cream on bordeaux" } },
+  { tile: "#2B1D14", band: "#E8A83A", fg: "#2B1D14", t: { lt: "Šafranas ant espresso", en: "Saffron on espresso" } },
+];
+const checks = [
+  { lt: "Šviesos kryptis", en: "Direction of light" }, { lt: "Šešėliai", en: "Shadows" }, { lt: "Atspindžiai", en: "Reflections" },
+  { lt: "Medžiagų tekstūra", en: "Material texture" }, { lt: "Natūrali oda", en: "Natural skin" }, { lt: "Produkto forma ir spalva", en: "Product shape and colour" },
+  { lt: "Proporcijos ir ženklinimas", en: "Proportions and labelling" }, { lt: "Tekstai", en: "Texts" }, { lt: "Kompozicija", en: "Composition" }, { lt: "Vaizdo kokybė", en: "Image quality" },
+];
+const mock = { ph: findImg("ph-18") };
 const chunks = (a: string[], n: number) => a.reduce<string[][]>((o, v, i) => { if (i % n === 0) o.push([]); o[o.length - 1].push(v); return o; }, []);
 const typoNote = { lt: "Pagrindinė mintis – „Newsreader“, paaiškinimas – „Figtree“. Vienas žodis kursyvu ir pabrauktas.", en: "The main thought is set in Newsreader, the explanation in Figtree. One word in italics and underlined." };
 ---
@@ -86,6 +97,40 @@ const typoNote = { lt: "Pagrindinė mintis – „Newsreader“, paaiškinimas �
                 </div>
                 {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
               </>
+            ) : b.type === "bands" ? (
+              <>
+                <div class="bs-row bs-trio bs-bands" aria-hidden="true">
+                  {bandTiles.map((c) => (
+                    <div class="bs-bt" style={`background:${c.tile}`}>
+                      <span class="br-band bs-band" style={`background-color:${c.band}`}></span>
+                      <b style={`color:${c.fg}`}>{c.t[lang]}</b>
+                    </div>
+                  ))}
+                </div>
+                {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
+              </>
+            ) : b.type === "checks" ? (
+              <>
+                <ul class="bs-checks">{checks.map((c) => (<li>{c[lang]}</li>))}</ul>
+                {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
+              </>
+            ) : b.type === "mockups" ? (
+              <>
+                <div class="bs-mk" aria-hidden="true">
+                  <div class="bs-mk-banner tex-bordeaux">
+                    <span class="logo logo-mark"></span>
+                    <p>Real light. <em>Unreal</em> ideas.</p>
+                    <small>{lang === "lt" ? "Fotografė ir AI vizualų kūrėja" : "Photographer and AI visual creator"}</small>
+                  </div>
+                  <div class="bs-mk-row">
+                    <div class="bs-mk-t bs-mk-slide" style="--r:.8"><p>Real <span class="br-ul"><em>first.</em></span></p><small>{lang === "lt" ? "Viena mintis kiekvienoje skaidrėje." : "One thought on every slide."}</small><span class="logo logo-mark bs-mk-mark"></span></div>
+                    <div class="bs-mk-t bs-mk-slide tex-bordeaux" style="--r:.8"><p>Real light.<br /><em>Unreal</em> ideas.</p><span class="logo logo-mark bs-mk-mark"></span></div>
+                    <div class="bs-mk-t bs-mk-reel" style="--r:.5625"><img src={`${base}${mock.ph.thumb}`} alt="" loading="lazy" decoding="async" /><p><span class="br-hw sf">{lang === "lt" ? "Pažiūrėk du kartus." : "Look twice."}</span></p></div>
+                    <div class="bs-mk-t bs-mk-end" style="--r:1.7778"><span class="logo logo-lockup"></span><small>notreal.lt</small></div>
+                  </div>
+                </div>
+                {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
+              </>
             ) : b.type === "typo" ? (
               <>
                 <div class="bs-row bs-typo">
@@ -107,6 +152,7 @@ const typoNote = { lt: "Pagrindinė mintis – „Newsreader“, paaiškinimas �
                         <button type="button" class="bs-fig" style={`--r:${(findImg(id).w / findImg(id).h).toFixed(4)}`} data-lb={idx(id)} aria-haspopup="dialog" aria-label={st.name}>
                           <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt="" loading="lazy" decoding="async" />
                           {b.type === "onphoto" && <span class="logo logo-mark bs-mark" aria-hidden="true"></span>}
+                          {b.labels && b.labels[b.ids.indexOf(id)] && <span class="bs-lab">{b.labels[b.ids.indexOf(id)][lang]}</span>}
                         </button>
                       ))}
                     </div>
