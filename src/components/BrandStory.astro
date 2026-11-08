@@ -1,15 +1,26 @@
 ---
 // A brand story on the Brand identity pages (SOXI, NOT REAL): intro, then collapsible sections, each with its text and pictures.
+// Besides pictures a block can be a live example drawn with the site's own parts (logos, palette, type), so the identity is shown in use.
 import { findImg, idsOf, type Story } from "../data/brandstory";
 import type { Lang } from "../i18n/utils";
 
 interface Props { lang: Lang; base: string; offset: number; st: Story; }
 const { lang, base, offset, st } = Astro.props;
+const prefix = lang === "lt" ? base + "/lt" : base;
+const to = (k: string) => `${prefix}/work/brand-identity/${k}/`;
 const ids = idsOf(st);
 const idx = (id: string) => offset + ids.indexOf(id);
 const bookIdx = offset + ids.length;   // first brandbook page in the lightbox list (its own group)
 const logo = findImg("02_logo");
 const heroImg = findImg(st.hero);
+const swatches = [
+  { n: { lt: "Bordo", en: "Bordeaux" }, hex: "#5C1F2A", fg: "#F2EDE4" },
+  { n: { lt: "Kreminė", en: "Cream" }, hex: "#F2EDE4", fg: "#2B1D14" },
+  { n: { lt: "Popierius", en: "Paper" }, hex: "#EBDECB", fg: "#2B1D14" },
+  { n: { lt: "Espresso", en: "Espresso" }, hex: "#2B1D14", fg: "#F2EDE4" },
+  { n: { lt: "Šafranas", en: "Saffron" }, hex: "#E8A83A", fg: "#2B1D14" },
+];
+const typoNote = { lt: "Pagrindinė mintis – „Newsreader“, paaiškinimas – „Figtree“. Vienas žodis kursyvu ir pabrauktas.", en: "The main thought is set in Newsreader, the explanation in Figtree. One word in italics and underlined." };
 ---
 <section class="gp-sec bs" aria-labelledby="bs-h">
   <div class="wrap">
@@ -31,42 +42,79 @@ const heroImg = findImg(st.hero);
         <div class="bs-body">
         <div class="bs-txt">{s.p.map((para) => (<p>{para.k && <strong>{para.k[lang]} </strong>}{para[lang]}</p>))}</div>
         {s.blocks.map((b) => (
-          b.type === "seq" ? (
-            <figure class="bs-seq">
-              <div class="bs-seqrow">
-                {b.ids.map((id, i) => (
-                  <>
-                    {i > 0 && <span class="bs-arr" aria-hidden="true">→</span>}
-                    {id === "@spiral" ? (
-                      <div class="bs-fig bs-spiral" style={`--r:${(logo.h / logo.w).toFixed(4)}`} aria-hidden="true">
-                        <img src={`${base}${logo.src}`} alt="" loading="lazy" decoding="async" />
-                      </div>
-                    ) : (
-                      <button type="button" class="bs-fig" data-lb={idx(id)} aria-haspopup="dialog" aria-label={st.name}>
-                        <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt="" loading="lazy" decoding="async" />
-                      </button>
-                    )}
-                  </>
-                ))}
-              </div>
-              {b.cap && <figcaption>{b.cap[lang]}</figcaption>}
-            </figure>
-          ) : (
-            <>
-              <div class={`bs-row bs-${b.type}`}>
-                {b.ids.map((id) => (
-                  <button type="button" class="bs-fig" data-lb={idx(id)} aria-haspopup="dialog" aria-label={st.name}>
-                    <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt="" loading="lazy" decoding="async" />
-                  </button>
-                ))}
-              </div>
-              {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
-            </>
-          )
+          <>
+            {b.type === "seq" ? (
+              <figure class="bs-seq">
+                <div class="bs-seqrow">
+                  {b.ids.map((id, i) => (
+                    <>
+                      {i > 0 && <span class="bs-arr" aria-hidden="true">→</span>}
+                      {id === "@spiral" ? (
+                        <div class="bs-fig bs-spiral" style={`--r:${(logo.h / logo.w).toFixed(4)}`} aria-hidden="true">
+                          <img src={`${base}${logo.src}`} alt="" loading="lazy" decoding="async" />
+                        </div>
+                      ) : (
+                        <button type="button" class="bs-fig" data-lb={idx(id)} aria-haspopup="dialog" aria-label={st.name}>
+                          <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt="" loading="lazy" decoding="async" />
+                        </button>
+                      )}
+                    </>
+                  ))}
+                </div>
+                {b.cap && <figcaption>{b.cap[lang]}</figcaption>}
+              </figure>
+            ) : b.type === "logos" ? (
+              <>
+                <div class="bs-row bs-trio bs-logos" aria-hidden="true">
+                  <div class="bs-lg bs-lg-bord"><span class="logo logo-mark"></span></div>
+                  <div class="bs-lg bs-lg-cream"><span class="logo logo-word"></span></div>
+                  <div class="bs-lg bs-lg-esp"><span class="logo logo-lockup"></span></div>
+                </div>
+                {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
+              </>
+            ) : b.type === "palette" ? (
+              <>
+                <div class="bs-pal">
+                  {swatches.map((c) => (<div class="bs-sw" style={`background:${c.hex};color:${c.fg}`}><b>{c.n[lang]}</b><span>{c.hex}</span></div>))}
+                </div>
+                <div class="bs-row bs-trio bs-ex">
+                  <div class="bs-ex-c"><p class="bs-ex-t">Real <span class="br-ul"><em>first.</em></span></p></div>
+                  <div class="bs-ex-c"><p class="bs-ex-t">Unreal <span class="br-hw">ideas.</span></p></div>
+                  <div class="bs-ex-c tex-bordeaux"><p class="bs-ex-t">Real light.</p></div>
+                </div>
+                {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
+              </>
+            ) : b.type === "typo" ? (
+              <>
+                <div class="bs-row bs-typo">
+                  <div class="bs-ty bs-ty-a">
+                    <p class="bs-ty-h">Real feeling. <span class="br-ul"><em>Unreal</em></span> ideas.</p>
+                    <p class="bs-ty-b">{typoNote[lang]}</p>
+                  </div>
+                  <div class="bs-ty bs-ty-b2"><p class="bs-ty-q">Look twice. Then say hi.</p></div>
+                  <div class="bs-ty bs-ty-b2"><p class="bs-ty-q">{lang === "lt" ? "Tikras produktas. Netikėtas scenarijus." : "A real product. An unexpected scenario."}</p></div>
+                </div>
+                {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
+              </>
+            ) : (
+              <>
+                <div class={`bs-row bs-${b.type}`}>
+                  {b.ids.map((id) => (
+                    <button type="button" class="bs-fig" data-lb={idx(id)} aria-haspopup="dialog" aria-label={st.name}>
+                      <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt="" loading="lazy" decoding="async" />
+                    </button>
+                  ))}
+                </div>
+                {b.cap && <p class="bs-cap">{b.cap[lang]}</p>}
+              </>
+            )}
+            {b.link && <p class="bs-link"><a href={to(b.link.to)}>{b.link.t[lang]}</a></p>}
+          </>
         ))}
         </div>
       </details>
     ))}
+    {st.foot && <p class="bs-next"><a class="btn" href={to(st.foot.to)}>{st.foot.t[lang]} →</a></p>}
     <p class="bs-credit">{st.credit[lang]}</p>
   </div>
 </section>

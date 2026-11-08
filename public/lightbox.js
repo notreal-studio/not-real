@@ -11,7 +11,7 @@
   /* the viewer steps only through the items of the opened item's group (items without a group form one group) */
   const peers=(i)=>{ const g=items[i].grp||''; const out=[]; items.forEach((x,k)=>{ if(!x.solo&&(x.grp||'')===g) out.push(k); }); return out; };
   function render(){
-    const it=items[idx]; stage.innerHTML='';
+    const it=items[idx]; stage.innerHTML=''; stage.classList.remove('zoomed');
     if(it.video){
       const v=document.createElement('video');
       v.src=it.video.src; v.poster=it.video.poster; v.controls=true; v.autoplay=true; v.playsInline=true; v.loop=true;
@@ -35,6 +35,7 @@
   function step(d){ if(items[idx].solo) return; const ps=peers(idx), at=ps.indexOf(idx); if(ps.length<2) return; idx=ps[(at+d+ps.length)%ps.length]; render(); }
 
   document.addEventListener('click',(e)=>{ const t=e.target.closest('[data-lb]'); if(t){ e.preventDefault(); open(Number(t.dataset.lb),t); } });
+  stage.addEventListener('click',(e)=>{ if(e.target.tagName==='IMG') stage.classList.toggle('zoomed'); });                       /* click a page to zoom in, click again to go back */
   closeB.addEventListener('click',close); prevB.addEventListener('click',()=>step(-1)); nextB.addEventListener('click',()=>step(1));
   lb.addEventListener('click',(e)=>{ if(e.target===lb||e.target===stage) close(); });
   document.addEventListener('keydown',(e)=>{

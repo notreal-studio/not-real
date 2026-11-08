@@ -16,11 +16,11 @@ const all: Img[] = [...Object.values(gallery).flat(), ...soxiFrames, ...bookPage
   return m;
 };
 
-export type BlockType = "pair" | "trio" | "seq" | "grid" | "wide" | "bb";
-export interface Block { type: BlockType; ids: string[]; cap?: L }
+export type BlockType = "pair" | "trio" | "seq" | "grid" | "wide" | "bb" | "logos" | "palette" | "typo";
+export interface Block { type: BlockType; ids: string[]; cap?: L; link?: { to: "soxi" | "not-real"; t: L } }
 export type Para = L & { k?: L };            // k = bold lead-in word(s)
 export interface Sec { n: string; h: L; p: Para[]; blocks: Block[] }
-export interface Story { name: string; h: L; lead: L; win: L; hero: string; bookLabel: L; book: BookDef; credit: L; sections: Sec[] }
+export interface Story { name: string; h: L; lead: L; win: L; hero: string; bookLabel: L; book: BookDef; credit: L; foot?: { to: "soxi" | "not-real"; t: L }; sections: Sec[] }
 
 export const soxiStory: Story = {
   name: "SOXI", book: SOXI_BOOK,
@@ -33,6 +33,7 @@ export const soxiStory: Story = {
   hero: "01_roll-into-socks",
   bookLabel: { lt: "Peržiūrėti visą brandbooką", en: "View the whole brandbook" } as L,
   credit: { lt: "Koncepcija, dizainas ir AI vizualizacijos – Inga Bankauskė / NOT REAL.", en: "Concept, design and AI visuals – Inga Bankauskė / NOT REAL." } as L,
+  foot: { to: "not-real", t: { lt: "Studijos identitetas: NOT REAL", en: "The studio identity: NOT REAL" } },
   sections: [
     { n: "01", h: { lt: "Idėja: kojinės kaip suši", en: "The idea: socks as sushi" },
       p: [
@@ -138,8 +139,9 @@ export const nrStory: Story = {
   },
   win: { lt: "Real feeling. Unreal ideas.", en: "Real feeling. Unreal ideas." },
   hero: "nb-01",
-  bookLabel: { lt: "Peržiūrėti visą brandbooką", en: "View the whole brandbook" },
+  bookLabel: { lt: "Peržiūrėti visą brandbooką", en: "View the whole brandbook (in Lithuanian)" },
   credit: { lt: "Identiteto idėja ir dizainas – Inga Bankauskė / NOT REAL.", en: "Identity concept and design – Inga Bankauskė / NOT REAL." },
+  foot: { to: "soxi", t: { lt: "Kaip tai atrodo praktikoje: SOXI projektas", en: "How it looks in practice: the SOXI project" } },
   sections: [
     { n: "01", h: { lt: "Pavadinimas ir kūrybinis principas", en: "The name and the creative principle" },
       p: [
@@ -150,7 +152,10 @@ export const nrStory: Story = {
         { k: { lt: "Fotografija ir AI.", en: "Photography and AI." }, lt: "Studijoje dirbu ir su tikra fotografija. Abu kūrybos būdus sieja tie patys kokybės kriterijai ir principas „Real feeling. Unreal ideas.“",
           en: "In the studio I also work with real photography. The same quality criteria and the principle “Real feeling. Unreal ideas.” join both ways of creating." },
       ],
-      blocks: [{ type: "trio", ids: ["nb-03", "nb-04", "nb-05"], cap: { lt: "Brandbooke: pozicionavimas, kam skirta ir prieš ką einame", en: "In the brandbook: positioning, who it is for and what it stands against" } }] },
+      blocks: [
+        { type: "trio", ids: ["ph-06", "ph-03", "ph-17"], cap: { lt: "Real feeling. Šviesa, medžiaga, oda, kuriomis galima patikėti", en: "Real feeling. Light, material and skin you can believe" } },
+        { type: "trio", ids: ["ph-18", "ph-02", "ph-04"], cap: { lt: "Unreal ideas. Scenos, kurių realybėje nepastatysi", en: "Unreal ideas. Scenes you could not stage in real life" } },
+      ] },
     { n: "02", h: { lt: "Logotipas ir atpažinimo ženklas", en: "Logo and identity mark" },
       p: [
         { k: { lt: "Netikėtas atradimas.", en: "An unexpected find." }, lt: "NR monograma gimė generuojant logotipo variantus. Pamačiusi šią formą atpažinau tai, ko ieškojau savo studijai. Ji tapo pagrindu tolesniam identitetui.",
@@ -161,8 +166,8 @@ export const nrStory: Story = {
           en: "The brandbook defines sizes, clear zones and colour versions. Used on a photograph, the mark has to stay legible and must not cover important details of the picture." },
       ],
       blocks: [
-        { type: "trio", ids: ["nb-07", "nb-08", "nb-10"], cap: { lt: "Brandbooke: monograma, trys variantai, apsaugos zona", en: "In the brandbook: the monogram, three versions, clear zone" } },
-        { type: "pair", ids: ["nb-11", "nb-12"], cap: { lt: "Logotipas ant fono ir ko nedaryti", en: "The logo on backgrounds and what never to do" } },
+        { type: "logos", ids: [], cap: { lt: "Trys logotipo variantai: NR simbolis, užrašas ir junginys", en: "The three logo versions: the NR symbol, the wordmark and the combination" } },
+        { type: "pair", ids: ["nb-10", "nb-11"], cap: { lt: "Brandbooke: apsaugos zona ir logotipas ant skirtingų fonų", en: "In the brandbook: clear zone and the logo on different backgrounds" } },
       ] },
     { n: "03", h: { lt: "Spalvų sistema ir tekstūros", en: "Colour system and textures" },
       p: [
@@ -174,8 +179,8 @@ export const nrStory: Story = {
           en: "I like textures because they give a picture life. Paper grain and dry-brush strokes add to the studio layouts, and highlights guide the eye. Bordeaux, texture and these accents reflect my taste best." },
       ],
       blocks: [
-        { type: "trio", ids: ["nb-14", "nb-15", "nb-17"], cap: { lt: "Brandbooke: spalvos pagal roles, poros ir kontrastas, tekstas ant kreminės tekstūros", en: "In the brandbook: colours by role, pairs and contrast, text on the cream texture" } },
-        { type: "pair", ids: ["nb-22", "nb-24"], cap: { lt: "Teptuko juostos ir biblioteka", en: "Brush bands and the library" } },
+        { type: "palette", ids: [], cap: { lt: "Penkios spalvos, popieriaus tekstūra ir teptuko paryškinimai", en: "Five colours, the paper texture and the brush highlights" } },
+        { type: "pair", ids: ["nb-22", "nb-24"], cap: { lt: "Brandbooke: teptuko juostos ir biblioteka", en: "In the brandbook: brush bands and the library" } },
       ] },
     { n: "04", h: { lt: "Tipografija ir komunikacijos tonas", en: "Typography and tone of voice" },
       p: [
@@ -187,8 +192,8 @@ export const nrStory: Story = {
           en: "The NOT REAL tone is bold, direct and warm, with room to play. In the texts, concreteness, explaining the creative decisions and attention to the client matter. I avoid exaggerated promises and marketing clichés." },
       ],
       blocks: [
-        { type: "trio", ids: ["nb-19", "nb-20", "nb-23"], cap: { lt: "Brandbooke: šriftų derinys, dydžių skalė, kursyvas ir pabraukimas", en: "In the brandbook: the type pairing, scale, italics and underline" } },
-        { type: "pair", ids: ["nb-60", "nb-61"], cap: { lt: "Tonas pagal kanalą ir „sakau / nesakau“", en: "Tone by channel and “say / don’t say”" } },
+        { type: "typo", ids: [], cap: { lt: "„Newsreader“ ir „Figtree“, kursyvas su pabraukimu ir tono pavyzdžiai", en: "Newsreader and Figtree, italics with an underline and examples of tone" } },
+        { type: "pair", ids: ["nb-19", "nb-23"], cap: { lt: "Brandbooke: šriftų derinys ir žodžio paryškinimas", en: "In the brandbook: the type pairing and the highlighted word" } },
       ] },
     { n: "05", h: { lt: "Produkto tikslumas ir AI kūryba", en: "Product accuracy and AI creation" },
       p: [
@@ -200,9 +205,9 @@ export const nrStory: Story = {
           en: "I use AI to create and edit scenes, settings and visuals. I judge the final result against the needs of the project: I check the product details, texts, composition and image quality." },
       ],
       blocks: [
+        { type: "pair", ids: ["p104", "va-09"], cap: { lt: "Atskaitos vaizdas baltame fone → tas pats produktas scenoje", en: "The reference on white → the same product in a scene" }, link: { to: "soxi", t: { lt: "Visas pavyzdys: SOXI projektas →", en: "The full example: the SOXI project →" } } },
         { type: "trio", ids: ["nb-45", "nb-46", "nb-50"], cap: { lt: "Brandbooke: etalonai – šviesa, medžiagos, oda", en: "In the brandbook: references – light, materials, skin" } },
         { type: "pair", ids: ["nb-51", "nb-52"], cap: { lt: "„Netinka“ pavyzdys ir AI politika", en: "A “not like that” example and the AI policy" } },
-        { type: "pair", ids: ["nb-53", "nb-54"], cap: { lt: "Foto ir AI taisyklės, 100 % mastelio patikros sąrašas", en: "Photo and AI rules, the 100% zoom checklist" } },
       ] },
     { n: "06", h: { lt: "Brandbookas kasdienėje veikloje", en: "The brandbook in everyday work" },
       p: [
@@ -214,8 +219,8 @@ export const nrStory: Story = {
           en: "Shared principles link different formats and leave room for new ideas. That is how I develop the NOT REAL style while keeping the individuality of each client’s project." },
       ],
       blocks: [
-        { type: "trio", ids: ["nb-02", "nb-37", "nb-38"], cap: { lt: "Brandbooke: turinys, LinkedIn juosta, karuselės skaidrės", en: "In the brandbook: contents, the LinkedIn banner, carousel slides" } },
-        { type: "trio", ids: ["nb-39", "nb-41", "nb-56"], cap: { lt: "Šablonai, Reels viršelis ir pabaigos kadrai", en: "Templates, the Reels cover and closing frames" } },
+        { type: "trio", ids: ["nb-37", "nb-38", "nb-41"], cap: { lt: "LinkedIn juosta, karuselės skaidrės ir Reels viršelis", en: "The LinkedIn banner, carousel slides and a Reels cover" } },
+        { type: "pair", ids: ["nb-39", "nb-56"], cap: { lt: "Šablonai ir pabaigos kadrai", en: "Templates and closing frames" } },
       ] },
   ],
 };
