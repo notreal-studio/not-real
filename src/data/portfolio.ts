@@ -106,8 +106,8 @@ const vaItems = gallery.visual.map((m, i) => iMedia(m, { en: `SOXI, frame ${i + 
 /* ---------------- the five groups ---------------- */
 export const groups: Group[] = [
   { slug: "video", n: "01", title: { en: "Video", lt: "Video" },
-    intro: { en: "Short films and ads where the product, the light and the feeling stay real, and one idea nobody ordered moves the story.",
-             lt: "Trumpi filmai ir reklamos, kuriuose produktas, šviesa ir jausmas lieka tikri, o viena niekieno neužsakyta idėja judina istoriją." },
+    intro: { en: "AI films and video ads can make even the most improbable story feel as though it really happened. Your product or service can take the lead. A good story makes people feel something and helps them remember your brand.",
+             lt: "AI filmuose ir vaizdo reklamose net neįtikėtina istorija gali atrodyti taip, lyg būtų nutikusi iš tiesų. Jos herojumi gali tapti jūsų produktas ar paslauga. Gera istorija sukelia emociją ir padeda žiūrovams prisiminti jūsų prekės ženklą." },
     cardSub: { en: "Films and ads", lt: "Filmai ir reklamos" },
     items: videos.map((v) => vMedia(v.slug)), slides: ["bubblegum-city", "vesper", "the-armchair", "limone", "beyond-the-elements", "dress-to-kill"].map((s) => `/assets/video/${s}.webp`) },
   { slug: "photography", n: "02", title: { en: "Photography", lt: "Fotografija" },

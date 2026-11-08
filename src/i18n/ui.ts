@@ -48,7 +48,7 @@ export const ui: Record<string, Record<string, string>> = {
     "footer.tag": "Real feeling. Unreal ideas.", "footer.explore": "Naršyk", "footer.hi": "Parašyk",
     "footer.copy": "© 2026 NOT REAL · Inga Bankauskė", "footer.privacy": "Privatumo politika", "footer.cookies": "Slapukų nustatymai",
 
-    "gp.back": "Visi darbai", "gp.works": "darbų", "gp.more": "Kiti darbai",
+    "gp.back": "Visi darbai", "gp.by": "Sukūrė Inga Bankauskė, NOT REAL studija", "gp.works": "darbų", "gp.more": "Kiti darbai",
     "gp.cta.h": "Turi projektą?", "gp.cta.btn": "Paprašyti pasiūlymo",
     "gp.brand.nr": "NOT REAL brandbook 4.0.0", "gp.brand.sx": "SOXI Brand Guidelines", "gp.brand.note": "Parodyti tik pasirinkti puslapiai.",
     "gp.soxi.h": "SOXI atvejo studija", "gp.soxi.p": "Nuo pavadinimo iki kampanijos viename Space: taisyklės, produktas, personažai, scenos, plakatai, e. parduotuvė ir filmas.", "gp.soxi.btn": "Skaityti atvejo studiją",
@@ -98,7 +98,7 @@ export const ui: Record<string, Record<string, string>> = {
     "footer.tag": "Real feeling. Unreal ideas.", "footer.explore": "Explore", "footer.hi": "Say hi",
     "footer.copy": "© 2026 NOT REAL · Inga Bankauskė", "footer.privacy": "Privacy policy", "footer.cookies": "Cookie settings",
 
-    "gp.back": "All work", "gp.works": "works", "gp.more": "More work",
+    "gp.back": "All work", "gp.by": "Created by Inga Bankauskė, NOT REAL studio", "gp.works": "works", "gp.more": "More work",
     "gp.cta.h": "Have a project in mind?", "gp.cta.btn": "Ask for a quote",
     "gp.brand.nr": "NOT REAL brandbook 4.0.0", "gp.brand.sx": "SOXI Brand Guidelines", "gp.brand.note": "Selected pages only.",
     "gp.soxi.h": "SOXI case study", "gp.soxi.p": "From a name to a campaign inside one Space: rules, product, cast, scenes, posters, e-shop and film.", "gp.soxi.btn": "Read the case study",
