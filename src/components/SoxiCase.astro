@@ -24,7 +24,8 @@ const guidelines = caseImg("guidelines", 1257, 610);
 const hero = im("04_hero");
 const frameIds = soxiFrames.map((f) => f.src.split("/").pop()!.replace(".webp", ""));
 const eshop = ["p057", "p058", "p059", "p061", "p062", "p063", "p064", "p104"].map(im);
-const posters = gallery.soxiPosters;
+const posters = gallery.soxiPosters.filter((m) => !m.src.includes("/p016.webp"));   // p016 is the same poster as p102
+const posterRows = [posters.slice(0, 2), posters.slice(2)];
 const scenes = ["p067", "p065", "p017", "03_rolled-dress"].map(im);
 const four = ["p073", "p069", "p070", "p068"].map(im);
 const sheets = ["p072", "p071"].map(im);
@@ -191,7 +192,11 @@ const alt = (n: string, i: number) => `SOXI — ${n} ${i + 1}`;
       <ul class="case-lines">{c.s8.lines.map((t) => (<li>{t}</li>))}</ul>
       <div class="case-two">{c.s8.p.map((t) => (<p>{t}</p>))}</div>
       <div class="case-posters">
-        {posters.map((m, i) => (<figure><img src={u(m.src)} srcset={rs(m)} sizes={SZ} width={m.w} height={m.h} alt={alt("poster", i)} loading="lazy" /></figure>))}
+        {posterRows.map((row) => (
+          <div class="case-prow" style={`--sum:${row.reduce((t, m) => t + m.w / m.h, 0).toFixed(4)}`}>
+            {row.map((m) => (<figure style={`--r:${(m.w / m.h).toFixed(4)}`}><img src={u(m.src)} srcset={rs(m)} sizes={SZ} width={m.w} height={m.h} alt={alt("poster", posters.indexOf(m))} loading="lazy" /></figure>))}
+          </div>
+        ))}
       </div>
     </div>
   </section>
