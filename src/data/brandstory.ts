@@ -12,7 +12,9 @@ const bookPageImgs = (b: BookDef): Img[] => Array.from({ length: b.pages }, (_, 
 });
 // ALDEMA serum campaign (concept): the same bottle in four different scenes
 const aldema: Img[] = [["al-01", 928, 1152], ["al-02", 1100, 1467], ["al-03", 928, 1152], ["al-04", 928, 1152]].map(([id, w, h]) => ({ id: id as string, src: `/assets/img/aldema/${id}.webp`, thumb: `/assets/img/aldema/${id}-640.webp`, w: w as number, h: h as number }));
-const all: Img[] = [...Object.values(gallery).flat(), ...soxiFrames, ...bookPageImgs(SOXI_BOOK), ...bookPageImgs(NR_BOOK), ...aldema];export const findImg = (id: string): Img => {
+// real artwork cropped out of the NOT REAL brandbook pages (LinkedIn profile, carousel slides, closing frame)
+const examples: Img[] = [["ex-li", 1400, 727], ["ex-s1", 1014, 1273], ["ex-s2", 1014, 1273], ["ex-s3", 1014, 1273], ["ex-end", 1400, 787]].map(([id, w, h]) => ({ id: id as string, src: `/assets/img/nr-brandbook/${id}.webp`, thumb: `/assets/img/nr-brandbook/${id}-640.webp`, w: w as number, h: h as number }));
+const all: Img[] = [...Object.values(gallery).flat(), ...soxiFrames, ...bookPageImgs(SOXI_BOOK), ...bookPageImgs(NR_BOOK), ...aldema, ...examples];export const findImg = (id: string): Img => {
   const m = all.find((x) => x.id === id);
   if (!m) throw new Error("brandstory: no picture with id " + id);
   return m;
@@ -220,7 +222,8 @@ export const nrStory: Story = {
           en: "Shared principles link different formats and leave room for new ideas. That is how I develop the NOT REAL style while keeping the individuality of each client’s project." },
       ],
       blocks: [
-        { type: "mockups", ids: [], cap: { lt: "Taip identitetas dirba kasdien: LinkedIn juosta, karuselės skaidrės, Reels viršelis ir pabaigos kadras", en: "How the identity works day to day: a LinkedIn banner, carousel slides, a Reels cover and a closing frame" } },
+        { type: "wide", ids: ["ex-li"], cap: { lt: "LinkedIn profilis: juosta su NR avataru ir antrašte", en: "The LinkedIn profile: the banner with the NR avatar and the headline" } },
+        { type: "grid", ids: ["ex-s1", "ex-s2", "ex-s3", "ex-end"], cap: { lt: "Karuselės skaidrės 4:5 ir pabaigos kadras: tas pats popierius, bordo juosta ir NR ženklas", en: "Carousel slides 4:5 and the closing frame: the same paper, the bordeaux band and the NR mark" } },
       ] },
   ],
 };
