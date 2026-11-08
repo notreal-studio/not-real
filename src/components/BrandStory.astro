@@ -31,7 +31,7 @@ const checks = [
   { lt: "Medžiagų tekstūra", en: "Material texture" }, { lt: "Natūrali oda", en: "Natural skin" }, { lt: "Produkto forma ir spalva", en: "Product shape and colour" },
   { lt: "Proporcijos ir ženklinimas", en: "Proportions and labelling" }, { lt: "Tekstai", en: "Texts" }, { lt: "Kompozicija", en: "Composition" }, { lt: "Vaizdo kokybė", en: "Image quality" },
 ];
-const mock = { ph: findImg("ph-18") };
+const mock = { ph: findImg("ph-08") };
 const chunks = (a: string[], n: number) => a.reduce<string[][]>((o, v, i) => { if (i % n === 0) o.push([]); o[o.length - 1].push(v); return o; }, []);
 const typoNote = { lt: "Pagrindinė mintis – „Newsreader“, paaiškinimas – „Figtree“. Vienas žodis kursyvu ir pabrauktas.", en: "The main thought is set in Newsreader, the explanation in Figtree. One word in italics and underlined." };
 ---

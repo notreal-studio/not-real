@@ -205,7 +205,7 @@ export const nrStory: Story = {
       ],
       blocks: [
         { type: "pair", ids: ["p104", "va-09"], cap: { lt: "Atskaitos vaizdas baltame fone → tas pats produktas scenoje", en: "The reference on white → the same product in a scene" }, link: { to: "soxi", t: { lt: "Visas pavyzdys: SOXI projektas →", en: "The full example: the SOXI project →" } } },
-        { type: "labelled", ids: ["ph-14", "ph-06", "ph-19"], labels: [{ lt: "Šviesos kryptis", en: "Direction of light" }, { lt: "Medžiagų tekstūra", en: "Material texture" }, { lt: "Natūrali oda", en: "Natural skin" }], cap: { lt: "Į ką žiūriu vertindama AI vaizdą", en: "What I look at when I judge an AI image" } },
+        { type: "labelled", ids: ["ph-20", "ph-11", "ph-09"], labels: [{ lt: "Šviesos kryptis", en: "Direction of light" }, { lt: "Medžiagų tekstūra", en: "Material texture" }, { lt: "Natūrali oda", en: "Natural skin" }], cap: { lt: "Į ką žiūriu vertindama AI vaizdą", en: "What I look at when I judge an AI image" } },
         { type: "checks", ids: [], cap: { lt: "Ką tikrinu prieš atiduodama darbą", en: "What I check before a piece leaves the studio" } },
       ] },
     { n: "06", h: { lt: "Brandbookas kasdienėje veikloje", en: "The brandbook in everyday work" },
