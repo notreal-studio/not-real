@@ -10,7 +10,9 @@ const bookPageImgs = (b: BookDef): Img[] => Array.from({ length: b.pages }, (_, 
   const n = String(i + 1).padStart(2, "0");
   return { id: `${b.prefix}-${n}`, src: `/assets/img/${b.dir}/${b.prefix}-${n}.webp`, thumb: `/assets/img/${b.dir}/${b.prefix}-${n}-640.webp`, w: b.w, h: b.h };
 });
-const all: Img[] = [...Object.values(gallery).flat(), ...soxiFrames, ...bookPageImgs(SOXI_BOOK), ...bookPageImgs(NR_BOOK)];export const findImg = (id: string): Img => {
+// ALDEMA serum campaign (concept): the same bottle in four different scenes
+const aldema: Img[] = [["al-01", 928, 1152], ["al-02", 1100, 1467], ["al-03", 928, 1152], ["al-04", 928, 1152]].map(([id, w, h]) => ({ id: id as string, src: `/assets/img/aldema/${id}.webp`, thumb: `/assets/img/aldema/${id}-640.webp`, w: w as number, h: h as number }));
+const all: Img[] = [...Object.values(gallery).flat(), ...soxiFrames, ...bookPageImgs(SOXI_BOOK), ...bookPageImgs(NR_BOOK), ...aldema];export const findImg = (id: string): Img => {
   const m = all.find((x) => x.id === id);
   if (!m) throw new Error("brandstory: no picture with id " + id);
   return m;
@@ -204,7 +206,7 @@ export const nrStory: Story = {
           en: "I use AI to create and edit scenes, settings and visuals. I judge the final result against the needs of the project: I check the product details, texts, composition and image quality." },
       ],
       blocks: [
-        { type: "pair", ids: ["p104", "va-09"], cap: { lt: "Atskaitos vaizdas baltame fone → tas pats produktas scenoje", en: "The reference on white → the same product in a scene" }, link: { to: "soxi", t: { lt: "Visas pavyzdys: SOXI projektas →", en: "The full example: the SOXI project →" } } },
+        { type: "grid", ids: ["al-01", "al-02", "al-03", "al-04"], cap: { lt: "Tas pats flakonas skirtingose scenose: forma, spalva ir ženklinimas nesikeičia", en: "The same bottle in different scenes: shape, colour and labelling do not change" } },
         { type: "labelled", ids: ["ph-20", "ph-11", "ph-09"], labels: [{ lt: "Šviesos kryptis", en: "Direction of light" }, { lt: "Medžiagų tekstūra", en: "Material texture" }, { lt: "Natūrali oda", en: "Natural skin" }], cap: { lt: "Į ką žiūriu vertindama AI vaizdą", en: "What I look at when I judge an AI image" } },
         { type: "checks", ids: [], cap: { lt: "Ką tikrinu prieš atiduodama darbą", en: "What I check before a piece leaves the studio" } },
       ] },
