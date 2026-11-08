@@ -5,7 +5,7 @@ import { gallery, soxiFrames, type Img } from "./gallery";
 export type L = { en: string; lt: string };
 export type Lang = "en" | "lt";
 
-export interface Video { slug: string; title: string; sub: L; vertical: boolean }
+export interface Video { slug: string; title: string; titleLt?: string; sub: L; vertical: boolean }
 export interface Media {
   id: string;
   kind: "image" | "video";
@@ -23,12 +23,12 @@ export interface Group {
 
 /* ---------------- videos ---------------- */
 export const videos: Video[] = [
-  { slug: "bubblegum-city",     title: "Bubblegum City",      sub: { en: "Concept film",                lt: "Koncepcinis filmas" },                 vertical: false },
-  { slug: "beyond-the-elements",title: "Beyond the Elements", sub: { en: "Outerwear film",              lt: "Lauko drabužių filmas" },              vertical: false },
-  { slug: "the-armchair",       title: "The Armchair",        sub: { en: "From product to interior",    lt: "Nuo produkto iki interjero" },         vertical: false },
-  { slug: "piazza",             title: "Piazza",              sub: { en: "Fashion film + 3D scene",     lt: "Mados filmas + 3D scena" },            vertical: false },
-  { slug: "sofa-360",           title: "Sofa, 360°",          sub: { en: "Product visualisation",       lt: "Produkto vizualizacija" },             vertical: false },
-  { slug: "scene-08",           title: "Scene 08",            sub: { en: "Concept film",                lt: "Koncepcinis filmas" },                 vertical: false },
+  { slug: "bubblegum-city", title: "Oops, My Bad", titleLt: "Ups, netyčia", sub: { en: "Personal AI film", lt: "Asmeninis AI filmas" }, vertical: false },
+  { slug: "beyond-the-elements", title: "Element", titleLt: "Stichija", sub: { en: "AI outerwear commercial", lt: "AI viršutinių drabužių reklama" }, vertical: false },
+  { slug: "the-armchair", title: "A Room Built Around It", titleLt: "Interjeras aplink jį", sub: { en: "AI product visualisation", lt: "AI produkto vizualizacija" }, vertical: false },
+  { slug: "piazza", title: "From Model to Motion", titleLt: "Nuo modelio iki judesio", sub: { en: "AI fashion film created from a 3D model", lt: "AI mados filmas, sukurtas iš 3D modelio" }, vertical: false },
+  { slug: "sofa-360", title: "The Turn", titleLt: "Apsisukimas", sub: { en: "360° product visualisation", lt: "360° produkto vizualizacija" }, vertical: false },
+  { slug: "scene-08", title: "Crime Scene Presentation", titleLt: "Nusikaltimo vietos pristatymas", sub: { en: "AI cinematic environment", lt: "AI kinematografinė aplinka" }, vertical: false },
   { slug: "vesper",             title: "Vesper",              sub: { en: "Headphones · concept ad",     lt: "Ausinės · koncepcinė reklama" },       vertical: true },
   { slug: "drinks",             title: "Splash",              sub: { en: "Drinks, in motion",           lt: "Gėrimai judesyje" },                   vertical: true },
   { slug: "limone",             title: "Limone",              sub: { en: "Beverage · concept ad",       lt: "Gėrimas · koncepcinė reklama" },       vertical: true },
@@ -45,7 +45,7 @@ export const heroVideos = heroSlugs.map((s) => videos.find((v) => v.slug === s)!
 
 const vMedia = (slug: string): Media => {
   const v = videos.find((x) => x.slug === slug)!;
-  return { id: slug, kind: "video", title: { en: v.title, lt: v.title }, sub: v.sub, cover: `/assets/video/${slug}.webp`, ratio: v.vertical ? 4 / 5 : 16 / 10,
+  return { id: slug, kind: "video", title: { en: v.title, lt: v.titleLt ?? v.title }, sub: v.sub, cover: `/assets/video/${slug}.webp`, ratio: v.vertical ? 4 / 5 : 16 / 10,
     video: { src: `/assets/video/${slug}.mp4`, poster: `/assets/video/${slug}.webp`, vertical: v.vertical } };
 };
 const iMedia = (m: Img, title: L, sub?: L): Media => ({ id: m.id, kind: "image", title, sub, cover: m.thumb, ratio: m.w / m.h, src: m.src, w: m.w, h: m.h });

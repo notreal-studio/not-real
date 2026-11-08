@@ -26,13 +26,12 @@ const countLabel = (g: (typeof groups)[number]) => g.countLabel?.[lang] ?? `${g.
     <section class="hero-slider" aria-roledescription="carousel" aria-label={t("hero.sr")}>
       <h1 class="sr-only">{t("hero.sr")}</h1>
       {heroVideos.map((w, n) => (
-        <article class={`hs${w.vertical ? " is-v" : ""}${n === 0 ? " is-active" : ""}`} aria-roledescription="slide" aria-label={`${n + 1} / ${heroVideos.length}: ${w.title}`}>
+        <article class={`hs${w.vertical ? " is-v" : ""}${n === 0 ? " is-active" : ""}`} aria-roledescription="slide" aria-label={`${n + 1} / ${heroVideos.length}: ${lang === "lt" && w.titleLt ? w.titleLt : w.title}`}>
           {w.vertical && <div class="hs-bg" data-bg={`${base}/assets/video/${w.slug}.webp`} style={n === 0 ? `background-image:url(${base}/assets/video/${w.slug}.webp)` : undefined}></div>}
           {n === 0 && <img class="hs-poster" src={`${base}/assets/video/${w.slug}.webp`} alt="" fetchpriority="high" decoding="async" />}
           <video muted playsinline preload="metadata" poster={n === 0 ? `${base}/assets/video/${w.slug}.webp` : undefined} data-poster={`${base}/assets/video/${w.slug}.webp`} data-src={`${base}/assets/video/${w.slug}.mp4`}></video>
           <div class="hs-cap">
-            <div class="hs-tag">{t("hero.tag")}</div>
-            <div class="hs-title">{w.title}</div>
+            <div class="hs-title">{lang === "lt" && w.titleLt ? w.titleLt : w.title}</div>
             <div class="hs-sub">{w.sub[lang]}</div>
           </div>
         </article>

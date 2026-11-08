@@ -13,7 +13,10 @@ const langHref = (l: string) => paths?.[l] ?? localePath(l as Lang, baseUrl);
 ---
 <header class={`site-head${solid ? " solid" : ""}`} id="siteHead">
   <div class="head-in">
-    <a class="head-logo" href={home} aria-label="NOT REAL"><span class="logo logo-mark s32" aria-hidden="true"></span></a>
+    <div class="head-brand">
+      <a class="head-logo" href={home} aria-label="NOT REAL"><span class="logo logo-mark s32" aria-hidden="true"></span></a>
+      <span class="head-tag">{t("hero.tag")}</span>
+    </div>
     <nav class="head-nav" aria-label="Main">
       <a href={`${home}#darbai`}>{t("nav.work")}</a>
       <a href={`${home}#about`}>{t("nav.about")}</a>

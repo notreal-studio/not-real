@@ -10,7 +10,10 @@ body.intro-on .site-head,body.intro-on .hs-cap,body.intro-on .hs-ctrl,body.intro
 /* ===== HEADER ===== */
 .site-head{position:fixed;inset:0 0 auto 0;z-index:90;color:var(--br-cream);transition:background .3s,color .3s,box-shadow .3s}
 .site-head.scrolled,.site-head.solid{background:var(--bg-2);color:var(--fg);box-shadow:0 1px 0 var(--line)}
-.head-in{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:var(--hh);padding:0 var(--gutter)}
+.head-in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;min-height:var(--hh);padding:0 var(--gutter)}
+.head-brand{display:flex;align-items:center;gap:16px;justify-self:start}
+.head-tag{font:500 10.5px/1.35 var(--body);letter-spacing:.2em;text-transform:uppercase;opacity:.82;max-width:15em}
+.head-actions{justify-self:end}
 .head-logo{display:block;width:52px}
 .head-nav{display:flex;gap:clamp(18px,2.6vw,38px);font:500 12px/1 var(--body);letter-spacing:.18em;text-transform:uppercase}
 .head-nav a{padding:14px 0;opacity:.88;transition:opacity .2s}
@@ -26,7 +29,9 @@ html[data-theme="dark"] .theme-toggle .i-moon{display:none}
 html[data-theme="light"] .theme-toggle .i-sun{display:none}
 .menu-btn{display:none;background:none;border:1px solid currentColor;border-radius:999px;cursor:pointer;color:inherit;padding:12px 18px;font:500 11px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;transition:background .2s,color .2s}
 .menu-btn:hover{background:var(--br-saffron);border-color:var(--br-saffron);color:var(--br-espresso)}
-@media (max-width:900px){.head-nav{display:none}.menu-btn{display:inline-flex}}
+@media (max-width:900px){.head-nav{display:none}.menu-btn{display:inline-flex}.head-in{display:flex;justify-content:space-between}}
+@media (min-width:901px) and (max-width:1100px){.head-tag{display:none}}
+@media (max-width:640px){.head-tag{display:none}}
 
 /* ===== OVERLAY MENU ===== */
 #menu{position:fixed;inset:0;z-index:120;clip-path:inset(0 0 100% 0);transition:clip-path .7s cubic-bezier(.76,0,.24,1);overflow:auto}
