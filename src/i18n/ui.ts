@@ -37,10 +37,10 @@ export const ui: Record<string, Record<string, string>> = {
     "faq.6_q": "Kaip pradėti?", "faq.6_a": "Parašyk arba užsisakyk trumpą pokalbį. Papasakok apie savo prekės ženklą ir ko tau reikia, o toliau viską suderinsime.",
 
     "cta.h2": "Pažiūrėk du kartus.<br>Tada <em class=\"br-hw sf\">parašyk.</em>",
-    "cta.p": "Papasakok apie savo produktą, ir parašysiu, kaip galiu padėti.", "cta.btn": "Pakalbėkime",
+    "cta.p": "Papasakok apie savo produktą.", "cta.btn": "Pakalbėkime",
 
     "contact.kicker": "Kontaktai", "contact.h2": "Pradėkime <em class=\"br-ul\">pokalbį.</em>",
-    "contact.lead": "Papasakok apie savo prekės ženklą ir ko tau reikia. Perskaitysiu ir parašysiu, kaip galiu padėti.", "contact.book": "Užsisakyti pokalbį",
+    "contact.lead": "Pasakyk, ką kuriame.", "contact.book": "Užsisakyti pokalbį",
     "form.name_label": "Vardas", "form.name_ph": "Tavo vardas", "form.email_label": "El. paštas", "form.email_ph": "vardas@verslas.lt",
     "form.msg_label": "Tavo prekės ženklas ir ko reikia", "form.msg_ph": "pvz. odos priežiūros prekės ženklas, reikia 10 produktų vaizdų ir 15 s reels.",
     "form.submit": "Siųsti užklausą", "form.subject": "Nauja užklausa — Not Real", "form.from": "Not Real svetainė",
@@ -87,10 +87,10 @@ export const ui: Record<string, Record<string, string>> = {
     "faq.6_q": "How do we start?", "faq.6_a": "Write to me or book a short call. Tell me about your brand and what you need, and we'll take it from there.",
 
     "cta.h2": "Look twice.<br>Then <em class=\"br-hw sf\">say hi.</em>",
-    "cta.p": "Tell me about your product, and I'll write back about how I can help.", "cta.btn": "Let's talk",
+    "cta.p": "Tell me about your product.", "cta.btn": "Let's talk",
 
     "contact.kicker": "Contact", "contact.h2": "Get in <em class=\"br-ul\">touch.</em>",
-    "contact.lead": "Tell me about your brand and what you need. I'll read it and write back about how I can help.", "contact.book": "Book a call",
+    "contact.lead": "Tell me what we're making.", "contact.book": "Book a call",
     "form.name_label": "Name", "form.name_ph": "Your name", "form.email_label": "Email", "form.email_ph": "name@business.com",
     "form.msg_label": "Your brand & what you need", "form.msg_ph": "e.g. a skincare brand, we need 10 product visuals and a 15 s reel.",
     "form.submit": "Send request", "form.subject": "New request — Not Real", "form.from": "Not Real website",
