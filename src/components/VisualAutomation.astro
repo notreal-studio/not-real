@@ -1,0 +1,170 @@
+---
+// Visual automation page body: benefits, one product two purposes, the four steps, the Magnific Spaces system (clickable blocks) and the SOXI case.
+import type { Lang } from "../i18n/utils";
+import type { Media } from "../data/portfolio";
+
+interface Props { lang: Lang; base: string; items: Media[]; soxiHref: string; homeHref: string; }
+const { lang, base, items, soxiHref, homeHref } = Astro.props;
+const L = (lt: string, en: string) => (lang === "lt" ? lt : en);
+const idx = (id: string) => items.findIndex((m) => m.id === id);
+const med = (id: string) => items.find((m) => m.id === id)!;
+
+const benefits = [
+  { n: "01", h: L("Greičiau", "Faster"), p: L("Prireikus naujos vaizdų serijos, produkto pavyzdžiai, stiliaus gairės ir kadrų nustatymai jau paruošti.", "When a new series of images is needed, the product references, style guidelines and frame settings are already in place.") },
+  { n: "02", h: L("Mažiau išlaidų pasiruošimui", "Less spent on preparation"), p: L("Kaskart atnaujinant vaizdus galima panaudoti dalį jau atlikto darbo. Keičiu tai, ko reikia naujai užduočiai – pavyzdžiui, aplinką, kompoziciją ar formatą.", "Each time the images are refreshed, part of the work already done can be reused. I change only what the new task needs, for example the setting, the composition or the format.") },
+  { n: "03", h: L("Vientisai ir tiksliai", "Consistent and accurate"), p: L("Skirtingų kanalų vaizdai remiasi tomis pačiomis prekės ženklo gairėmis. Prieš pateikdama kadrus patikrinu, ar tiksliai perteiktos produkto spalvos, forma, tekstūra ir etiketė.", "Images for different channels follow the same brand guidelines. Before I hand over the frames I check that the product’s colours, shape, texture and label are rendered accurately.") },
+];
+
+const steps = [
+  { n: "01", h: L("Išsiaiškiname, kokių vaizdų reikia reguliariai", "We find out which images you need regularly"), p: L("Aptariame, ką dažniausiai atnaujinate ir kur vaizdai bus naudojami. Peržiūriu jūsų turimas produkto nuotraukas, logotipą ir stiliaus gaires. Jei produkto vaizdų dar nėra, galiu jį nufotografuoti. Paslaugai atspirties tašku gali tapti jūsų erdvės, žmonių ar darbo proceso vaizdai.", "We discuss what you refresh most often and where the images will be used. I review the product photos, logo and style guidelines you already have. If there are no product images yet, I can photograph the product. For a service, your spaces, people or working process can be the starting point.") },
+  { n: "02", h: L("Paruošiu sistemą", "I set up the system"), p: L("Sujungiu produkto pavyzdžius, prekės ženklo gaires ir dažniausiai reikalingų kadrų nustatymus. Pagal paskirtį numatau apšvietimą, foną, kompoziciją ir formatą.", "I connect the product references, the brand guidelines and the settings for the frames you need most. For each purpose I plan the lighting, background, composition and format.") },
+  { n: "03", h: L("Kuriu ir patikrinu naujus kadrus", "I create and check new frames"), p: L("Parengiu kadro užduotį, o AI pagal ją ir prijungtus pavyzdžius sukuria variantus. Iš jų atrenku tinkamus, patikrinu produkto detales ir prireikus jas pataisau.", "I write the brief for a frame and AI makes variants from it and the connected references. I choose the right ones, check the product details and correct them if needed.") },
+  { n: "04", h: L("Perduodu vaizdus, o sistema lieka kitam atnaujinimui", "I hand over the images, and the system stays for the next refresh"), p: L("Gaunate atrinktus ir patikrintus kadrus. Kitai kampanijai ar vaizdų serijai galiu naudoti jau paruoštą sistemą ir pritaikyti ją naujai užduočiai.", "You receive the selected, checked frames. For the next campaign or series I can use the system that is already built and adapt it to the new task.") },
+];
+
+/* the Spaces system: the overview plus six blocks */
+const sys = [
+  { k: "overview", n: "", t: L("Visa sistema", "The whole system"), c: L("Visas SOXI Space viename vaizde: šeši blokai, o iš vieno Brand Kit linijos eina į kiekvieną kūrimo bloką.", "The whole SOXI Space in one picture: six blocks, with lines running from one Brand Kit to every creation block.") },
+  { k: "brand", n: "1", t: L("Gairės", "Brand"), c: L("Vienas SOXI Brand Kit su spalvomis, ženklu ir šriftu. Jis prijungtas prie kiekvieno kūrimo bloko, todėl stilius nesikeičia.", "One SOXI Brand Kit with the colours, mark and type. It is wired into every creation block, so the style does not drift.") },
+  { k: "product", n: "2", t: L("Produktas", "Product"), c: L("Švarūs dėžutės ir kojinių vaizdai yra pavyzdžiai. Iš jų sukuriami nauji rakursai ir aplinkos, o pakuotės detalės lieka tos pačios.", "Clean images of the box and the socks are the references. New angles and settings are made from them while the packaging details stay the same.") },
+  { k: "character", n: "3", t: L("Veikėjai", "Character"), c: L("Veikėją sukuriu vieną kartą, paskui paruošiu jo kampų ir detalių lapus. Jie tampa pavyzdžiu visose kitose scenose.", "I build a character once, then prepare its angle and detail sheets. They become the reference for every other scene.") },
+  { k: "scenes", n: "4", t: L("Scenos", "Scenes"), c: L("Kiekviena scena turi savo aprašymą ir prijungtus pavyzdžius: produktą, veikėjus, stilių. Aprašymą galima pakeisti ir paleisti iš naujo.", "Each scene has its own brief and connected references: the product, the characters, the style. The brief can be edited and run again.") },
+  { k: "social", n: "5", t: L("Socialiniai tinklai", "Social"), c: L("Plakatai ir įrašai su tekstu: tos pačios spalvos, tas pats produktas, skirtingos kompozicijos. Variantų kuriama keli, atrenku geriausią.", "Posters and posts with type: the same colours, the same product, different compositions. Several versions are made and I choose the best.") },
+  { k: "eshop", n: "6", t: L("E. parduotuvė", "E-shop"), c: L("Dešimt kadrų, kiekvienas su savo aprašymu: uždara ir atvira dėžutė, ant modelio, iš arti. Kiekvienas atsako į kitą pirkėjo klausimą.", "Ten shots, each with its own brief: the box closed and open, on a model, close up. Each one answers a different buyer question.") },
+];
+
+/* SOXI case: four groups with pictures from the gallery */
+const cases = [
+  { n: "01", h: L("Gairės ir produkto pavyzdžiai", "Guidelines and product references"), p: L("SOXI spalvas, ženklą ir vaizdų stilistiką sujungiau į gairių rinkinį Brand Kit. Dėžutės ir kojinių rinkinio vaizdus prijungiau prie skirtingų kūrimo blokų kaip produkto pavyzdžius. Atskiruose identiteto pristatymo vaizduose parodžiau, kaip SOXI ženklas, spalvos ir tipografija dera tarpusavyje.", "I combined the SOXI colours, mark and image style into a Brand Kit. I connected the images of the box and the sock set to the different creation blocks as product references. In separate identity presentation images I showed how the SOXI mark, colours and typography work together."), ids: ["va-21", "va-22", "va-12", "va-13"] },
+  { n: "02", h: L("Veikėjai ir kampanijos scenos", "Characters and campaign scenes"), p: L("Sukūriau personažus ir paruošiau jų vizualus iš skirtingų rakursų. Pasirinktus atvaizdus naudojau kitose scenose. Pagrindinis horizontalus kampanijos kadras tapo pavyzdžiu vertikaliai kompozicijai. Naujoje užduotyje nurodžiau išlaikyti veikėjus, kojines ir spiralės motyvą, o jų išdėstymą pritaikyti vertikaliam formatui.", "I created the characters and prepared their looks from different angles. The chosen images were used in other scenes. The main horizontal campaign frame became the reference for a vertical composition. In the new task I asked to keep the characters, the socks and the spiral motif and to adapt their arrangement to the vertical format."), ids: ["va-05", "va-06", "va-04", "va-01", "va-08", "va-16"] },
+  { n: "03", h: L("Socialinių tinklų vizualai", "Social media visuals"), p: L("Išbandžiau kelias produkto, teksto ir spalvų kompozicijas. Atrenkant variantus svarbu, kad žinutę būtų lengva perskaityti, produktas būtų aiškiai matomas, o vizualas išlaikytų SOXI charakterį.", "I tried several compositions of product, type and colour. When choosing between versions, the message has to be easy to read, the product clearly visible and the visual true to the character of SOXI."), ids: ["va-02", "va-23", "va-20", "va-24"] },
+  { n: "04", h: L("E. parduotuvės kadrai", "E-shop frames"), p: L("Uždara dėžutė parodo pakuotę, atvira – ką pirkėjas ras viduje. Kadrai ant modelio parodo, kaip kojinės atrodo avimos, o vaizdai iš arti leidžia apžiūrėti mezgimo detales.", "The closed box shows the packaging, the open one what the buyer will find inside. Frames on a model show how the socks look when worn, and close-ups let you study the knit."), ids: ["va-11", "va-17", "va-18", "va-03", "va-14", "va-15"] },
+];
+const rows = (ids: string[], per: number) => { const out: string[][] = []; for (let i = 0; i < ids.length; i += per) out.push(ids.slice(i, i + per)); return out; };
+
+const when = [
+  L("Reguliariai papildote asortimentą arba atnaujinate produktų vaizdus.", "You add to your range or refresh product images regularly."),
+  L("Tam pačiam produktui reikia skirtingų kadrų parduotuvei, reklamai ir socialiniams tinklams.", "The same product needs different frames for the shop, advertising and social media."),
+  L("Norite keisti kampanijų nuotaiką ir aplinką, išlaikydami atpažįstamą prekės ženklo stilių.", "You want to change the mood and setting of campaigns while keeping a recognisable brand style."),
+];
+const swatches = ["#1F2A1E", "#F4ECDD", "#EE7B5E", "#A4BB57", "#9B1C31", "#E8A82A"];
+---
+<section class="gp-sec va">
+  <div class="wrap">
+
+    <!-- 1. benefits -->
+    <div class="va-ben">
+      {benefits.map((b) => (
+        <article class="va-card">
+          <span class="va-num">{b.n}</span>
+          <h2>{b.h}</h2>
+          <p>{b.p}</p>
+        </article>
+      ))}
+    </div>
+
+    <!-- 2. one product, two purposes -->
+    <section class="va-blk" aria-labelledby="va-two">
+      <h2 id="va-two" class="va-h">{L("Tas pats produktas, dvi paskirtys", "The same product, two purposes")}</h2>
+      <div class="va-two">
+        <figure>
+          <button type="button" class="va-img" data-lb={idx("va-12")} aria-haspopup="dialog"><img src={`${base}${med("va-12").cover}`} alt={L("SOXI „Omakase“ dėžutė baltame e. parduotuvės fone", "The SOXI Omakase box on a white e-shop background")} loading="lazy" decoding="async" /></button>
+          <figcaption><b>{L("E. parduotuvei", "For the e-shop")}</b></figcaption>
+        </figure>
+        <div class="va-same" aria-hidden="true"><span>{L("tas pats produkto pavyzdys", "the same product reference")}</span><i></i></div>
+        <figure>
+          <button type="button" class="va-img" data-lb={idx("va-09")} aria-haspopup="dialog"><img src={`${base}${med("va-09").cover}`} alt={L("Ta pati dėžutė kampanijos scenoje", "The same box in a campaign scene")} loading="lazy" decoding="async" /></button>
+          <figcaption><b>{L("Kampanijai", "For the campaign")}</b></figcaption>
+        </figure>
+      </div>
+      <p class="va-note">{L("Kairėje – SOXI „Omakase“ dėžutė e. parduotuvei. Dešinėje – ta pati dėžutė kampanijos scenoje. Abiem kadrams naudotas tas pats produkto pavyzdys.", "On the left, the SOXI Omakase box for an e-shop. On the right, the same box in a campaign scene. Both frames use the same product reference.")}</p>
+    </section>
+
+    <!-- 3. how it works -->
+    <section class="va-blk" aria-labelledby="va-how">
+      <h2 id="va-how" class="va-h">{L("Kaip tai veikia?", "How does it work?")}</h2>
+      <ol class="va-steps">
+        {steps.map((s) => (
+          <li><span class="va-num">{s.n}</span><div><h3>{s.h}</h3><p>{s.p}</p></div></li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- 4. the system -->
+    <section class="va-blk" aria-labelledby="va-sys">
+      <h2 id="va-sys" class="va-h">{L("Kaip sujungti kūrimo blokai?", "How are the creation blocks connected?")}</h2>
+      <p class="va-lead">{L("„Magnific Spaces“ – tai vizuali darbo lenta, kurioje blokai sujungti linijomis. Kiekvienas blokas turi paskirtį. Viename yra produkto vaizdas, kitame – stiliaus gairės ar kadro aprašymas, dar kitame AI pagal šią medžiagą kuria naują vaizdą. Linijos rodo, iš kurių blokų keliauja medžiaga konkrečiam kadrui.", "Magnific Spaces is a visual workboard where blocks are joined by lines. Each block has a purpose. One holds a product image, another the style guidelines or the description of a frame, and another has AI make a new image from that material. The lines show which blocks the material for a given frame comes from.")}</p>
+
+      <div class="va-eq" role="img" aria-label={L("Dėžutės vaizdas plius SOXI gairės plius kadro aprašymas sukuria e. parduotuvės kadrą", "Box image plus SOXI guidelines plus frame brief makes an e-shop frame")}>
+        <div class="va-chip"><img src={`${base}/assets/img/va-system/box-ref.webp`} alt="" loading="lazy" decoding="async" /><span>{L("Dėžutės vaizdas", "Box image")}</span></div>
+        <b>+</b>
+        <div class="va-chip"><div class="va-sw">{swatches.map((c) => (<i style={`background:${c}`}></i>))}</div><span>{L("SOXI gairės", "SOXI guidelines")}</span></div>
+        <b>+</b>
+        <div class="va-chip va-txt"><em>{L("„Uždara dėžutė baltame fone, šiek tiek pasukta, su minkštu šešėliu“", "“The closed box on white, slightly turned, with a soft shadow”")}</em><span>{L("Kadro aprašymas", "Frame brief")}</span></div>
+        <b>→</b>
+        <div class="va-chip va-res"><img src={`${base}${med("va-12").cover}`} alt="" loading="lazy" decoding="async" /><span>{L("E. parduotuvės kadras", "E-shop frame")}</span></div>
+      </div>
+      <p class="va-note">{L("Dėžutės vaizdas parodo, kaip atrodo pakuotė, o aprašymas nurodo, kaip ją pateikti. Tą patį produkto vaizdą galiu prijungti prie kampanijos bloko ir naudoti su visai kitu scenos aprašymu.", "The box image shows what the packaging looks like and the brief says how to present it. I can connect the same product image to a campaign block and use it with a completely different scene brief.")}</p>
+
+      <div class="va-spaces" data-va-spaces>
+        <div class="va-tabs" role="tablist" aria-label={L("Sistemos blokai", "System blocks")}>
+          {sys.map((s, i) => (
+            <button type="button" role="tab" class="va-tab" aria-selected={i === 0 ? "true" : "false"} data-k={s.k}>{s.n && <span>{s.n}</span>}{s.t}</button>
+          ))}
+        </div>
+        <div class="va-view">
+          {sys.map((s, i) => (
+            <figure class="va-pane" data-k={s.k} hidden={i !== 0}>
+              <button type="button" class="va-shot" data-lb={idx("vs-" + s.k)} aria-haspopup="dialog" aria-label={L("Padidinti: ", "Enlarge: ") + s.t}>
+                <img src={`${base}/assets/img/va-system/${s.k}.webp`} alt={`${s.t} – Magnific Spaces`} loading={i === 0 ? "eager" : "lazy"} decoding="async" />
+              </button>
+              <figcaption><b>{s.n ? s.n + " · " : ""}{s.t}.</b> {s.c}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. SOXI case -->
+    <section class="va-blk va-soxi" aria-labelledby="va-case">
+      <h2 id="va-case" class="va-h">SOXI <i>/</i> {L("Vizualų sistema nuo produkto iki kampanijos", "A visual system from product to campaign")}</h2>
+      <p class="va-win">{L("1-oji vieta tarptautiniame „Magnific One Brand Kit“ konkurse", "1st place, international Magnific One Brand Kit contest")}</p>
+      {cases.map((c) => (
+        <div class="va-case">
+          <div class="va-case-t"><span class="va-num">{c.n}</span><h3>{c.h}</h3><p>{c.p}</p></div>
+          <div class="bs-rows">
+            {rows(c.ids, c.ids.length > 4 ? 3 : 4).map((r) => (
+              <div class="bs-jr">
+                {r.map((id) => (
+                  <button type="button" class="bs-fig" style={`--r:${med(id).ratio.toFixed(4)}`} data-lb={idx(id)} aria-haspopup="dialog" aria-label={med(id).title[lang]}>
+                    <img src={`${base}${med(id).cover}`} alt="" loading="lazy" decoding="async" />
+                  </button>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+      <a class="btn va-more" href={soxiHref}>{L("Skaityti visą SOXI atvejį", "Read the whole SOXI case")} →</a>
+    </section>
+
+    <!-- 6. when -->
+    <section class="va-blk va-when" aria-labelledby="va-when">
+      <h2 id="va-when" class="va-h">{L("Kada tokia sistema praverčia?", "When is such a system useful?")}</h2>
+      <ul>{when.map((w) => (<li>{w}</li>))}</ul>
+      <a class="btn" href={`${homeHref}#kontaktai`}>{L("Aptarkime jūsų atvejį", "Let’s talk about your case")}</a>
+    </section>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-va-spaces]").forEach((root) => {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>(".va-tab"));
+    const panes = Array.from(root.querySelectorAll<HTMLElement>(".va-pane"));
+    const pick = (k: string) => {
+      tabs.forEach((t) => t.setAttribute("aria-selected", String(t.dataset.k === k)));
+      panes.forEach((p) => { p.hidden = p.dataset.k !== k; });
+    };
+    tabs.forEach((t) => t.addEventListener("click", () => pick(t.dataset.k!)));
+  });
+</script>
