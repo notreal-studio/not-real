@@ -142,7 +142,7 @@ export const groups: Group[] = [
   { slug: "visual-automation", n: "05", title: { en: "Visual automation", lt: "Vizualų automatizavimas" },
     intro: { en: "I set the system up once. New frames are then made from that ready base.\n\nFor brands that regularly need new images for an e-shop, seasonal campaigns and social media.",
              lt: "Vieną kartą paruošiu sistemą. Naujus kadrus kuriu iš jau paruošto pagrindo.\n\nSkirta prekės ženklams, kuriems reguliariai reikia naujų vaizdų e. parduotuvei, sezoninėms kampanijoms ir socialiniams tinklams." },
-    cardSub: { en: "Brand Kit workflows", lt: "Brand Kit procesai" }, countLabel: { en: "1 Brand Kit", lt: "1 Brand Kit" },
+    cardSub: { en: "SOXI case study", lt: "SOXI atvejis" }, countLabel: { en: "1 case study", lt: "1 atvejis" },
     items: [vMedia("soxi-film"), ...vaItems, vaPoster, ...vaSystem], slides: ["va-09", "va-14", "va-20", "va-01", "va-12", "va-17"].map((id) => gallery.visual.find((x) => x.id === id)!.thumb) },
 ];
 

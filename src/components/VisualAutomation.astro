@@ -3,8 +3,8 @@
 import type { Lang } from "../i18n/utils";
 import type { Media } from "../data/portfolio";
 
-interface Props { lang: Lang; base: string; items: Media[]; soxiHref: string; homeHref: string; }
-const { lang, base, items, soxiHref, homeHref } = Astro.props;
+interface Props { lang: Lang; base: string; items: Media[]; soxiHref: string; }
+const { lang, base, items, soxiHref } = Astro.props;
 const L = (lt: string, en: string) => (lang === "lt" ? lt : en);
 const idx = (id: string) => items.findIndex((m) => m.id === id);
 const med = (id: string) => items.find((m) => m.id === id)!;
@@ -139,6 +139,13 @@ const swatches = ["#1F2A1E", "#F4ECDD", "#EE7B5E", "#A4BB57", "#9B1C31", "#E8A82
     <section class="va-blk va-soxi" aria-labelledby="va-case">
       <h2 id="va-case" class="va-h">SOXI <i>/</i> {L("Vizualų sistema nuo produkto iki kampanijos", "A visual system from product to campaign")}</h2>
       <p class="va-win">{L("1-oji vieta tarptautiniame „Magnific One Brand Kit“ konkurse", "1st place, international Magnific One Brand Kit contest")}</p>
+      <div class="va-film">
+        <button type="button" class="va-film-v" data-lb={idx("soxi-film")} aria-haspopup="dialog" aria-label={L("Žiūrėti SOXI filmą su garsu", "Watch the SOXI film with sound")}>
+          <img src={`${base}/assets/video/soxi-film.webp`} alt={L("SOXI filmo kadras: „Omakase“ dėžutė su lazdelėmis", "A frame of the SOXI film: the Omakase box with chopsticks")} loading="lazy" decoding="async" />
+          <span class="gp-play" aria-hidden="true"></span>
+        </button>
+        <p>{L("SOXI filmas: „Omakase“ dėžutė ir kojinės judesyje. Paspausk, kad pažiūrėtum su garsu.", "The SOXI film: the Omakase box and the socks in motion. Click or tap to watch with sound.")}</p>
+      </div>
       {cases.map((c) => (
         <div class="va-case">
           <div class="va-case-t"><span class="va-num">{c.n}</span><h3>{c.h}</h3><p>{c.p}</p></div>
@@ -162,7 +169,6 @@ const swatches = ["#1F2A1E", "#F4ECDD", "#EE7B5E", "#A4BB57", "#9B1C31", "#E8A82
     <section class="va-blk va-when" aria-labelledby="va-when">
       <h2 id="va-when" class="va-h">{L("Kada tokia sistema praverčia?", "When is such a system useful?")}</h2>
       <ul>{when.map((w) => (<li>{w}</li>))}</ul>
-      <a class="btn" href={`${homeHref}#kontaktai`}>{L("Aptarkime jūsų atvejį", "Let’s talk about your case")}</a>
     </section>
   </div>
 </section>
