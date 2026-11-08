@@ -103,6 +103,19 @@ const sxPages = gallery.brandSX.map((m) => iMedia(m, sxTitles[m.id], { en: "SOXI
 
 /* ---------------- visual automation ---------------- */
 const vaItems = gallery.visual.map((m, i) => iMedia(m, { en: `SOXI, frame ${i + 1}`, lt: `SOXI, kadras ${i + 1}` }, { en: "One Brand Kit, many frames", lt: "Vienas Brand Kit, daug kadrų" }));
+/* the Magnific Spaces system, shown as screenshots (own lightbox group "sys") */
+const sysDefs: [string, number, number, L][] = [
+  ["overview", 1300, 1199, { en: "The whole SOXI Space: six blocks wired from one Brand Kit", lt: "Visas SOXI Space: šeši blokai, sujungti iš vieno Brand Kit" }],
+  ["brand", 1212, 600, { en: "1 · Brand: the SOXI Brand Kit and a short how-to", lt: "1 · Gairės: SOXI Brand Kit ir trumpa instrukcija" }],
+  ["product", 1121, 1340, { en: "2 · Product: clean packshots and the variants made from them", lt: "2 · Produktas: švarūs pavyzdžiai ir iš jų sukurti variantai" }],
+  ["character", 1354, 952, { en: "3 · Character: one model, then angle and detail sheets", lt: "3 · Veikėjai: vienas modelis, tada kampų ir detalių lapai" }],
+  ["scenes", 998, 1309, { en: "4 · Scenes: each scene has its own prompt and references", lt: "4 · Scenos: kiekviena scena turi savo aprašymą ir pavyzdžius" }],
+  ["social", 1600, 1267, { en: "5 · Social: type posters made from the same kit", lt: "5 · Socialiniai tinklai: tipografiniai plakatai iš to paties rinkinio" }],
+  ["eshop", 606, 1251, { en: "6 · E-shop: ten shots, ten prompts", lt: "6 · E. parduotuvė: dešimt kadrų, dešimt aprašymų" }],
+];
+/* a poster cut out of the Space screenshot, shown in the SOXI case */
+const vaPoster = iMedia({ id: "va-poster1", src: "/assets/img/va-system/poster-fresh.webp", thumb: "/assets/img/va-system/poster-fresh.webp", w: 624, h: 500 } as Img, { en: "SOXI type poster: Fresh off the roll", lt: "SOXI tipografinis plakatas: Fresh off the roll" }, { en: "One Brand Kit, many frames", lt: "Vienas Brand Kit, daug kadrų" });
+export const vaSystem: Media[] = sysDefs.map(([id, w, h, title]) => ({ id: "vs-" + id, kind: "image", title, sub: { en: "SOXI · Magnific Spaces", lt: "SOXI · Magnific Spaces" }, cover: `/assets/img/va-system/${id}.webp`, ratio: w / h, src: `/assets/img/va-system/${id}.webp`, w, h, grp: "sys" }));
 
 /* ---------------- the five groups ---------------- */
 export const groups: Group[] = [
@@ -127,10 +140,10 @@ export const groups: Group[] = [
     cardSub: { en: "Logos and brandbooks", lt: "Logotipai ir brand book'ai" }, countLabel: { en: "2 brandbooks", lt: "2 brand book'ai" },
     items: [...nrPages, ...sxPages], slides: [...gallery.brandNR.slice(0, 4), ...gallery.brandSX.slice(0, 2)].map((m) => m.thumb) },
   { slug: "visual-automation", n: "05", title: { en: "Visual automation", lt: "Vizualų automatizavimas" },
-    intro: { en: "Build the brand once, then let the workflow make the rest: a Brand Kit that produces on-brand photos, posters, e-shop shots and film from one Space.",
-             lt: "Sukurk prekės ženklą vieną kartą, o likusį padaro workflow: Brand Kit, kuris viename Space sukuria prekės ženklo stiliaus nuotraukas, plakatus, e. parduotuvės kadrus ir filmą." },
-    cardSub: { en: "Brand Kit workflows", lt: "Brand Kit procesai" }, countLabel: { en: "1 Brand Kit", lt: "1 Brand Kit" },
-    items: [vMedia("soxi-film"), ...vaItems], slides: ["va-09", "va-14", "va-20", "va-01", "va-12", "va-17"].map((id) => gallery.visual.find((x) => x.id === id)!.thumb) },
+    intro: { en: "I set the system up once. New frames are then made from that ready base.\n\nFor brands that regularly need new images for an e-shop, seasonal campaigns and social media.",
+             lt: "Vieną kartą paruošiu sistemą. Naujus kadrus kuriu iš jau paruošto pagrindo.\n\nSkirta prekės ženklams, kuriems reguliariai reikia naujų vaizdų e. parduotuvei, sezoninėms kampanijoms ir socialiniams tinklams." },
+    cardSub: { en: "SOXI case study", lt: "SOXI atvejis" }, countLabel: { en: "1 case study", lt: "1 atvejis" },
+    items: [vMedia("soxi-film"), ...vaItems, vaPoster, ...vaSystem], slides: ["va-09", "va-14", "va-20", "va-01", "va-12", "va-17"].map((id) => gallery.visual.find((x) => x.id === id)!.thumb) },
 ];
 
 /* ---------------- home: living mosaic + About video ---------------- */

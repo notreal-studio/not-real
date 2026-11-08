@@ -1,6 +1,7 @@
 ---
 import CaseLayout from "../layouts/CaseLayout.astro";
 import BrandStory from "./BrandStory.astro";
+import VisualAutomation from "./VisualAutomation.astro";
 import { soxiStory, nrStory, mediaOf, bookOf } from "../data/brandstory";
 import { groups, soxiCover } from "../data/portfolio";
 import { useTranslations, localePath, type Lang } from "../i18n/utils";
@@ -22,7 +23,8 @@ const nr = indexed.filter(({ m }) => m.id.startsWith("nr-"));
 const sx = indexed.filter(({ m }) => m.id.startsWith("sx-"));
 const isBrand = slug === "brand-identity";
 const useOrb = slug === "video" || slug === "photography" || slug === "graphic-design";
-const showSoxi = slug === "visual-automation";
+const showSoxi = false;
+const isVA = slug === "visual-automation";
 const nrItems = nr.map(({ m }) => m);
 const st = sub === "soxi" ? soxiStory : sub === "notreal" ? nrStory : null;
 const lbList = !isBrand ? g.items : st ? [...mediaOf(st), ...bookOf(st)] : undefined;   // brand pages: the story pictures, then the whole brandbook (its own lightbox group); the chooser needs none
@@ -96,6 +98,8 @@ const desc = descBase.length > 155 ? descBase.slice(0, 152).replace(/\s+\S*$/, "
     </section>
   ) : st ? (
     <BrandStory lang={lang} base={base} offset={0} st={st} />
+  ) : isVA ? (
+    <VisualAutomation lang={lang} base={base} items={g.items} soxiHref={soxiHref} />
   ) : (
     <section class="gp-sec">
       <div class="wrap">
