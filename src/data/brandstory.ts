@@ -153,8 +153,8 @@ export const nrStory: Story = {
           en: "In the studio I also work with real photography. The same quality criteria and the principle “Real feeling. Unreal ideas.” join both ways of creating." },
       ],
       blocks: [
-        { type: "trio", ids: ["ph-06", "ph-03", "ph-17"], cap: { lt: "Real feeling. Šviesa, medžiaga, oda, kuriomis galima patikėti", en: "Real feeling. Light, material and skin you can believe" } },
-        { type: "trio", ids: ["ph-18", "ph-02", "ph-04"], cap: { lt: "Unreal ideas. Scenos, kurių realybėje nepastatysi", en: "Unreal ideas. Scenes you could not stage in real life" } },
+        { type: "trio", ids: ["ph-03", "ph-17", "ph-13"], cap: { lt: "Real feeling. Šviesa, medžiaga, oda, kuriomis galima patikėti", en: "Real feeling. Light, material and skin you can believe" } },
+        { type: "trio", ids: ["ph-18", "ph-04", "ph-06"], cap: { lt: "Unreal ideas. Scenos, kurių realybėje nepastatysi", en: "Unreal ideas. Scenes you could not stage in real life" } },
       ] },
     { n: "02", h: { lt: "Logotipas ir atpažinimo ženklas", en: "Logo and identity mark" },
       p: [
