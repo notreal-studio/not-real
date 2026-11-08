@@ -1,7 +1,7 @@
 ---
 import CaseLayout from "../layouts/CaseLayout.astro";
 import BrandStory from "./BrandStory.astro";
-import { storyMedia, story } from "../data/brandstory";
+import { storyMedia, bookMedia, story } from "../data/brandstory";
 import { groups, soxiCover } from "../data/portfolio";
 import { useTranslations, localePath, type Lang } from "../i18n/utils";
 
@@ -24,7 +24,7 @@ const isBrand = slug === "brand-identity";
 const useOrb = slug === "video" || slug === "photography" || slug === "graphic-design";
 const showSoxi = slug === "visual-automation";
 const nrItems = nr.map(({ m }) => m);
-const lbList = !isBrand ? g.items : sub === "soxi" ? storyMedia() : sub === "notreal" ? nrItems : undefined;   // brand pages: SOXI = its story pictures, NOT REAL = its brandbook cards, the chooser needs none
+const lbList = !isBrand ? g.items : sub === "soxi" ? [...storyMedia(), ...bookMedia()] : sub === "notreal" ? nrItems : undefined;   // brand pages: SOXI = its story pictures, NOT REAL = its brandbook cards, the chooser needs none
 const subName = sub === "soxi" ? "SOXI" : sub === "notreal" ? "NOT REAL" : "";
 const nrCover = nrItems[0];
 const introParas = g.intro[lang].split("\n\n");

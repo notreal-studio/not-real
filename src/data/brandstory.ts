@@ -22,6 +22,7 @@ export const story = {
   } as L,
   win: { lt: "1 vieta · „Magnific One Brand Kit“ konkursas · 2026", en: "1st place · Magnific One Brand Kit contest · 2026" } as L,
   hero: "01_roll-into-socks",
+  book: { lt: "Peržiūrėti visą brandbooką", en: "View the whole brandbook" } as L,
   credit: { lt: "Koncepcija ir kūrybinis įgyvendinimas – Inga Bankauskė / NOT REAL.", en: "Concept and creative direction – Inga Bankauskė / NOT REAL." } as L,
   sections: [
     { n: "01", h: { lt: "Kaip gimė SOXI", en: "How SOXI was born" },
@@ -109,4 +110,12 @@ for (const id of [story.hero, ...story.sections.flatMap((s) => s.blocks.flatMap(
 export const storyMedia = (): Media[] => storyIds.map((id) => {
   const m = findImg(id);
   return { id: "story-" + id, kind: "image", title: { en: "SOXI", lt: "SOXI" }, cover: m.thumb, ratio: m.w / m.h, src: m.src, w: m.w, h: m.h };
+});
+
+/* the whole SOXI brandbook (13 pages), opened in the lightbox right after the story pictures */
+export const BOOK_PAGES = 13;
+export const bookMedia = (): Media[] => Array.from({ length: BOOK_PAGES }, (_, i) => {
+  const n = String(i + 1).padStart(2, "0");
+  return { id: "sb-" + n, kind: "image", title: { en: "SOXI brandbook", lt: "SOXI brandbookas" }, sub: { en: `Page ${i + 1} / ${BOOK_PAGES}`, lt: `Puslapis ${i + 1} / ${BOOK_PAGES}` },
+    cover: `/assets/img/soxi-brandbook/sb-${n}-640.webp`, ratio: 1800 / 1013, src: `/assets/img/soxi-brandbook/sb-${n}.webp`, w: 1800, h: 1013 } as Media;
 });

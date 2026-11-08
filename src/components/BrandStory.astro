@@ -1,11 +1,12 @@
 ---
 // The SOXI brand-identity story on the Brand identity page: text and pictures in the order they should be seen.
-import { story, storyIds, findImg, type Block } from "../data/brandstory";
+import { story, storyIds, findImg, BOOK_PAGES, type Block } from "../data/brandstory";
 import type { Lang } from "../i18n/utils";
 
 interface Props { lang: Lang; base: string; offset: number; }
 const { lang, base, offset } = Astro.props;
 const idx = (id: string) => offset + storyIds.indexOf(id);
+const bookIdx = offset + storyIds.length;   // first page of the whole brandbook in the lightbox list
 const logo = findImg("02_logo");
 const heroImg = findImg(story.hero);
 const pairs = (b: Block) => b.ids.reduce<string[][]>((a, id, i) => { if (i % 2 === 0) a.push([id]); else a[a.length - 1].push(id); return a; }, []);
@@ -17,6 +18,7 @@ const pairs = (b: Block) => b.ids.reduce<string[][]>((a, id, i) => { if (i % 2 =
         <h2 id="bs-h" class="bs-title">{story.h[lang]}</h2>
         <p class="bs-lead">{story.lead[lang]}</p>
         <p class="bs-win">{story.win[lang]}</p>
+        <button type="button" class="btn bs-book" data-lb={bookIdx} aria-haspopup="dialog">{story.book[lang]} · {BOOK_PAGES}</button>
       </div>
       <button type="button" class="bs-fig bs-hero" data-lb={idx(story.hero)} aria-haspopup="dialog" aria-label="SOXI">
         <img src={`${base}${heroImg.src}`} width={heroImg.w} height={heroImg.h} alt="" loading="eager" decoding="async" />
@@ -28,6 +30,7 @@ const pairs = (b: Block) => b.ids.reduce<string[][]>((a, id, i) => { if (i % 2 =
         <summary class="bs-sh"><span class="bs-n">{s.n}</span><h3>{s.h[lang]}</h3><span class="bs-pm" aria-hidden="true"></span></summary>
         <div class="bs-body">
         <div class="bs-txt">{s.p.map((para) => (<p>{para[lang]}</p>))}</div>
+        {s.n === "06" && <button type="button" class="btn bs-book" data-lb={bookIdx} aria-haspopup="dialog">{story.book[lang]} · {BOOK_PAGES}</button>}
         {s.blocks.map((b) => (
           b.type === "seq" ? (
             <figure class="bs-seq">

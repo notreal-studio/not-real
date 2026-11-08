@@ -38,6 +38,8 @@
 .bs-title{font-size:clamp(1.5rem,2.5vw,2.1rem);line-height:1.1;margin-bottom:12px}
 .bs-lead{font-size:clamp(15px,1.15vw,17px);line-height:1.6;color:var(--muted)}
 .bs-win{display:inline-block;margin-top:16px;padding:7px 12px;background:var(--br-saffron);color:var(--br-espresso);font:600 11px/1.2 var(--body);letter-spacing:.16em;text-transform:uppercase}
+.bs-book{margin-top:18px;padding:12px 20px;font-size:12px}
+.bs-win+.bs-book{display:block}
 .bs-fig{display:block;padding:0;border:0;background:#241811;border-radius:4px;overflow:hidden;cursor:zoom-in;position:relative}
 .bs-fig img{display:block;width:100%;height:auto}
 .bs-hero{margin-top:0;width:100%}
