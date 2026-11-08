@@ -171,7 +171,7 @@ export const nrStory: Story = {
       ],
       blocks: [
         { type: "logos", ids: [], cap: { lt: "Trys logotipo variantai: NR simbolis, užrašas ir junginys", en: "The three logo versions: the NR symbol, the wordmark and the combination" } },
-        { type: "onphoto", ids: ["ph-16", "ph-19", "ph-14"], cap: { lt: "Logotipas ant nuotraukos: tik NR simbolis, mažas, rami vieta kampe", en: "The logo on a photograph: only the NR symbol, small, in a calm corner" } },
+        { type: "onphoto", ids: ["ph-16", "ph-19", "ph-14"], cap: { lt: "Logotipas ant nuotraukų: simbolis, apvalus ženkliukas ir popierinė etiketė, kiekvienoje vietoje kitaip, bet visada ramiame kampe", en: "The logo on photographs: the symbol, a round badge and a paper label, each placed differently but always in a calm corner" } },
       ] },
     { n: "03", h: { lt: "Spalvų sistema ir tekstūros", en: "Colour system and textures" },
       p: [
