@@ -345,7 +345,10 @@
 .va-same i::after{content:"";position:absolute;right:-1px;top:-4px;border-left:9px solid var(--accent);border-top:5px solid transparent;border-bottom:5px solid transparent}
 /* steps */
 .va-steps{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,26px)}
-.va-steps li{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:clamp(18px,2.2vw,28px);border-top:1px solid var(--line)}
+.va-steps li{display:flex;flex-direction:column;gap:16px;padding:0 0 clamp(18px,2.2vw,28px);border-bottom:1px solid var(--line)}
+.va-step-img{aspect-ratio:16/9;overflow:hidden;border-radius:4px;background:#241811}
+.va-step-img img{width:100%;height:100%;object-fit:cover;display:block}
+.va-step-t .va-num{display:block;margin-bottom:8px}
 .va-steps .va-num{font:italic 400 clamp(2rem,3.4vw,2.8rem)/1 var(--disp);letter-spacing:0;color:var(--accent)}
 .va-steps h3{font-size:clamp(1.15rem,1.7vw,1.4rem);line-height:1.2;margin-bottom:8px}
 .va-steps p{color:var(--muted);font-size:15.5px}
@@ -388,4 +391,13 @@
   .va-ben,.va-steps{grid-template-columns:1fr}
   .va-two{grid-template-columns:1fr}.va-same{flex-direction:row;max-width:none;justify-content:center}.va-same i{width:60px}
   .va-pane,.va-case{grid-template-columns:1fr}
+}
+
+.va-hint{display:none;margin:-4px 0 12px;color:var(--muted);font-size:13px}
+@media (max-width:900px){.va-hint{display:block}}
+@media (max-width:600px){
+  .va-case .bs-jr{flex-wrap:wrap}
+  .va-case .bs-jr{align-items:flex-start}
+  .va-case .bs-jr .bs-fig{flex:1 1 calc(50% - 8px)}
+  .va-case .bs-jr .bs-fig img{height:auto}
 }

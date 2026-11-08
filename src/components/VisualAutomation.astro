@@ -15,6 +15,7 @@ const benefits = [
   { n: "03", h: L("Vientisai ir tiksliai", "Consistent and accurate"), p: L("Skirtingų kanalų vaizdai remiasi tomis pačiomis prekės ženklo gairėmis. Prieš pateikdama kadrus patikrinu, ar tiksliai perteiktos produkto spalvos, forma, tekstūra ir etiketė.", "Images for different channels follow the same brand guidelines. Before I hand over the frames I check that the product’s colours, shape, texture and label are rendered accurately.") },
 ];
 
+const stepImg = [`/assets/img/va-system/box-ref.webp`, `/assets/img/va-system/brand.webp`, null, null];
 const steps = [
   { n: "01", h: L("Išsiaiškiname, kokių vaizdų reikia reguliariai", "We find out which images you need regularly"), p: L("Aptariame, ką dažniausiai atnaujinate ir kur vaizdai bus naudojami. Peržiūriu jūsų turimas produkto nuotraukas, logotipą ir stiliaus gaires. Jei produkto vaizdų dar nėra, galiu jį nufotografuoti. Paslaugai atspirties tašku gali tapti jūsų erdvės, žmonių ar darbo proceso vaizdai.", "We discuss what you refresh most often and where the images will be used. I review the product photos, logo and style guidelines you already have. If there are no product images yet, I can photograph the product. For a service, your spaces, people or working process can be the starting point.") },
   { n: "02", h: L("Paruošiu sistemą", "I set up the system"), p: L("Sujungiu produkto pavyzdžius, prekės ženklo gaires ir dažniausiai reikalingų kadrų nustatymus. Pagal paskirtį numatau apšvietimą, foną, kompoziciją ir formatą.", "I connect the product references, the brand guidelines and the settings for the frames you need most. For each purpose I plan the lighting, background, composition and format.") },
@@ -35,11 +36,19 @@ const sys = [
 
 /* SOXI case: four groups with pictures from the gallery */
 const cases = [
-  { n: "01", h: L("Gairės ir produkto pavyzdžiai", "Guidelines and product references"), p: L("SOXI spalvas, ženklą ir vaizdų stilistiką sujungiau į gairių rinkinį Brand Kit. Dėžutės ir kojinių rinkinio vaizdus prijungiau prie skirtingų kūrimo blokų kaip produkto pavyzdžius. Atskiruose identiteto pristatymo vaizduose parodžiau, kaip SOXI ženklas, spalvos ir tipografija dera tarpusavyje.", "I combined the SOXI colours, mark and image style into a Brand Kit. I connected the images of the box and the sock set to the different creation blocks as product references. In separate identity presentation images I showed how the SOXI mark, colours and typography work together."), ids: ["va-21", "va-22", "va-12", "va-13"] },
+  { n: "01", h: L("Gairės ir produkto pavyzdžiai", "Guidelines and product references"), p: L("SOXI spalvas, ženklą ir vaizdų stilistiką sujungiau į gairių rinkinį Brand Kit. Dėžutės ir kojinių rinkinio vaizdus prijungiau prie skirtingų kūrimo blokų kaip produkto pavyzdžius. Atskiruose identiteto pristatymo vaizduose parodžiau, kaip SOXI ženklas, spalvos ir tipografija dera tarpusavyje.", "I combined the SOXI colours, mark and image style into a Brand Kit. I connected the images of the box and the sock set to the different creation blocks as product references. In separate identity presentation images I showed how the SOXI mark, colours and typography work together."), ids: ["va-21", "va-22", "va-13"] },
   { n: "02", h: L("Veikėjai ir kampanijos scenos", "Characters and campaign scenes"), p: L("Sukūriau personažus ir paruošiau jų vizualus iš skirtingų rakursų. Pasirinktus atvaizdus naudojau kitose scenose. Pagrindinis horizontalus kampanijos kadras tapo pavyzdžiu vertikaliai kompozicijai. Naujoje užduotyje nurodžiau išlaikyti veikėjus, kojines ir spiralės motyvą, o jų išdėstymą pritaikyti vertikaliam formatui.", "I created the characters and prepared their looks from different angles. The chosen images were used in other scenes. The main horizontal campaign frame became the reference for a vertical composition. In the new task I asked to keep the characters, the socks and the spiral motif and to adapt their arrangement to the vertical format."), ids: ["va-05", "va-06", "va-04", "va-01", "va-08", "va-16"] },
-  { n: "03", h: L("Socialinių tinklų vizualai", "Social media visuals"), p: L("Išbandžiau kelias produkto, teksto ir spalvų kompozicijas. Atrenkant variantus svarbu, kad žinutę būtų lengva perskaityti, produktas būtų aiškiai matomas, o vizualas išlaikytų SOXI charakterį.", "I tried several compositions of product, type and colour. When choosing between versions, the message has to be easy to read, the product clearly visible and the visual true to the character of SOXI."), ids: ["va-02", "va-23", "va-20", "va-24"] },
-  { n: "04", h: L("E. parduotuvės kadrai", "E-shop frames"), p: L("Uždara dėžutė parodo pakuotę, atvira – ką pirkėjas ras viduje. Kadrai ant modelio parodo, kaip kojinės atrodo avimos, o vaizdai iš arti leidžia apžiūrėti mezgimo detales.", "The closed box shows the packaging, the open one what the buyer will find inside. Frames on a model show how the socks look when worn, and close-ups let you study the knit."), ids: ["va-11", "va-17", "va-18", "va-03", "va-14", "va-15"] },
+  { n: "03", h: L("Socialinių tinklų vizualai", "Social media visuals"), p: L("Išbandžiau kelias produkto, teksto ir spalvų kompozicijas. Atrenkant variantus svarbu, kad žinutę būtų lengva perskaityti, produktas būtų aiškiai matomas, o vizualas išlaikytų SOXI charakterį.", "I tried several compositions of product, type and colour. When choosing between versions, the message has to be easy to read, the product clearly visible and the visual true to the character of SOXI."), ids: ["va-poster1", "va-02", "va-23", "va-20", "va-24"] },
+  { n: "04", h: L("E. parduotuvės kadrai", "E-shop frames"), p: L("Uždara dėžutė parodo pakuotę, atvira – ką pirkėjas ras viduje. Kadrai ant modelio parodo, kaip kojinės atrodo avimos, o vaizdai iš arti leidžia apžiūrėti mezgimo detales.", "The closed box shows the packaging, the open one what the buyer will find inside. Frames on a model show how the socks look when worn, and close-ups let you study the knit."), ids: ["va-12", "va-11", "va-18", "va-03", "va-14", "va-15"] },
 ];
+const alts: Record<string, [string, string]> = {
+  "va-21": ["SOXI logotipas", "The SOXI logo"], "va-22": ["SOXI spalvų paletė", "The SOXI colour palette"], "va-13": ["Suvyniotos kojinės iš arti", "A rolled sock, close up"],
+  "va-05": ["Vyras oranžinio atspalvio kostiumu", "A man in an orange-red suit"], "va-06": ["Vyras avokado žalio atspalvio kostiumu", "A man in an avocado green suit"], "va-04": ["Moteris megzta suknele iš kojinių ritinių", "A woman in a dress of rolled socks"],
+  "va-01": ["Du veikėjai spalvų blokų kambaryje", "Two characters in a colour-block room"], "va-08": ["Moteris fotelyje prie spiralės", "A woman in an armchair by a spiral"], "va-16": ["Moteris bordo kostiumu prieš oranžinę sieną", "A woman in a burgundy suit against an orange wall"],
+  "va-poster1": ["Plakatas „Fresh off the roll“", "Poster: Fresh off the roll"], "va-02": ["Plakatas „Don’t walk. Roll.“", "Poster: Don’t walk. Roll."], "va-23": ["Reklama „Roll into socks“", "Ad: Roll into socks"], "va-20": ["Plakatas „Six rolls. One box.“", "Poster: Six rolls. One box."], "va-24": ["Suvyniotos kojinės ant oranžinio fono", "Rolled socks on an orange background"],
+  "va-12": ["Atvira „Omakase“ dėžutė baltame fone", "The open Omakase box on white"], "va-11": ["Moteris kostiumu sėdi ant baltos kubo", "A woman in a suit seated on a white block"], "va-18": ["Rankos mauna bordo kojines", "Hands pulling on burgundy socks"], "va-03": ["Keturios poros kojinių ant kojų", "Four pairs of socks on legs"], "va-14": ["Žalios kojinės su avokadais", "Green socks with avocados"], "va-15": ["Kojos pro automobilio langą", "Legs out of a car window"],
+};
+const alt = (id: string) => (alts[id] ? alts[id][lang === "lt" ? 0 : 1] : "");
 const rows = (ids: string[], per: number) => { const out: string[][] = []; for (let i = 0; i < ids.length; i += per) out.push(ids.slice(i, i + per)); return out; };
 
 const when = [
@@ -84,8 +93,8 @@ const swatches = ["#1F2A1E", "#F4ECDD", "#EE7B5E", "#A4BB57", "#9B1C31", "#E8A82
     <section class="va-blk" aria-labelledby="va-how">
       <h2 id="va-how" class="va-h">{L("Kaip tai veikia?", "How does it work?")}</h2>
       <ol class="va-steps">
-        {steps.map((s) => (
-          <li><span class="va-num">{s.n}</span><div><h3>{s.h}</h3><p>{s.p}</p></div></li>
+        {steps.map((s, i) => (
+          <li><div class="va-step-img"><img src={`${base}${i === 2 ? med("va-19").cover : i === 3 ? med("va-10").cover : stepImg[i]}`} alt="" loading="lazy" decoding="async" /></div><div class="va-step-t"><span class="va-num">{s.n}</span><h3>{s.h}</h3><p>{s.p}</p></div></li>
         ))}
       </ol>
     </section>
@@ -102,19 +111,20 @@ const swatches = ["#1F2A1E", "#F4ECDD", "#EE7B5E", "#A4BB57", "#9B1C31", "#E8A82
         <b>+</b>
         <div class="va-chip va-txt"><em>{L("„Uždara dėžutė baltame fone, šiek tiek pasukta, su minkštu šešėliu“", "“The closed box on white, slightly turned, with a soft shadow”")}</em><span>{L("Kadro aprašymas", "Frame brief")}</span></div>
         <b>→</b>
-        <div class="va-chip va-res"><img src={`${base}${med("va-12").cover}`} alt="" loading="lazy" decoding="async" /><span>{L("E. parduotuvės kadras", "E-shop frame")}</span></div>
+        <div class="va-chip va-res"><img src={`${base}${med("va-17").cover}`} alt="" loading="lazy" decoding="async" /><span>{L("E. parduotuvės kadras", "E-shop frame")}</span></div>
       </div>
       <p class="va-note">{L("Dėžutės vaizdas parodo, kaip atrodo pakuotė, o aprašymas nurodo, kaip ją pateikti. Tą patį produkto vaizdą galiu prijungti prie kampanijos bloko ir naudoti su visai kitu scenos aprašymu.", "The box image shows what the packaging looks like and the brief says how to present it. I can connect the same product image to a campaign block and use it with a completely different scene brief.")}</p>
 
       <div class="va-spaces" data-va-spaces>
         <div class="va-tabs" role="tablist" aria-label={L("Sistemos blokai", "System blocks")}>
           {sys.map((s, i) => (
-            <button type="button" role="tab" class="va-tab" aria-selected={i === 0 ? "true" : "false"} data-k={s.k}>{s.n && <span>{s.n}</span>}{s.t}</button>
+            <button type="button" role="tab" id={`va-t-${s.k}`} aria-controls={`va-p-${s.k}`} tabindex={i === 0 ? 0 : -1} class="va-tab" aria-selected={i === 0 ? "true" : "false"} data-k={s.k}>{s.n && <span>{s.n}</span>}{s.t}</button>
           ))}
         </div>
+        <p class="va-hint">{L("Paspausk nuotrauką, kad padidintum.", "Tap a picture to enlarge it.")}</p>
         <div class="va-view">
           {sys.map((s, i) => (
-            <figure class="va-pane" data-k={s.k} hidden={i !== 0}>
+            <figure class="va-pane" role="tabpanel" id={`va-p-${s.k}`} aria-labelledby={`va-t-${s.k}`} data-k={s.k} hidden={i !== 0}>
               <button type="button" class="va-shot" data-lb={idx("vs-" + s.k)} aria-haspopup="dialog" aria-label={L("Padidinti: ", "Enlarge: ") + s.t}>
                 <img src={`${base}/assets/img/va-system/${s.k}.webp`} alt={`${s.t} – Magnific Spaces`} loading={i === 0 ? "eager" : "lazy"} decoding="async" />
               </button>
@@ -137,7 +147,7 @@ const swatches = ["#1F2A1E", "#F4ECDD", "#EE7B5E", "#A4BB57", "#9B1C31", "#E8A82
               <div class="bs-jr">
                 {r.map((id) => (
                   <button type="button" class="bs-fig" style={`--r:${med(id).ratio.toFixed(4)}`} data-lb={idx(id)} aria-haspopup="dialog" aria-label={med(id).title[lang]}>
-                    <img src={`${base}${med(id).cover}`} alt="" loading="lazy" decoding="async" />
+                    <img src={`${base}${med(id).cover}`} alt={alt(id)} loading="lazy" decoding="async" />
                   </button>
                 ))}
               </div>
@@ -162,9 +172,18 @@ const swatches = ["#1F2A1E", "#F4ECDD", "#EE7B5E", "#A4BB57", "#9B1C31", "#E8A82
     const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>(".va-tab"));
     const panes = Array.from(root.querySelectorAll<HTMLElement>(".va-pane"));
     const pick = (k: string) => {
-      tabs.forEach((t) => t.setAttribute("aria-selected", String(t.dataset.k === k)));
+      tabs.forEach((t) => { const on = t.dataset.k === k; t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1; });
       panes.forEach((p) => { p.hidden = p.dataset.k !== k; });
     };
-    tabs.forEach((t) => t.addEventListener("click", () => pick(t.dataset.k!)));
+    tabs.forEach((t, i) => {
+      t.addEventListener("click", () => pick(t.dataset.k!));
+      t.addEventListener("keydown", (e) => {
+        const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+        if (!d) return;
+        e.preventDefault();
+        const n = tabs[(i + d + tabs.length) % tabs.length];
+        pick(n.dataset.k!); n.focus();
+      });
+    });
   });
 </script>

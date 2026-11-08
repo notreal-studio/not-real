@@ -113,6 +113,8 @@ const sysDefs: [string, number, number, L][] = [
   ["social", 1600, 1267, { en: "5 · Social: type posters made from the same kit", lt: "5 · Socialiniai tinklai: tipografiniai plakatai iš to paties rinkinio" }],
   ["eshop", 606, 1251, { en: "6 · E-shop: ten shots, ten prompts", lt: "6 · E. parduotuvė: dešimt kadrų, dešimt aprašymų" }],
 ];
+/* a poster cut out of the Space screenshot, shown in the SOXI case */
+const vaPoster = iMedia({ id: "va-poster1", src: "/assets/img/va-system/poster-fresh.webp", thumb: "/assets/img/va-system/poster-fresh.webp", w: 624, h: 500 } as Img, { en: "SOXI type poster: Fresh off the roll", lt: "SOXI tipografinis plakatas: Fresh off the roll" }, { en: "One Brand Kit, many frames", lt: "Vienas Brand Kit, daug kadrų" });
 export const vaSystem: Media[] = sysDefs.map(([id, w, h, title]) => ({ id: "vs-" + id, kind: "image", title, sub: { en: "SOXI · Magnific Spaces", lt: "SOXI · Magnific Spaces" }, cover: `/assets/img/va-system/${id}.webp`, ratio: w / h, src: `/assets/img/va-system/${id}.webp`, w, h, grp: "sys" }));
 
 /* ---------------- the five groups ---------------- */
@@ -141,7 +143,7 @@ export const groups: Group[] = [
     intro: { en: "I set the system up once. New frames are then made from that ready base.\n\nFor brands that regularly need new images for an e-shop, seasonal campaigns and social media.",
              lt: "Vieną kartą paruošiu sistemą. Naujus kadrus kuriu iš jau paruošto pagrindo.\n\nSkirta prekės ženklams, kuriems reguliariai reikia naujų vaizdų e. parduotuvei, sezoninėms kampanijoms ir socialiniams tinklams." },
     cardSub: { en: "Brand Kit workflows", lt: "Brand Kit procesai" }, countLabel: { en: "1 Brand Kit", lt: "1 Brand Kit" },
-    items: [vMedia("soxi-film"), ...vaItems, ...vaSystem], slides: ["va-09", "va-14", "va-20", "va-01", "va-12", "va-17"].map((id) => gallery.visual.find((x) => x.id === id)!.thumb) },
+    items: [vMedia("soxi-film"), ...vaItems, vaPoster, ...vaSystem], slides: ["va-09", "va-14", "va-20", "va-01", "va-12", "va-17"].map((id) => gallery.visual.find((x) => x.id === id)!.thumb) },
 ];
 
 /* ---------------- home: living mosaic + About video ---------------- */
