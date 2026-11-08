@@ -29,7 +29,7 @@ const desc = introFlat.length > 155 ? introFlat.slice(0, 152).replace(/\s+\S*$/,
       <a class="gp-back" href={`${home}#darbai`}>← {t("gp.back")}</a>
       <div class="gp-n">{g.n} / 05</div>
       <h1 class="gp-h1"><span class="br-ul">{g.title[lang]}</span></h1>
-      {introParas.map((para) => (<p class="gp-intro">{para}</p>))}
+      {introParas.map((para) => (<p class={introFlat.length > 650 ? "gp-intro long" : "gp-intro"}>{para}</p>))}
       <div class="gp-meta"><span>{t("gp.by")}</span></div>
       <nav class="gp-tabs" aria-label={t("pf.kicker")}>
         {groups.map((x) => (
