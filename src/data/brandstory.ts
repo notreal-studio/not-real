@@ -3,7 +3,9 @@
 import { gallery, soxiFrames, type Img } from "./gallery";
 import type { L, Media } from "./portfolio";
 
-const all: Img[] = [...Object.values(gallery).flat(), ...soxiFrames];
+export const BOOK_PAGES = 34;   // pages of SOXI_Brand_Guidelines_v2.0.pdf, rendered to /assets/img/soxi-brandbook/sb-NN.webp
+const bookImgs: Img[] = Array.from({ length: BOOK_PAGES }, (_, i) => { const n = String(i + 1).padStart(2, "0"); return { id: "sb-" + n, src: `/assets/img/soxi-brandbook/sb-${n}.webp`, thumb: `/assets/img/soxi-brandbook/sb-${n}-640.webp`, w: 1800, h: 1013 }; });
+const all: Img[] = [...Object.values(gallery).flat(), ...soxiFrames, ...bookImgs];
 export const findImg = (id: string): Img => {
   const m = all.find((x) => x.id === id);
   if (!m) throw new Error("brandstory: no picture with id " + id);
@@ -55,7 +57,7 @@ export const story = {
       ],
       blocks: [
         { type: "pair", ids: ["07_colour", "p058"] },
-        { type: "wide", ids: ["sx-06"] },
+        { type: "wide", ids: ["sb-17"] },
         { type: "trio", ids: ["p055", "01_roll-into-socks", "05_dont-walk-roll"] },
       ] },
     { n: "04", h: { lt: "Produktas ir pakuotė kuriami kartu", en: "Product and packaging are made together" },
@@ -90,7 +92,7 @@ export const story = {
         { lt: "Brandbookas leidžia tęsti SOXI kūrybą remiantis aiškiais sprendimais. Nauja reklama ar produkto vaizdas gali būti kitoks, tačiau turi priklausyti tam pačiam prekės ženklui.",
           en: "The brandbook lets the work on SOXI continue from clear decisions. A new ad or product picture may look different, but it has to belong to the same brand." },
       ],
-      blocks: [{ type: "bb", ids: ["sx-03", "p104", "sx-05", "p055", "sx-09", "04_hero"] }] },
+      blocks: [{ type: "bb", ids: ["sb-07", "p104", "sb-13", "p055", "sb-22", "04_hero"] }] },
     { n: "07", h: { lt: "Nuo vienos idėjos iki vientiso prekės ženklo", en: "From one idea to a whole brand" },
       p: [
         { lt: "SOXI prasidėjo nuo susuktos kojinės. Iš jos formos gimė simbolis, iš suši idėjos – kolekcijos spalvos, pavadinimai ir pakuotė. Šie sprendimai vėliau persikėlė į reklamos vaizdus ir buvo apibrėžti brandbooke.",
@@ -109,13 +111,12 @@ for (const id of [story.hero, ...story.sections.flatMap((s) => s.blocks.flatMap(
 }
 export const storyMedia = (): Media[] => storyIds.map((id) => {
   const m = findImg(id);
-  return { id: "story-" + id, kind: "image", title: { en: "SOXI", lt: "SOXI" }, cover: m.thumb, ratio: m.w / m.h, src: m.src, w: m.w, h: m.h };
+  return { id: "story-" + id, kind: "image", title: { en: "SOXI", lt: "SOXI" }, cover: m.thumb, ratio: m.w / m.h, src: m.src, w: m.w, h: m.h, grp: "story" };
 });
 
-/* the whole SOXI brandbook (13 pages), opened in the lightbox right after the story pictures */
-export const BOOK_PAGES = 13;
+/* the whole SOXI brandbook, its own lightbox group: the viewer shows only these pages, never the story pictures */
 export const bookMedia = (): Media[] => Array.from({ length: BOOK_PAGES }, (_, i) => {
   const n = String(i + 1).padStart(2, "0");
   return { id: "sb-" + n, kind: "image", title: { en: "SOXI brandbook", lt: "SOXI brandbookas" }, sub: { en: `Page ${i + 1} / ${BOOK_PAGES}`, lt: `Puslapis ${i + 1} / ${BOOK_PAGES}` },
-    cover: `/assets/img/soxi-brandbook/sb-${n}-640.webp`, ratio: 1800 / 1013, src: `/assets/img/soxi-brandbook/sb-${n}.webp`, w: 1800, h: 1013 } as Media;
+    cover: `/assets/img/soxi-brandbook/sb-${n}-640.webp`, ratio: 1800 / 1013, src: `/assets/img/soxi-brandbook/sb-${n}.webp`, w: 1800, h: 1013, grp: "book" } as Media;
 });
