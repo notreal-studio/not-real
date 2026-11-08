@@ -83,7 +83,7 @@
 .bs-slides{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:clamp(16px,2.4vw,26px);max-width:880px}
 .bs-sl{position:relative;aspect-ratio:4/5;border-radius:4px;overflow:hidden;container-type:inline-size;box-shadow:0 0 0 1px rgba(242,237,228,.14)}
 .bs-sl-in{position:absolute;inset:0 0 22cqw 0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 7cqw}
-.bs-sl-h{font-family:var(--disp);font-size:19cqw;line-height:1.02;letter-spacing:-.01em}
+.bs-sl-h{font-family:var(--disp);font-size:15.5cqw;line-height:1.08;letter-spacing:-.01em;text-wrap:balance}
 .bs-sl-s{margin-top:7cqw;font-size:5.6cqw;line-height:1.35;opacity:.92}
 .bs-sl .br-band{position:absolute;left:0;right:0;bottom:15cqw;height:20cqw;inset:auto 0 15cqw 0;background-size:100% 100%}
 .bs-sl-bt{position:absolute;left:0;right:0;bottom:21.5cqw;font-size:5.4cqw;line-height:1.2;letter-spacing:.01em}

@@ -33,10 +33,10 @@ const checks = [
 ];
 const mock = { ph: findImg("ph-08") };
 const slideWays = [
-  { cls: "bs-sl-cream", name: { lt: "Kreminė", en: "Cream" }, sf: false },
-  { cls: "bs-sl-bord tex-bordeaux", name: { lt: "Bordo", en: "Bordeaux" }, sf: true },
-  { cls: "bs-sl-esp", name: { lt: "Espresso", en: "Espresso" }, sf: true },
-  { cls: "bs-sl-saf", name: { lt: "Šafranas", en: "Saffron" }, sf: false },
+  { cls: "bs-sl-cream", sf: false, name: { lt: "Kreminė", en: "Cream" }, h1: "Real", em: "first.", sub: "Real light. Real skin. Real feeling.", band: "Then one idea nobody ordered." },
+  { cls: "bs-sl-bord tex-bordeaux", sf: true, name: { lt: "Bordo", en: "Bordeaux" }, h1: "Real light.", em: "Unreal", h2: "ideas.", sub: "AI visuals · Product · Video", band: "See the work" },
+  { cls: "bs-sl-esp", sf: true, name: { lt: "Espresso", en: "Espresso" }, h1: "Feeling", em: "before", h2: "technique.", sub: "One saffron highlight per slide.", band: "Save this carousel" },
+  { cls: "bs-sl-saf", sf: false, name: { lt: "Šafranas", en: "Saffron" }, h1: "Show the", em: "trick", h2: "later.", sub: "Rules, not a rulebook.", band: "Say hi" },
 ];
 const chunks = (a: string[], n: number) => a.reduce<string[][]>((o, v, i) => { if (i % n === 0) o.push([]); o[o.length - 1].push(v); return o; }, []);
 const typoNote = { lt: "Pagrindinė mintis – „Newsreader“, paaiškinimas – „Figtree“. Vienas žodis kursyvu ir pabrauktas.", en: "The main thought is set in Newsreader, the explanation in Figtree. One word in italics and underlined." };
@@ -143,11 +143,11 @@ const typoNote = { lt: "Pagrindinė mintis – „Newsreader“, paaiškinimas �
                   {slideWays.map((w) => (
                     <div class={`bs-sl ${w.cls}`}>
                       <div class="bs-sl-in">
-                        <p class="bs-sl-h">Real <span class={w.sf ? "br-ul sf" : "br-ul"}><em>first.</em></span></p>
-                        <p class="bs-sl-s">Real light. Real skin. Real feeling.</p>
+                        <p class="bs-sl-h">{w.h1} <span class={w.sf ? "br-ul sf" : "br-ul"}><em>{w.em}</em></span>{w.h2 ? <> {w.h2}</> : null}</p>
+                        <p class="bs-sl-s">{w.sub}</p>
                       </div>
                       <span class="br-band bs-sl-band"></span>
-                      <span class="bs-sl-bt">Then one idea nobody ordered.</span>
+                      <span class="bs-sl-bt">{w.band}</span>
                       <span class="bs-sl-tag">{w.name[lang]}</span>
                     </div>
                   ))}
