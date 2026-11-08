@@ -3,11 +3,12 @@
 import { gallery, soxiFrames, type Img } from "./gallery";
 import type { L, Media } from "./portfolio";
 
-export interface BookDef { prefix: string; dir: string; pages: number; w: number; h: number }
+export interface BookDef { prefix: string; dir: string; pages: number; w: number; h: number; hide?: number[] }   // hide = internal pages that stay out of the public viewer
+export const shown = (b: BookDef) => b.pages - (b.hide?.length ?? 0);
 export const SOXI_BOOK: BookDef = { prefix: "sb", dir: "soxi-brandbook", pages: 34, w: 1800, h: 1013 };   // SOXI_Brand_Guidelines_v2.0.pdf
-export const NR_BOOK: BookDef = { prefix: "nb", dir: "nr-brandbook", pages: 62, w: 1700, h: 956 };          // NOT_REAL_brandbook_4.0.0_web.pdf
-const bookPageImgs = (b: BookDef): Img[] => Array.from({ length: b.pages }, (_, i) => {
-  const n = String(i + 1).padStart(2, "0");
+export const NR_BOOK: BookDef = { prefix: "nb", dir: "nr-brandbook", pages: 62, w: 1700, h: 956, hide: [9, 15, 16, 20, 29, 31, 33, 34, 35, 36, 44, 52, 53, 54, 55, 57, 58] };          // NOT_REAL_brandbook_4.0.0_web.pdf
+const bookPageImgs = (b: BookDef): Img[] => Array.from({ length: b.pages }, (_, i) => i + 1).filter((p) => !b.hide?.includes(p)).map((p) => {
+  const n = String(p).padStart(2, "0");
   return { id: `${b.prefix}-${n}`, src: `/assets/img/${b.dir}/${b.prefix}-${n}.webp`, thumb: `/assets/img/${b.dir}/${b.prefix}-${n}-640.webp`, w: b.w, h: b.h };
 });
 // ALDEMA serum campaign (concept): the same bottle in four different scenes
@@ -136,10 +137,10 @@ export const soxiStory: Story = {
 /* ---------------- NOT REAL: the studio brand (brandbook 4.0.0, 62 pages). LT is Inga's text; EN is a translation to review. ---------------- */
 export const nrStory: Story = {
   name: "NOT REAL", book: NR_BOOK,
-  h: { lt: "NOT REAL – fotografijos, grafinio dizaino ir AI kūrybos studija", en: "NOT REAL – a studio for photography, graphic design and AI creation" },
+  h: { lt: "NOT REAL – fotografijos ir AI vizualų kūrybos studija", en: "NOT REAL – a studio for photography and AI visuals" },
   lead: {
-    lt: "NOT REAL – mano, Ingos Bankauskės, kūrybinė studija, jungianti fotografijos patirtį, grafinį dizainą ir AI vaizdų kūrimą. Jos identitetą sukūriau remdamasi savo estetika ir darbo principais. Juos aprašiau 62 puslapių prekės ženklo vadove, kuris padeda nuosekliai pristatyti studiją ir jos darbus.",
-    en: "NOT REAL is my creative studio, Inga Bankauskė’s, joining photography experience, graphic design and AI image making. I built its identity from my own taste and ways of working, and set them down in a 62-page brand guide that helps present the studio and its work consistently.",
+    lt: "NOT REAL – mano, Ingos Bankauskės, kūrybinė studija, jungianti fotografijos patirtį ir AI vaizdų kūrimą. Jos identitetą sukūriau remdamasi savo estetika ir darbo principais. Juos aprašiau brandbooke – prekės ženklo vadove, kuris padeda nuosekliai pristatyti studiją ir jos darbus.",
+    en: "NOT REAL is my creative studio, Inga Bankauskė’s, combining photography experience and AI image making. I built its identity from my own taste and ways of working, and set them down in a brandbook – a brand guide that helps present the studio and its work consistently.",
   },
   win: { lt: "Real feeling. Unreal ideas.", en: "Real feeling. Unreal ideas." },
   hero: "nb-01",
@@ -149,12 +150,12 @@ export const nrStory: Story = {
   sections: [
     { n: "01", h: { lt: "Pavadinimas ir kūrybinis principas", en: "The name and the creative principle" },
       p: [
-        { k: { lt: "Atvirumas.", en: "Openness." }, lt: "Pavadinimą NOT REAL pasirinkau dėl paprastumo ir tiesumo. Juo iš karto pasakau, kad vaizdas gali būti sukurtas pasitelkiant AI. Tai mano kūrybos dalis, kurią įvardiju atvirai.",
-          en: "I chose the name NOT REAL for its simplicity and directness. It says at once that an image may have been made with AI. That is part of my work, and I name it openly." },
+        { k: { lt: "Atvirumas.", en: "Openness." }, lt: "Pavadinimą NOT REAL pasirinkau dėl paprastumo ir tiesumo. Juo iš karto pasakau, kad vaizdas gali būti sukurtas pasitelkiant AI. Dirbu su AI ir to neslepiu.",
+          en: "I chose the name NOT REAL for its simplicity and directness. It says at once that an image may have been made with AI. AI is part of my work, and I do not hide it." },
         { k: { lt: "Provokacija.", en: "Provocation." }, lt: "Dar prieš žmogui paklausiant, ar tai tikra, pavadinimas atsako – „NOT REAL“. Tuomet pats darbas turi parodyti, kaip įtikinamai galima perteikti šviesą, medžiagas, aplinką ir emociją.",
           en: "Before anyone can ask whether it is real, the name answers: “NOT REAL”. Then the work itself has to show how convincingly light, materials, setting and emotion can be conveyed." },
         { k: { lt: "Fotografija ir AI.", en: "Photography and AI." }, lt: "Studijoje dirbu ir su tikra fotografija. Abu kūrybos būdus sieja tie patys kokybės kriterijai ir principas „Real feeling. Unreal ideas.“",
-          en: "In the studio I also work with real photography. The same quality criteria and the principle “Real feeling. Unreal ideas.” join both ways of creating." },
+          en: "In the studio I also work with real photography. The same quality criteria and the principle “Real feeling. Unreal ideas.” link both ways of working." },
       ],
       blocks: [
         { type: "trio", ids: ["ph-03", "ph-17", "ph-13"], cap: { lt: "Real feeling. Šviesa, medžiaga, oda, kuriomis galima patikėti", en: "Real feeling. Light, material and skin you can believe" } },
@@ -166,17 +167,17 @@ export const nrStory: Story = {
           en: "The NR monogram came out of generating logo variants. When I saw this shape I recognised what I had been looking for in my studio. It became the base of the identity that followed." },
         { k: { lt: "Trys variantai.", en: "Three versions." }, lt: "Logotipo sistemą sudaro NR simbolis, užrašas „NOT REAL“ ir jų junginys. Kiekvienas turi savo paskirtį – nuo profilio piktogramos iki projekto pristatymo.",
           en: "The logo system consists of the NR symbol, the “NOT REAL” wordmark and the combination of the two. Each has its own use, from a profile icon to a project presentation." },
-        { k: { lt: "Naudojimo taisyklės.", en: "Rules of use." }, lt: "Brandbooke apibrėžti dydžiai, apsaugos zonos ir spalviniai variantai. Naudojamas ant nuotraukos, ženklas turi išlikti įskaitomas ir neuždengti svarbių vaizdo detalių.",
+        { k: { lt: "Naudojimo taisyklės.", en: "Rules of use." }, lt: "Brandbooke apibrėžti dydžiai, apsaugos zonos ir spalviniai variantai. Ant nuotraukos ženklas turi išlikti įskaitomas ir neuždengti svarbių vaizdo detalių.",
           en: "The brandbook defines sizes, clear zones and colour versions. Used on a photograph, the mark has to stay legible and must not cover important details of the picture." },
       ],
       blocks: [
         { type: "logos", ids: [], cap: { lt: "Trys logotipo variantai: NR simbolis, užrašas ir junginys", en: "The three logo versions: the NR symbol, the wordmark and the combination" } },
-        { type: "onphoto", ids: ["ph-16", "ph-19", "ph-14"], marks: ["tl", "br", "tr"], cap: { lt: "Ant nuotraukos – tik simbolis NR, mažas (apie 8 % kadro pločio), kampe be rašto. Kampas parenkamas skaičiuojant kodu: blogiausi 5 % taškų po simboliu duoda bent 3 : 1 (WCAG 1.4.11)", en: "On a photograph only the NR symbol, small (about 8 % of the frame width), in a corner free of detail. The corner is chosen by code: the worst 5 % of pixels under the symbol give at least 3:1 (WCAG 1.4.11)" } },
+        { type: "onphoto", ids: ["ph-16", "ph-19", "ph-14"], marks: ["tl", "br", "tr"], cap: { lt: "Ant nuotraukos – tik NR simbolis, apie 8 % kadro pločio, ramiame kampe be teksto ir smulkių detalių. Kontrastas patikrintas automatiškai: ne mažiau kaip 3 : 1", en: "On a photograph only the NR symbol, about 8 % of the frame width, in a calm corner free of text and fine detail. Contrast is checked automatically: at least 3:1" } },
       ] },
     { n: "03", h: { lt: "Spalvų sistema ir tekstūros", en: "Colour system and textures" },
       p: [
-        { k: { lt: "Bordo – pradinis pasirinkimas.", en: "Bordeaux – the starting point." }, lt: "Tai mano mėgstamiausia spalva ir asmeniškiausia NOT REAL identiteto dalis. Aplink ją suderinau likusią paletę.",
-          en: "It is my favourite colour and the most personal part of the NOT REAL identity. I matched the rest of the palette around it." },
+        { k: { lt: "Bordo – pradinis pasirinkimas.", en: "Bordeaux – the starting point." }, lt: "Bordo – mano mėgstamiausia spalva ir asmeniškiausia NOT REAL identiteto dalis. Aplink ją suderinau likusią paletę.",
+          en: "Bordeaux is my favourite colour and the most personal part of the NOT REAL identity. I matched the rest of the palette around it." },
         { k: { lt: "Aiškios spalvų paskirtys.", en: "Clear roles for colours." }, lt: "Kreminė ir šilto popieriaus atspalvis naudojami šviesiems fonams, tamsiai ruda „Espresso“ – tekstui ir tamsioms kompozicijoms. Šafrano geltona palikta kaip viena akcentinė spalva svarbiam žodžiui, žymai ar detalei išskirti.",
           en: "Cream and a warm paper tone are used for light backgrounds, dark brown “Espresso” for text and dark compositions. Saffron yellow is kept as a single accent colour to pick out an important word, label or detail." },
         { k: { lt: "Tekstūra ir paryškinimai.", en: "Texture and highlights." }, lt: "Mėgstu tekstūras, nes jos suteikia vaizdui gyvybės. Popieriaus grūdėtumas ir sauso teptuko potėpiai papildo studijos maketus, o paryškinimai nukreipia dėmesį. Bordo, tekstūra ir šie akcentai geriausiai atspindi mano skonį.",
@@ -190,8 +191,8 @@ export const nrStory: Story = {
       p: [
         { k: { lt: "Šriftų derinys.", en: "The type pairing." }, lt: "Antraštėms ir citatoms pasirinkau „Newsreader“, aprašymams bei informacijai – „Figtree“. Skirtingos jų paskirtys padeda aiškiai atskirti pagrindinę mintį nuo paaiškinimo.",
           en: "For headlines and quotes I chose Newsreader, for descriptions and information Figtree. Their different roles keep the main thought clearly apart from the explanation." },
-        { k: { lt: "Akcentas tekste.", en: "An accent in the text." }, lt: "Vieną pasirinktą antraštės žodį išskiriu kursyvu. Kartu su saikingai naudojamu pabraukimu tai tampa pasikartojančia NOT REAL stiliaus detale.",
-          en: "I set one chosen word of a headline in italics. Together with a sparingly used underline it becomes a recurring detail of the NOT REAL style." },
+        { k: { lt: "Akcentas tekste.", en: "An accent in the text." }, lt: "Vieną pasirinktą antraštės žodį išskiriu kursyvu. Kartu su saikingai naudojamu pabraukimu jis tampa pasikartojančia NOT REAL stiliaus detale.",
+          en: "I set one chosen word of a headline in italics. Together with a sparingly used underline, it becomes a recurring detail of the NOT REAL style." },
         { k: { lt: "Bendravimas.", en: "Communication." }, lt: "NOT REAL tonas drąsus, tiesus ir šiltas, su vieta žaismingumui. Tekstuose svarbūs konkretumas, kūrybinių sprendimų paaiškinimas ir dėmesys klientui. Vengiu perdėtų pažadų ir rinkodaros klišių.",
           en: "The NOT REAL tone is bold, direct and warm, with room to play. In the texts, concreteness, explaining the creative decisions and attention to the client matter. I avoid exaggerated promises and marketing clichés." },
       ],
@@ -204,8 +205,8 @@ export const nrStory: Story = {
           en: "When I judge an AI image I look at the direction of the light, shadows, reflections, material textures and natural-looking skin. These details decide whether a scene is convincing." },
         { k: { lt: "Tikslus produkto pateikimas.", en: "Accurate presentation of the product." }, lt: "Produkto formą, spalvą, medžiagą, proporcijas ir ženklinimą tikrinu pagal patvirtintą šaltinį. Kliento produktas neturi būti keičiamas vien tam, kad derėtų prie NOT REAL paletės.",
           en: "I check the shape, colour, material, proportions and labelling of the product against an approved source. A client’s product must not be changed just to suit the NOT REAL palette." },
-        { k: { lt: "Kūryba ir patikra.", en: "Creation and checking." }, lt: "AI naudoju scenoms, aplinkoms ir vizualams kurti bei redaguoti. Galutinį rezultatą vertinu pagal projekto reikalavimus: tikrinu produkto detales, tekstus, kompoziciją ir vaizdo kokybę.",
-          en: "I use AI to create and edit scenes, settings and visuals. I judge the final result against the needs of the project: I check the product details, texts, composition and image quality." },
+        { k: { lt: "Kūryba ir patikra.", en: "Creation and checking." }, lt: "AI naudoju scenoms, aplinkoms ir vizualams kurti bei redaguoti. Galutinį rezultatą vertinu pagal projekto reikalavimus: tikrinu produkto detales, tekstus, kompoziciją ir vaizdo kokybę. Dirbant su klientais AI naudojimą nurodau atvirai: darbus, sukurtus ar redaguotus AI, pažymiu.",
+          en: "I use AI to create and edit scenes, settings and visuals. I judge the final result against the needs of the project: I check the product details, texts, composition and image quality. When I work with clients I state the use of AI openly: work made or edited with AI is labelled as such." },
       ],
       blocks: [
         { type: "grid", ids: ["al-01", "al-02", "al-03", "al-04"], cap: { lt: "Tas pats flakonas skirtingose scenose: forma, spalva ir ženklinimas nesikeičia", en: "The same bottle in different scenes: shape, colour and labelling do not change" } },
@@ -214,8 +215,8 @@ export const nrStory: Story = {
       ] },
     { n: "06", h: { lt: "Brandbookas kasdienėje veikloje", en: "The brandbook in everyday work" },
       p: [
-        { k: { lt: "Aiškus pagrindas.", en: "A clear base." }, lt: "62 puslapių vadove sujungiau studijos pozicionavimą, logotipą, spalvas, tipografiją, grafinius elementus, komunikacijos toną, šablonų aprašymus ir vaizdų kūrimo taisykles.",
-          en: "In the 62-page guide I brought together the studio’s positioning, logo, colours, typography, graphic elements, tone of voice, template descriptions and the rules for making images." },
+        { k: { lt: "Aiškus pagrindas.", en: "A clear base." }, lt: "Brandbooke sujungiau studijos pozicionavimą, logotipą, spalvas, tipografiją, grafinius elementus, komunikacijos toną, šablonų aprašymus ir vaizdų kūrimo taisykles.",
+          en: "In the brandbook I brought together the studio’s positioning, logo, colours, typography, graphic elements, tone of voice, template descriptions and the rules for making images." },
         { k: { lt: "Praktinė paskirtis.", en: "Practical use." }, lt: "Brandbookas padeda nuosekliai rengti portfolio, projektų pristatymus, socialinių tinklų maketus ir vaizdo įrašų pabaigos kadrus. Naujam turiniui turiu aiškų pagrindą, todėl nereikia kiekvieną kartą iš naujo spręsti, kaip studija turėtų atrodyti.",
           en: "The brandbook helps me prepare the portfolio, project presentations, social media layouts and the closing frames of videos consistently. For any new content I have a clear base, so I do not have to decide again each time how the studio should look." },
         { k: { lt: "Atpažįstamumas.", en: "Recognisability." }, lt: "Bendri principai susieja skirtingus formatus ir palieka erdvės naujoms idėjoms. Taip plėtoju NOT REAL braižą, išlaikydama kiekvieno kliento projekto savitumą.",
@@ -242,6 +243,6 @@ export const mediaOf = (s: Story): Media[] => idsOf(s).map((id) => {
 /* the whole brandbook of a story, its own lightbox group: the viewer shows only these pages, never the story pictures */
 export const bookOf = (s: Story): Media[] => bookPageImgs(s.book).map((m, i) => ({
   id: m.id, kind: "image", title: { en: s.name + " brandbook", lt: s.name + " brandbookas" },
-  sub: { en: `Page ${i + 1} / ${s.book.pages}`, lt: `Puslapis ${i + 1} / ${s.book.pages}` },
+  sub: { en: `Page ${i + 1} / ${shown(s.book)}`, lt: `Puslapis ${i + 1} / ${shown(s.book)}` },
   cover: m.thumb, ratio: m.w / m.h, src: m.src, w: m.w, h: m.h, grp: "book",
 } as Media));

@@ -1,7 +1,7 @@
 ---
 // A brand story on the Brand identity pages (SOXI, NOT REAL): intro, then collapsible sections, each with its text and pictures.
 // Besides pictures a block can be a live example drawn with the site's own parts (logos, palette, type), so the identity is shown in use.
-import { findImg, idsOf, type Story } from "../data/brandstory";
+import { findImg, idsOf, shown, type Story } from "../data/brandstory";
 import type { Lang } from "../i18n/utils";
 
 interface Props { lang: Lang; base: string; offset: number; st: Story; }
@@ -48,10 +48,10 @@ const typoNote = { lt: "Pagrindinė mintis – „Newsreader“, paaiškinimas �
         <h2 id="bs-h" class="bs-title">{st.h[lang]}</h2>
         <p class="bs-lead">{st.lead[lang]}</p>
         <p class="bs-win">{st.win[lang]}</p>
-        <button type="button" class="btn bs-book" data-lb={bookIdx} aria-haspopup="dialog">{st.bookLabel[lang]} · {st.book.pages}</button>
+        <button type="button" class="btn bs-book" data-lb={bookIdx} aria-haspopup="dialog">{st.bookLabel[lang]} · {shown(st.book)}</button>
       </div>
       <button type="button" class="bs-fig bs-hero" data-lb={idx(st.hero)} aria-haspopup="dialog" aria-label={st.name}>
-        <img src={`${base}${heroImg.src}`} width={heroImg.w} height={heroImg.h} alt="" loading="eager" decoding="async" />
+        <img src={`${base}${heroImg.src}`} width={heroImg.w} height={heroImg.h} alt={st.name + " brandbook"} loading="eager" decoding="async" />
       </button>
     </div>
 
@@ -173,7 +173,7 @@ const typoNote = { lt: "Pagrindinė mintis – „Newsreader“, paaiškinimas �
                     <div class="bs-jr">
                       {row.map((id) => (
                         <button type="button" class="bs-fig" style={`--r:${(findImg(id).w / findImg(id).h).toFixed(4)}`} data-lb={idx(id)} aria-haspopup="dialog" aria-label={st.name}>
-                          <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt="" loading="lazy" decoding="async" />
+                          <img src={`${base}${findImg(id).thumb}`} width={findImg(id).w} height={findImg(id).h} alt={b.cap ? b.cap[lang] : ""} loading="lazy" decoding="async" />
                           {b.type === "onphoto" && b.marks && <span class={`logo logo-mark bs-m bs-m-${b.marks[b.ids.indexOf(id)]}`} aria-hidden="true"></span>}
                           {b.labels && b.labels[b.ids.indexOf(id)] && <span class="bs-lab">{b.labels[b.ids.indexOf(id)][lang]}</span>}
                         </button>
