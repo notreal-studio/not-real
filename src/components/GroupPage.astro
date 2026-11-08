@@ -1,19 +1,21 @@
 ---
 import CaseLayout from "../layouts/CaseLayout.astro";
 import BrandStory from "./BrandStory.astro";
-import { storyMedia } from "../data/brandstory";
+import { storyMedia, story } from "../data/brandstory";
 import { groups, soxiCover } from "../data/portfolio";
 import { useTranslations, localePath, type Lang } from "../i18n/utils";
 
-interface Props { lang: Lang; slug: string; }
-const { lang, slug } = Astro.props;
+interface Props { lang: Lang; slug: string; sub?: "soxi" | "notreal"; }
+const { lang, slug, sub } = Astro.props;
 const t = useTranslations(lang);
 const baseUrl = import.meta.env.BASE_URL;
 const base = baseUrl.replace(/\/$/, "");
 const prefix = lang === "lt" ? base + "/lt" : base;
 const home = localePath(lang, baseUrl);
 const g = groups.find((x) => x.slug === slug)!;
-const paths = { en: base + "/work/" + slug + "/", lt: base + "/lt/work/" + slug + "/" };
+const subSlug = sub === "soxi" ? "soxi" : sub === "notreal" ? "not-real" : "";
+const tail = subSlug ? subSlug + "/" : "";
+const paths = { en: base + "/work/" + slug + "/" + tail, lt: base + "/lt/work/" + slug + "/" + tail };
 const soxiHref = `${prefix}/work/soxi/`;
 const indexed = g.items.map((m, i) => ({ m, i }));
 const nr = indexed.filter(({ m }) => m.id.startsWith("nr-"));
@@ -22,24 +24,37 @@ const isBrand = slug === "brand-identity";
 const useOrb = slug === "video" || slug === "photography" || slug === "graphic-design";
 const showSoxi = slug === "visual-automation";
 const nrItems = nr.map(({ m }) => m);
-const lbList = isBrand ? [...nrItems, ...storyMedia()] : g.items;   // brand page: the brandbook cards first, then every picture of the SOXI story
+const lbList = !isBrand ? g.items : sub === "soxi" ? storyMedia() : sub === "notreal" ? nrItems : undefined;   // brand pages: SOXI = its story pictures, NOT REAL = its brandbook cards, the chooser needs none
+const subName = sub === "soxi" ? "SOXI" : sub === "notreal" ? "NOT REAL" : "";
+const nrCover = nrItems[0];
 const introParas = g.intro[lang].split("\n\n");
 const introFlat = introParas.join(" ");
-const desc = introFlat.length > 155 ? introFlat.slice(0, 152).replace(/\s+\S*$/, "") + "…" : introFlat;
+const descBase = sub === "soxi" ? story.lead[lang] : sub === "notreal" ? t("gp.sub.nr.d") : introFlat;
+const desc = descBase.length > 155 ? descBase.slice(0, 152).replace(/\s+\S*$/, "") + "…" : descBase;
 ---
-<CaseLayout lang={lang} title={`${g.title[lang]} — Not Real`} desc={desc} paths={paths} mainClass="gp" lbItems={lbList}>
+<CaseLayout lang={lang} title={`${subName || g.title[lang]} — Not Real`} desc={desc} paths={paths} mainClass="gp" lbItems={lbList}>
   <section class="gp-hero">
     <div class="wrap">
-      <a class="gp-back" href={`${home}#darbai`}>← {t("gp.back")}</a>
+      {sub ? (
+        <a class="gp-back" href={`${prefix}/work/${slug}/`}>← {g.title[lang]}</a>
+      ) : (
+        <a class="gp-back" href={`${home}#darbai`}>← {t("gp.back")}</a>
+      )}
       <div class="gp-n">{g.n} / 05</div>
-      <h1 class="gp-h1"><span class="br-ul">{g.title[lang]}</span></h1>
-      {introParas.map((para) => (<p class={introFlat.length > 650 ? "gp-intro long" : "gp-intro"}>{para}</p>))}
+      <h1 class="gp-h1"><span class="br-ul">{subName || g.title[lang]}</span></h1>
+      {!sub && introParas.map((para) => (<p class={introFlat.length > 650 ? "gp-intro long" : "gp-intro"}>{para}</p>))}
       <div class="gp-meta"><span>{t("gp.by")}</span></div>
       <nav class="gp-tabs" aria-label={t("pf.kicker")}>
         {groups.map((x) => (
           <a href={`${prefix}/work/${x.slug}/`} aria-current={x.slug === slug ? "page" : undefined}><span class="gp-tn">{x.n}</span>{x.title[lang]}</a>
         ))}
       </nav>
+      {isBrand && (
+        <nav class="gp-subtabs" aria-label={g.title[lang]}>
+          <a href={`${prefix}/work/${slug}/soxi/`} aria-current={sub === "soxi" ? "page" : undefined}>SOXI</a>
+          <a href={`${prefix}/work/${slug}/not-real/`} aria-current={sub === "notreal" ? "page" : undefined}>NOT REAL</a>
+        </nav>
+      )}
     </div>
   </section>
 
@@ -59,9 +74,29 @@ const desc = introFlat.length > 155 ? introFlat.slice(0, 152).replace(/\s+\S*$/,
     </section>
   )}
 
-  {isBrand ? (
+  {isBrand && !sub ? (
+    <section class="gp-sec">
+      <div class="wrap">
+        <div class="gp-choose">
+          <a class="gp-choice" href={`${prefix}/work/${slug}/soxi/`}>
+            <span class="gp-choice-img"><img src={`${base}${soxiCover.thumb}`} width={soxiCover.w} height={soxiCover.h} alt="" loading="eager" decoding="async" /></span>
+            <span class="gp-choice-t">SOXI</span>
+            <span class="gp-choice-d">{t("gp.sub.soxi.d")}</span>
+            <span class="gp-choice-go">{t("gp.sub.open")} →</span>
+          </a>
+          <a class="gp-choice" href={`${prefix}/work/${slug}/not-real/`}>
+            <span class="gp-choice-img"><img src={`${base}${nrCover.cover}`} width="640" height={Math.round(640 / nrCover.ratio)} alt="" loading="eager" decoding="async" /></span>
+            <span class="gp-choice-t">NOT REAL</span>
+            <span class="gp-choice-d">{t("gp.sub.nr.d")}</span>
+            <span class="gp-choice-go">{t("gp.sub.open")} →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  ) : isBrand && sub === "soxi" ? (
+    <BrandStory lang={lang} base={base} offset={0} />
+  ) : isBrand && sub === "notreal" ? (
     <>
-      <BrandStory lang={lang} base={base} offset={nrItems.length} />
       <section class="gp-sec">
         <div class="wrap">
           <h2>{t("gp.brand.nr")}</h2>
