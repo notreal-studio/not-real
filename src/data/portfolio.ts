@@ -53,6 +53,34 @@ const iMedia = (m: Img, title: L, sub?: L): Media => ({ id: m.id, kind: "image",
 const byId = (key: string) => (id: string) => gallery[key].find((x) => x.id === id)!;
 
 /* ---------------- photography ---------------- */
+/* ---------------- new work (Nov 2026): posters, a photo-to-poster film and street photographs ---------------- */
+const newGd: Img[] = [
+  { id: "gd-n01", src: "/assets/img/graphic-design/gd-n01.webp", thumb: "/assets/img/graphic-design/gd-n01-640.webp", w: 1143, h: 2048 },
+  { id: "gd-n02", src: "/assets/img/graphic-design/gd-n02.webp", thumb: "/assets/img/graphic-design/gd-n02-640.webp", w: 900, h: 1320 },
+  { id: "gd-n03", src: "/assets/img/graphic-design/gd-n03.webp", thumb: "/assets/img/graphic-design/gd-n03-640.webp", w: 900, h: 1320 },
+  { id: "gd-n04", src: "/assets/img/graphic-design/gd-n04.webp", thumb: "/assets/img/graphic-design/gd-n04-640.webp", w: 960, h: 1440 },
+  { id: "gd-n05", src: "/assets/img/graphic-design/gd-n05.webp", thumb: "/assets/img/graphic-design/gd-n05-640.webp", w: 960, h: 1440 },
+  { id: "gd-n06", src: "/assets/img/graphic-design/gd-n06.webp", thumb: "/assets/img/graphic-design/gd-n06-640.webp", w: 1143, h: 2048 },
+  { id: "gd-n07", src: "/assets/img/graphic-design/gd-n07.webp", thumb: "/assets/img/graphic-design/gd-n07-640.webp", w: 1143, h: 2048 },
+  { id: "gd-n08", src: "/assets/img/graphic-design/gd-n08.webp", thumb: "/assets/img/graphic-design/gd-n08-640.webp", w: 1143, h: 2048 },
+  { id: "gd-n09", src: "/assets/img/graphic-design/gd-n09.webp", thumb: "/assets/img/graphic-design/gd-n09-640.webp", w: 900, h: 1273 },
+  { id: "gd-n10", src: "/assets/img/graphic-design/gd-n10.webp", thumb: "/assets/img/graphic-design/gd-n10-640.webp", w: 960, h: 1440 },
+  { id: "gd-n11", src: "/assets/img/graphic-design/gd-n11.webp", thumb: "/assets/img/graphic-design/gd-n11-640.webp", w: 1143, h: 2048 },
+  { id: "gd-n12", src: "/assets/img/graphic-design/gd-n12.webp", thumb: "/assets/img/graphic-design/gd-n12-640.webp", w: 1143, h: 2048 },
+  { id: "gd-n13", src: "/assets/img/graphic-design/gd-n13.webp", thumb: "/assets/img/graphic-design/gd-n13-640.webp", w: 1600, h: 1157 },
+];
+const newGdCaps: [string, string][] = [["Atgarsis", "Echo"], ["Paskutinis keltas", "The Last Ferry"], ["Chrome & Octane", "Chrome & Octane"], ["Afterimage", "Afterimage"], ["Next", "Next"], ["Išeik iš rutinos", "Break the routine"], ["Kritimo anatomija", "Anatomy of a fall"], ["Kur tavo namai", "Where is your home"], ["Naktinė pamaina", "Night shift"], ["Prism", "Prism"], ["Šešėlis", "Shadow"], ["Stop", "Stop"], ["Šviesos pjūvis", "Cross-section of light"]];
+const newPh: Img[] = [
+  { id: "ph-21", src: "/assets/img/photography/ph-21.webp", thumb: "/assets/img/photography/ph-21-640.webp", w: 1536, h: 2752 },
+  { id: "ph-22", src: "/assets/img/photography/ph-22.webp", thumb: "/assets/img/photography/ph-22-640.webp", w: 1536, h: 2752 },
+  { id: "ph-23", src: "/assets/img/photography/ph-23.webp", thumb: "/assets/img/photography/ph-23-640.webp", w: 1536, h: 2752 },
+  { id: "ph-24", src: "/assets/img/photography/ph-24.webp", thumb: "/assets/img/photography/ph-24-640.webp", w: 1536, h: 2752 },
+  { id: "ph-25", src: "/assets/img/photography/ph-25.webp", thumb: "/assets/img/photography/ph-25-640.webp", w: 1536, h: 2752 },
+  { id: "ph-26", src: "/assets/img/photography/ph-26.webp", thumb: "/assets/img/photography/ph-26-640.webp", w: 1536, h: 2752 },
+];
+const newPhCaps: [string, string][] = [["Raudonas namas, geltonos durys", "Red house, yellow door"], ["Žmonės kerta aikštę, vaizdas iš viršaus", "People crossing a square, seen from above"], ["Eisena palei betoninę sieną", "Walking along a concrete wall"], ["Kritimas pilkoje studijoje", "A fall in a grey studio"], ["Moteris prie jūros", "A woman by the sea"], ["Eisena balta aikšte", "Walking across a white square"]];
+const photoToPoster: Media = { id: "photo-to-poster", kind: "video", title: { en: "From photo to poster", lt: "Nuo nuotraukos iki plakato" }, sub: { en: "Motion", lt: "Judesys" },
+  cover: "/assets/video/photo-to-poster.webp", ratio: 4 / 5, video: { src: "/assets/video/photo-to-poster.mp4", poster: "/assets/video/photo-to-poster.webp", vertical: true } };
 const ph = byId("photography");
 const photoCaps: Record<string, L> = {
   "ph-06": { en: "Brocade blazer, goose, lake light", lt: "Brokato švarkas, žąsis, ežero šviesa" },
@@ -75,7 +103,7 @@ const photoCaps: Record<string, L> = {
   "ph-01": { en: "Children on a cream sofa", lt: "Vaikai ant kreminės sofos" },
 };
 const photographyOrder = ["ph-06", "ph-03", "ph-04", "ph-07", "ph-09", "ph-18", "ph-19", "ph-17", "ph-14", "ph-13", "ph-16", "ph-02", "ph-15", "ph-10", "ph-20", "ph-08", "ph-11", "ph-01"];
-const photographyItems = photographyOrder.map((id) => iMedia(ph(id), photoCaps[id]));
+const photographyItems = [...photographyOrder.map((id) => iMedia(ph(id), photoCaps[id])), ...newPh.map((m, i) => iMedia(m, { lt: newPhCaps[i][0], en: newPhCaps[i][1] }, { en: "Street photography", lt: "Gatvės fotografija" }))];
 
 /* ---------------- graphic design ---------------- */
 const gd = gallery.graphic;
@@ -86,7 +114,7 @@ const gdCaps: Record<string, L> = {
   "p102": { en: "Poster, man in a red suit", lt: "Plakatas, vyras raudonu kostiumu" },
   "p019": { en: "Roll into socks.", lt: "Roll into socks." },
 };
-const graphicItems = gd.map((m) => iMedia(m, gdCaps[m.id] ?? { en: "SOXI poster", lt: "SOXI plakatas" }, { en: "SOXI campaign", lt: "SOXI kampanija" }));
+const graphicItems = [photoToPoster, ...newGd.map((m, i) => iMedia(m, { lt: newGdCaps[i][0], en: newGdCaps[i][1] }, { en: "Concept poster", lt: "Koncepcinis plakatas" })), ...gd.map((m) => iMedia(m, gdCaps[m.id] ?? { en: "SOXI poster", lt: "SOXI plakatas" }, { en: "SOXI campaign", lt: "SOXI kampanija" }))];
 
 /* ---------------- brand identity (selected pages only) ---------------- */
 const nrTitles: Record<string, L> = {
@@ -133,7 +161,7 @@ export const groups: Group[] = [
     intro: { en: "Packaging catches the eye, a catalogue helps people choose, and on screen, motion sets the pace at which a message unfolds.\n\nAI makes it possible to explore several design directions from a single sketch, including styles you might not have considered at first. The chosen direction is refined to fit your brand’s visual identity. Motion design comes in where movement can catch the eye and draw attention to what matters most.",
              lt: "Pakuotė patraukia žvilgsnį, katalogas padeda išsirinkti, o ekrane judesys leidžia žinutę atskleisti pasirinktu ritmu.\n\nSu AI iš vieno eskizo galima greitai išbandyti kelias dizaino kryptis, net ir tokias, apie kurias iš pradžių nepagalvotumėte. Pasirinkta kryptis derinama prie jūsų prekės ženklo vizualinio identiteto. Animuota grafika (motion design) pasitelkiama ten, kur judesys padeda patraukti dėmesį ir išryškinti tai, kas svarbiausia." },
     cardSub: { en: "Posters and type", lt: "Plakatai ir tipografija" },
-    items: graphicItems, slides: gd.map((m) => m.thumb) },
+    items: graphicItems, slides: [...["gd-n07", "gd-n10", "gd-n01", "gd-n09"].map((id) => newGd.find((x) => x.id === id)!.thumb), ...gd.map((m) => m.thumb)] },
   { slug: "brand-identity", n: "04", title: { en: "Brand identity", lt: "Prekės ženklo identitetas" },
     intro: { en: "What makes your product or service distinctive deserves to be seen. Brand identity starts with understanding who it is for, what makes it valuable and why someone would choose it. Research into the audience, competitors and existing communication helps establish a distinctive direction and translate it into design.\n\nThat direction takes shape through the logo, colours, typography, graphics, photography and tone of voice. These elements are developed together and tested where customers encounter the brand: on packaging, websites, social media and advertising.\n\nThe brand guidelines bring these decisions together through practical rules and examples. They give you and your creative collaborators a shared reference, so every new piece of content does not require a fresh decision about how the brand should look or sound. There is room for new ideas, with a consistent and recognisable identity to build on.",
              lt: "Jūsų produkto ar paslaugos išskirtinumas turi būti matomas. Prekės ženklo identiteto kūrimas prasideda nuo jo esmės: kam jis skirtas, kuo vertingas ir kodėl žmogus turėtų pasirinkti būtent jį. Auditorijos, konkurentų ir esamos komunikacijos analizė padeda atrasti savą kryptį ir suteikti jai aiškią kūrybinę išraišką.\n\nŠi kryptis atsiskleidžia logotipe, spalvose, šriftuose, grafikoje, fotografijoje ir bendravimo tone. Sprendimai derinami tarpusavyje ir išbandomi ten, kur prekės ženklą sutinka klientas: ant pakuotės, svetainėje, socialiniuose tinkluose ar reklamoje.\n\nVisa tai sujungiama į prekės ženklo vadovą – brandbooką. Jame pateikiamos naudojimo taisyklės ir konkretūs pavyzdžiai, kad kuriant naują turinį nereikėtų kaskart iš naujo spręsti, kaip jūsų prekės ženklas turi atrodyti ir kalbėti. Tai bendras pagrindas jums ir su jumis dirbantiems kūrėjams: laisvė plėtoti naujas idėjas, išlaikant savitą, vientisą ir atpažįstamą įvaizdį." },
