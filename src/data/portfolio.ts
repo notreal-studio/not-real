@@ -106,7 +106,7 @@ const photographyOrder = ["ph-06", "ph-03", "ph-04", "ph-07", "ph-09", "ph-18", 
 const photographyItems = [...photographyOrder.map((id) => iMedia(ph(id), photoCaps[id])), ...newPh.map((m, i) => iMedia(m, { lt: newPhCaps[i][0], en: newPhCaps[i][1] }, { en: "Street photography", lt: "Gatvės fotografija" }))];
 
 /* ---------------- graphic design ---------------- */
-const gd = gallery.graphic;
+const gd = gallery.graphic.filter((m) => m.id !== "p102");   // p102 is the same "Don't walk. Roll." poster again
 const gdCaps: Record<string, L> = {
   "gd-dont-walk-roll": { en: "Don't walk. Roll.", lt: "Don't walk. Roll." },
   "gd-raw-style": { en: "Raw style. Well rolled.", lt: "Raw style. Well rolled." },
