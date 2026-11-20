@@ -3,12 +3,14 @@
 // A section is a list of parts shown in order: a heading, a small label, paragraphs, a sub-heading, and pictures/videos.
 import { findMedia, type Media } from "./portfolio";
 
+export interface PriceTable { cols: [string, string, string]; groups: { h: string; rows: [string, string, string][] }[]; note: string; legendH: string; legend: [string, string, string][]; after: string }
 export type Part =
   | { h: string }
   | { h4: string }
   | { label: string }
   | { p: string[] }
   | { ul: string[] }
+  | { table: PriceTable }
   | { hr: true }
   | { imgs: Media[]; first?: "wide"; uniform?: boolean }   // first = the first picture spans the full width; uniform = all tiles 16:9
   | { ids: string[] };                  // pictures or videos that already exist on the site, by id
@@ -181,6 +183,49 @@ export const collections: Collection[] = [
           ] },
           { h4: "Svarbu žinoti" },
           { p: ["AI geriausiai tinka vizualiniam produkto pristatymui, o ne tiksliam jo funkcijų demonstravimui. Sudėtingas judėjimas ar žmogaus sąveika su baldu gali pakeisti tikrąsias produkto detales, todėl kiekvieną rezultatą kruopščiai tikriname."] },
+          { h4: "Kada ką rinktis ir kiek tai gali kainuoti?" },
+          { table: {
+            cols: ["Ką norite sukurti?", "Rekomenduojamas būdas", "Sąnaudos"],
+            groups: [
+              { h: "Produkto pristatymas", rows: [
+                ["Baldo pristatymas baltame fone, subtilus judesys", "AI video", "€"],
+                ["Audinio, siūlių, porankių ir kitų detalių išryškinimas", "AI video*", "€–€€"],
+                ["Papildomi rakursai ir perspektyvos", "AI video*", "€€"],
+                ["Tas pats baldas keliuose interjeruose", "AI video", "€€"],
+                ["Skirtingų spalvų to paties modelio video", "AI / hibridinis", "€€"],
+              ] },
+              { h: "Kūrybinė reklama ir istorijos", rows: [
+                ["Trumpa kūrybinė reklama su skirtingais rakursais ir perėjimais", "AI video", "€€"],
+                ["Realistiškos reklaminės scenos su veikėjais", "AI video", "€€–€€€"],
+                ["Gyvenimo būdo istorija su šeima ar augintiniais", "AI / hibridinis", "€€–€€€"],
+                ["Sezoninė reklama, aplinkos ir nuotaikos kaita", "AI video", "€€"],
+                ["Ilgesnė istorija su aktoriais ir sudėtingais veiksmais", "Filmavimas / hibridinis", "€€€–€€€€"],
+              ] },
+              { h: "Funkcionalumas ir tikslumas", rows: [
+                ["Sofos-lovos išskleidimo mechanizmas", "Filmavimas", "€€"],
+                ["Modulinės sofos perstatymo procesas", "Filmavimas", "€€€"],
+                ["Reguliuojami atlošai, daiktadėžės ir kitos funkcijos", "Filmavimas", "€€"],
+                ["Tikrų audinio savybių demonstravimas", "Filmavimas", "€€"],
+                ["Žmogaus atsisėdimas, tikro minkštumo demonstravimas", "Filmavimas", "€€€"],
+                ["Baldų gamybos procesas", "Filmavimas", "€€€"],
+              ] },
+              { h: "AI ir realaus video derinimas", rows: [
+                ["Tikras baldas AI sukurtame interjere", "Hibridinis", "€€"],
+                ["Tikras baldo funkcionalumas su pakeista aplinka", "Hibridinis", "€€€"],
+                ["Filmuota scena su papildomais AI kadrais", "Hibridinis", "€€–€€€"],
+                ["Vienas filmavimas, pritaikytas kelioms kampanijoms", "Hibridinis", "€€–€€€"],
+              ] },
+            ],
+            note: "* AI sukurti papildomi rakursai ir detalių kadrai tinkami tik tuomet, kai galima patikrinti, ar jie atitinka realų baldą.",
+            legendH: "Kaip skaityti kainos simbolius?",
+            legend: [
+              ["€", "Mažos sąnaudos", "Trumpas, paprastas klipas, turint tinkamas pradines nuotraukas."],
+              ["€€", "Vidutinės sąnaudos", "Keli kadrai, aplinkos, montažas arba nesudėtingas filmavimas."],
+              ["€€€", "Didesnės sąnaudos", "Sudėtingesnė reklama, veikėjai, filmavimo komanda ar daugiau korekcijų."],
+              ["€€€€", "Didelės sąnaudos", "Ilgesnė reklaminė produkcija su daug scenų, žmonių ir didesniais pasiruošimo reikalavimais."],
+            ],
+            after: "Nurodytos sąnaudos yra orientacinės. Galutinė projekto kaina priklauso nuo vaizdo įrašo trukmės, scenų sudėtingumo, turimos medžiagos ir reikalingų korekcijų.",
+          } },
           { ids: ["the-armchair", "sofa-360"] },
         ],
       },
