@@ -466,3 +466,4 @@
 }
 /* collection pages: text runs the full content width, like the table */
 .pc .pc-text,.pc .pc-list,.pc .pc-note,.pc .pc-after,.pc .pc-h{max-width:none}
+.pc-list strong{color:var(--fg);font-weight:600}

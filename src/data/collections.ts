@@ -10,6 +10,7 @@ export type Part =
   | { label: string }
   | { p: string[] }
   | { ul: string[] }
+  | { ulb: string[] }
   | { table: PriceTable }
   | { hr: true }
   | { imgs: Media[]; first?: "wide"; uniform?: boolean }   // first = the first picture spans the full width; uniform = all tiles 16:9
@@ -175,11 +176,17 @@ export const collections: Collection[] = [
       {
         key: "video", title: "Video", parts: [
           { h: "AI VIDEO – iš nuotraukos į judantį vaizdą" },
-          { p: [
-            "Pasitelkdami AI, iš minkštųjų baldų nuotraukų kuriame tikroviškus vaizdo įrašus – nuo subtilaus kameros judesio ir artimų produkto detalių kadrų iki skirtingų interjerų, reklamos scenų ir gyvenimo istorijų su veikėjais.",
-            "Tai suteikia galimybę pristatyti baldus įvairiose aplinkose ir kurti papildomą reklaminį turinį be naujo filmavimo.",
-            "AI ypač naudingas trumpiems produktų pristatymams ir kūrybinėms reklamoms, kai svarbiausia vizualinis įspūdis, atmosfera ir emocija.",
+          { p: ["Pasitelkdami AI, iš minkštųjų baldų nuotraukų kuriame tikroviškus vaizdo įrašus – nuo produkto pristatymo baltame fone iki reklaminių istorijų su veikėjais. Galime sukurti skirtingas aplinkas, kameros judesius ir scenas be papildomo filmavimo."] },
+          { h4: "Ką AI leidžia sukurti?" },
+          { ulb: [
+            "Skirtingi rakursai ir kadruotės. Kameros priartėjimai, judėjimas iš skirtingų aukščių, perspektyvų keitimas ir dinamiški produkto pristatymai.",
+            "Produkto detalės. Artimi audinio tekstūros, siūlių, porankių ir kitų baldo elementų kadrai.",
+            "Skirtingos aplinkos. Baldas moderniame, klasikiniame ar minimalistiniame interjere, terasoje arba kitoje pasirinktoje realistiškoje erdvėje.",
+            "Žmonės ir gyvūnai. Į scenas įtraukiami personažai, augintiniai, jų judėjimas ir kasdienės gyvenimo situacijos.",
+            "Reklaminės istorijos. Kelių scenų pasakojimai su veikėjais, emocijomis, skirtingomis kompozicijomis ir montažu.",
+            "Sezoniniai pokyčiai. Skirtingas apšvietimas, metų laikai, dekoras ir atmosfera.",
           ] },
+          { p: ["AI ypač naudingas, kai jau turite kokybiškas baldo nuotraukas, o norite daugiau judančio turinio, skirtingų aplinkų ir kūrybinių reklamos variantų be naujo filmavimo."] },
           { h4: "Kada rinktis AI, filmavimą ar abu?" },
           { table: {
             cols: ["Ką norite sukurti?", "Rekomenduojamas būdas", "Sąnaudos"],
