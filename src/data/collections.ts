@@ -101,6 +101,16 @@ const fotelisAugintiniai = [
 // people and pets shown together as one set, alternating so no two pet pictures sit next to each other
 const fotelisVisi = [fotelisZmones[0], fotelisZmones[1], fotelisAugintiniai[0], fotelisZmones[2], fotelisAugintiniai[1], fotelisZmones[3], fotelisAugintiniai[2], fotelisZmones[4]];
 
+const adVideo = (n: number, lt: string): Media => ({
+  id: "mb-ad-" + n, kind: "video", title: { en: lt, lt },
+  cover: `/assets/video/minksti-ad-${n}.webp`, ratio: 16 / 9,
+  video: { src: `/assets/video/minksti-ad-${n}.mp4`, poster: `/assets/video/minksti-ad-${n}.webp`, vertical: false },
+});
+const reklamosVideo = [
+  adVideo(2, "Augintiniai ant sofos"), adVideo(1, "Muzikos vakaras"), adVideo(3, "Žaidimų kambarys"),
+  adVideo(4, "Naujų namų jausmas"), adVideo(5, "Pirmoji diena naujuose namuose"),
+];
+
 const everyoneFits: Media = {
   id: "mb-everyone-fits", kind: "video", title: { en: "Everyone fits", lt: "Everyone fits – kiek gyvenimų telpa ant vienos sofos" },
   cover: "/assets/video/minksti-everyone-fits.webp", ratio: 9 / 16,
@@ -229,6 +239,7 @@ export const collections: Collection[] = [
             "Kai svarbu tiksliai parodyti baldo mechanizmus, funkcionalumą ar tikrąsias fizines savybes, rekomenduojame realų filmavimą arba hibridinį sprendimą. Kiekvienam projektui tinkamiausią būdą parenkame individualiai.",
           ] },
           { imgs: [everyoneFits, findMedia("the-armchair"), findMedia("sofa-360")], vid: true },
+          { imgs: reklamosVideo, first: "wide", uniform: true },
         ],
       },
     ],
