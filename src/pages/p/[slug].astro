@@ -17,20 +17,24 @@ const count = (s: (typeof sections)[number]) => s.parts.reduce((n, p) => n + (p.
     <div class="wrap">
       <div class="gp-n">{c.kicker}</div>
       <h1 class="gp-h1"><span class="br-ul">{c.title}</span></h1>
-      <p class="gp-intro">{c.intro}</p>
-      <div class="gp-meta"><span>Sukūrė Inga Bankauskė, NOT REAL studija</span></div>
-      <nav class="gp-tabs" aria-label="Skyriai">
-        {sections.map((s, i) => (<a href={`#${s.key}`}><span class="gp-tn">0{i + 1}</span>{s.title} · {count(s)}</a>))}
+      {c.about && (<div class="pc-about">{c.about.map((t) => (<p set:html={t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")} />))}</div>)}
+      <nav class="pc-toc" aria-label="Turinys">
+        {sections.map((s, i) => (
+          <div class="pc-toc-col">
+            <a class="pc-toc-h" href={`#${s.key}`}><span class="pc-toc-n">0{i + 1}</span>{s.title}<small>{count(s)}</small></a>
+            <ol>{s.parts.filter((p) => "h" in p).map((p, j) => (<li><a href={`#${s.key}-${j + 1}`}>{(p as { h: string }).h}</a></li>))}</ol>
+          </div>
+        ))}
       </nav>
     </div>
   </section>
 
-  {sections.map((s) => (
+  {sections.map((s, si) => (
     <section class="gp-sec pc" id={s.key}>
       <div class="wrap">
-        <h2 class="pc-sec">{s.title}</h2>
-        {s.parts.map((p) => (
-          "h" in p ? <h3 class="pc-h">{p.h}</h3>
+        <div class="pc-band"><span class="pc-band-n">0{si + 1}</span><h2 class="pc-sec">{s.title}</h2><span class="pc-band-c">{count(s)}</span></div>
+        {s.parts.map((p, pi) => (
+          "h" in p ? <h3 class="pc-h" id={`${s.key}-${s.parts.slice(0, pi + 1).filter((q) => "h" in q).length}`}><span class="pc-hn">{s.parts.slice(0, pi + 1).filter((q) => "h" in q).length}</span>{p.h}</h3>
           : "h4" in p ? <h4 class="pc-h4">{p.h4}</h4>
           : "label" in p ? <p class="pc-label">{p.label}</p>
           : "p" in p ? <div class="pc-text">{p.p.map((t) => (<p>{t}</p>))}</div>
