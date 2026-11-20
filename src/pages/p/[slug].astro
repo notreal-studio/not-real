@@ -1,0 +1,45 @@
+---
+// Unlisted collection page (see src/data/collections.ts): noindex, no links to it anywhere, not in the sitemap.
+import CaseLayout from "../../layouts/CaseLayout.astro";
+import { collections, sectionMedia } from "../../data/collections";
+
+export function getStaticPaths() { return collections.map((c) => ({ params: { slug: c.slug }, props: { c } })); }
+const { c } = Astro.props;
+const lang = "lt" as const;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const secs = sectionMedia(c);
+const all = secs.flatMap((s) => s.items);
+const idx = (id: string) => all.findIndex((m) => m.id === id);
+const path = `${base}/p/${c.slug}/`;
+---
+<CaseLayout lang={lang} title={`${c.title} — Not Real`} desc={c.intro} paths={{ en: path, lt: path }} mainClass="gp" lbItems={all} noindex>
+  <section class="gp-hero">
+    <div class="wrap">
+      <div class="gp-n">{c.kicker}</div>
+      <h1 class="gp-h1"><span class="br-ul">{c.title}</span></h1>
+      <p class="gp-intro">{c.intro}</p>
+      <div class="gp-meta"><span>Sukūrė Inga Bankauskė, NOT REAL studija</span></div>
+      <nav class="gp-tabs" aria-label="Skyriai">
+        {secs.map((s, i) => (<a href={`#${s.key}`}><span class="gp-tn">0{i + 1}</span>{s.title} · {s.items.length}</a>))}
+      </nav>
+    </div>
+  </section>
+
+  {secs.map((s) => (
+    <section class="gp-sec" id={s.key}>
+      <div class="wrap">
+        <h2>{s.title}</h2>
+        <div class="gp-grid">
+          {s.items.map((m) => (
+            <button type="button" class="gp-card" data-lb={idx(m.id)} aria-haspopup="dialog" aria-label={m.title[lang]}>
+              <div class="gp-media" style={`aspect-ratio:${m.ratio.toFixed(4)}`}>
+                <img src={`${base}${m.cover}`} alt={m.title[lang]} loading="lazy" decoding="async" />
+                {m.kind === "video" && <span class="gp-play" aria-hidden="true"></span>}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+</CaseLayout>
