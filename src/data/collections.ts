@@ -60,6 +60,23 @@ const rinkinysInterjerai = [
   photo("rinkinys-int-lubos", 1600, 1194, "Bordo sofa aukštų lubų interjere su šiltomis šviesomis"),
 ];
 
+const reklama = [
+  photo("reklama-01", 1600, 893, "Moteris ilsisi ant apvalios formos sofos šviesiame interjere, vaizdas iš viršaus"),
+  photo("reklama-02", 1600, 1074, "Šeima kambaryje su kampine sofa: tėtis, mama su knyga ir žaidžiantis vaikas"),
+  photo("reklama-03", 1600, 893, "Pora ilsisi ant kordo audinio sofos tarp vinilo plokštelių"),
+  photo("reklama-04", 1600, 893, "Dvi merginos guli ant sofos ir skaito knygas"),
+  photo("reklama-05", 1600, 893, "Šunys šokinėja ant sofos ir bėgioja po kambarį, katė miega"),
+  photo("reklama-06", 1600, 893, "Besijuokianti pora ant sofos tarp kraustymosi dėžių ir augalų"),
+  photo("reklama-07", 1600, 893, "Besijuokianti pora ant sofos, artimas kadras"),
+  photo("reklama-08", 1600, 893, "Šuniukai bėgioja prieš šviesią kampinę sofą, katė miega ant jos"),
+  photo("reklama-09", 1600, 893, "Žiovaujanti katė ant sofos"),
+  photo("reklama-10", 1600, 893, "Mergaitės ranka su tortu ant sofos sėdynės"),
+  photo("reklama-11", 1600, 893, "Besijuokianti mergaitė valgo gimtadienio tortą prieš sofą"),
+  photo("reklama-12", 1600, 893, "Vaikai šokinėja ant sofos gimtadienio proga"),
+  photo("reklama-13", 1600, 893, "Moteris ilsisi ant garstyčių spalvos kampinės sofos šalia židinio"),
+  photo("reklama-14", 1600, 893, "Moteris sėdi ant sofos tarp kraustymosi dėžių"),
+];
+
 export const collections: Collection[] = [
   {
     slug: "minksti-baldai-7k3q",
@@ -115,6 +132,19 @@ export const collections: Collection[] = [
           { imgs: rinkinysDetales, uniform: true },
           { label: "Interjeruose" },
           { imgs: rinkinysInterjerai, uniform: true },
+          { hr: true },
+          { h: "Creative Ads – reklama, kuri pasakoja istoriją." },
+          { p: [
+            "Produktas gali būti daugiau nei gražiai nufotografuotas objektas. Jis gali tapti istorijos dalimi, sukelti emociją ir kurti asociacijas, kurios išlieka atmintyje.",
+            "Jungdami fotografiją, AI ir grafinį dizainą, kuriame kūrybinius reklaminius vizualus – nuo tikroviškų gyvenimo situacijų iki netikėtų, drąsių ir siurrealistinių koncepcijų.",
+            "Į vizualus įtraukiame žmones, personažus, objektus ir aplinką. Kuriame istorijas, kuriose vyksta gyvenimas: šeimos akimirkos, pokalbiai, susitikimai, poilsis ar mažos kasdienės tradicijos. Baldas tampa natūralia šių istorijų dalimi – ne tik interjero elementu, bet ir vieta, kurioje kuriami prisiminimai.",
+          ] },
+          { imgs: reklama, first: "wide", uniform: true },
+          { p: [
+            "Kūrybinę kryptį formuojame pagal jūsų prekės ženklo charakterį ir projekto užduotį. Kartu išgryniname, kokią istoriją pasakoti, kokius namus, žmones ir emocijas parodyti bei kokį įspūdį norime sukurti.",
+            "Kiekvieną detalę – nuo aplinkos ir veikėjų iki apšvietimo, kompozicijos ir galutinio reklamos maketo – sujungiame į vientisą vizualinį pasakojimą.",
+            "Tikslas – ne tik parodyti produktą, bet ir padėti auditorijai įsivaizduoti jį savo gyvenime, stiprinti prekės ženklo atpažįstamumą ir kurti įsimintiną komunikaciją.",
+          ] },
         ],
       },
       { key: "video", title: "Video", parts: [{ ids: ["the-armchair", "sofa-360"] }] },
