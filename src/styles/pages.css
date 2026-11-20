@@ -432,3 +432,5 @@
 .pc-list li{position:relative;padding-left:26px;color:var(--muted);font-size:clamp(16px,1.2vw,18px);line-height:1.6}
 .pc-list li::before{content:"";position:absolute;left:0;top:.7em;width:14px;height:2px;background:var(--accent)}
 .pc-hr{border:0;border-top:1px solid var(--line);margin:clamp(40px,7vw,80px) 0 clamp(28px,4vw,44px)}
+.pc-uni .pc-media{aspect-ratio:16/9 !important}
+.pc-uni .pc-media img{object-position:center 62%}

@@ -10,7 +10,7 @@ export type Part =
   | { p: string[] }
   | { ul: string[] }
   | { hr: true }
-  | { imgs: Media[]; first?: "wide" }   // first = the first picture spans the full width
+  | { imgs: Media[]; first?: "wide"; uniform?: boolean }   // first = the first picture spans the full width; uniform = all tiles 16:9
   | { ids: string[] };                  // pictures or videos that already exist on the site, by id
 export interface CollectionSection { key: string; title: string; parts: Part[] }
 export interface Collection { slug: string; title: string; kicker: string; intro: string; sections: CollectionSection[] }
@@ -36,6 +36,28 @@ const audinysInterjerai = [
   photo("audinys-fotelis-pilkas", 1600, 1066, "Tas pats fotelis ir pufas su pilku lygiu audiniu"),
   photo("audinys-sofa-ruda", 1600, 1074, "Sofa su rudu audiniu interjere"),
   photo("audinys-sofa-pilka", 1600, 1074, "Sofa su pilku margu audiniu interjere"),
+];
+
+const rinkinysBalta = [
+  photo("rinkinys-priekis", 1600, 893, "Bordo spalvos kampinė sofa su gulimąja dalimi, vaizdas iš priekio baltame fone"),
+  photo("rinkinys-galas", 1600, 893, "Ta pati sofa iš galo ir šono"),
+  photo("rinkinys-sonas", 1600, 893, "Ta pati sofa, vaizdas iš šono"),
+  photo("rinkinys-kampas", 1600, 893, "Ta pati sofa, vaizdas iš kampo"),
+  photo("rinkinys-kampas-pilkas", 1600, 893, "Ta pati sofa kitu kampu, šviesiai pilkame fone"),
+];
+const rinkinysDetales = [
+  photo("rinkinys-detale-ranktelis", 1600, 893, "Sofos porankio detalė iš arti"),
+  photo("rinkinys-audinys", 1600, 893, "Bordo audinio tekstūra iš arti"),
+  photo("rinkinys-detale-kampas", 1600, 893, "Sofos kampas su siūle iš arti"),
+  photo("rinkinys-detale-pagalve", 1600, 893, "Porankis, pagalvė ir sėdynė iš arti"),
+];
+const rinkinysInterjerai = [
+  photo("rinkinys-int-langai", 1600, 893, "Bordo sofa interjere su dideliais langais"),
+  photo("rinkinys-int-virsus", 1600, 893, "Bordo sofa šiltame medžio interjere, vaizdas iš viršaus"),
+  photo("rinkinys-int-kaktusas", 1600, 1194, "Bordo sofa šviesiame interjere su akmens siena ir kaktusu"),
+  photo("rinkinys-int-sodas", 1600, 893, "Bordo sofa interjere su vaizdu į sodą"),
+  photo("rinkinys-int-plokstes", 1600, 893, "Bordo sofa klasikinio interjero fone su sienų plokštėmis"),
+  photo("rinkinys-int-lubos", 1600, 1194, "Bordo sofa aukštų lubų interjere su šiltomis šviesomis"),
 ];
 
 export const collections: Collection[] = [
@@ -78,6 +100,21 @@ export const collections: Collection[] = [
           { p: ["Ne visais atvejais įmanoma pakeisti baldo audinį naudojant AI. Ne ant kiekvieno esamo audinio galima tikroviškai pritaikyti kitą, todėl prieš pradedant darbą būtina individuali konsultacija, kurios metu įvertiname keitimo galimybes."] },
           { label: "Interjeruose" },
           { imgs: audinysInterjerai },
+          { hr: true },
+          { h: "Iš vienos nuotraukos – visas vizualų rinkinys." },
+          { label: "Baltame fone" },
+          { imgs: rinkinysBalta, first: "wide", uniform: true },
+          { p: [
+            "Viena baldo nuotrauka gali tapti pagrindu visai vizualų kolekcijai. Pasitelkdami AI, galime parodyti tą patį baldą iš skirtingų pusių, aukščių ir perspektyvų – nuo bendrų produkto vaizdų iki stambių kadrų, atskleidžiančių audinio tekstūrą, siūles ir konstrukcines detales.",
+            "Baldą taip pat galime perkelti į įvairius interjerus, pritaikydami aplinką prie jūsų prekės ženklo estetikos. Nuo šviesaus minimalizmo iki išraiškingo maksimalizmo, nuo jaukios namų aplinkos iki modernaus, prabangaus interjero. Keičiame erdvę, apšvietimą, kompoziciją ir fotografavimo perspektyvą, kad tas pats produktas būtų pristatytas skirtingomis vizualinėmis kryptimis.",
+            "Taip iš vienos pradinės nuotraukos sukuriame nuoseklų vizualų rinkinį, tinkamą e. parduotuvėms, katalogams, reklamai, socialiniams tinklams ir tolesnei AI vaizdo įrašų kūrybai – be papildomos fotosesijos.",
+          ] },
+          { h4: "Ko reikia iš jūsų?" },
+          { p: ["Kokybiškos baldo nuotraukos ir pageidaujamos vizualinės krypties."] },
+          { label: "Detalės iš arti" },
+          { imgs: rinkinysDetales, uniform: true },
+          { label: "Interjeruose" },
+          { imgs: rinkinysInterjerai, uniform: true },
         ],
       },
       { key: "video", title: "Video", parts: [{ ids: ["the-armchair", "sofa-360"] }] },
