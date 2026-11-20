@@ -13,7 +13,7 @@ export type Part =
   | { ulb: string[] }
   | { table: PriceTable }
   | { hr: true }
-  | { imgs: Media[]; first?: "wide"; uniform?: boolean }   // first = the first picture spans the full width; uniform = all tiles 16:9
+  | { imgs: Media[]; first?: "wide"; uniform?: boolean; vid?: boolean }   // first = the first picture spans the full width; uniform = all tiles 16:9
   | { ids: string[] };                  // pictures or videos that already exist on the site, by id
 export interface CollectionSection { key: string; title: string; parts: Part[] }
 export interface Collection { slug: string; title: string; kicker: string; intro: string; sections: CollectionSection[] }
@@ -100,6 +100,12 @@ const fotelisAugintiniai = [
 
 // people and pets shown together as one set, alternating so no two pet pictures sit next to each other
 const fotelisVisi = [fotelisZmones[0], fotelisZmones[1], fotelisAugintiniai[0], fotelisZmones[2], fotelisAugintiniai[1], fotelisZmones[3], fotelisAugintiniai[2], fotelisZmones[4]];
+
+const everyoneFits: Media = {
+  id: "mb-everyone-fits", kind: "video", title: { en: "Everyone fits", lt: "Everyone fits – kiek gyvenimų telpa ant vienos sofos" },
+  cover: "/assets/video/minksti-everyone-fits.webp", ratio: 9 / 16,
+  video: { src: "/assets/video/minksti-everyone-fits.mp4", poster: "/assets/video/minksti-everyone-fits.webp", vertical: true },
+};
 
 export const collections: Collection[] = [
   {
@@ -222,7 +228,7 @@ export const collections: Collection[] = [
             "AI leidžia kurti tikroviškas scenas su žmonėmis, gyvūnais ir jų sąveika su baldais. Tačiau ne visada galima užtikrinti visišką produkto detalių ir sudėtingų judesių tikslumą.",
             "Kai svarbu tiksliai parodyti baldo mechanizmus, funkcionalumą ar tikrąsias fizines savybes, rekomenduojame realų filmavimą arba hibridinį sprendimą. Kiekvienam projektui tinkamiausią būdą parenkame individualiai.",
           ] },
-          { ids: ["the-armchair", "sofa-360"] },
+          { imgs: [everyoneFits, findMedia("the-armchair"), findMedia("sofa-360")], vid: true },
         ],
       },
     ],

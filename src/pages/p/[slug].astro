@@ -63,7 +63,7 @@ const count = (s: (typeof sections)[number]) => s.parts.reduce((n, p) => n + (p.
           : "ulb" in p ? <ul class="pc-list">{p.ulb.map((t) => { const k = t.indexOf(". "); return (<li><strong>{t.slice(0, k + 1)}</strong> {t.slice(k + 2)}</li>); })}</ul>
           : "hr" in p ? <hr class="pc-hr" />
           : p.media ? (
-            <div class={`pc-imgs${"first" in p && p.first === "wide" ? " pc-wide" : ""}${"uniform" in p && p.uniform ? " pc-uni" : ""}${p.media.length === 1 ? " pc-one" : ""}`}>
+            <div class={`pc-imgs${"first" in p && p.first === "wide" ? " pc-wide" : ""}${"uniform" in p && p.uniform ? " pc-uni" : ""}${"vid" in p && p.vid ? " pc-vid" : ""}${p.media.length === 1 ? " pc-one" : ""}`}>
               {p.media.map((m) => (
                 <button type="button" class="pc-card" data-lb={idx(m.id)} aria-haspopup="dialog" aria-label={m.title[lang]}>
                   <div class="pc-media" style={`aspect-ratio:${m.ratio.toFixed(4)}`}>
