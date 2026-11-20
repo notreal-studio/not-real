@@ -3,14 +3,17 @@
 // A section is a list of parts shown in order: a heading, a small label, paragraphs, a sub-heading, and pictures/videos.
 import { findMedia, type Media } from "./portfolio";
 
+export interface PriceTable { cols: [string, string, string]; groups: { h: string; rows: [string, string, string][] }[]; note: string; legendH: string; legend: [string, string, string][]; after: string }
 export type Part =
   | { h: string }
   | { h4: string }
   | { label: string }
   | { p: string[] }
   | { ul: string[] }
+  | { ulb: string[] }
+  | { table: PriceTable }
   | { hr: true }
-  | { imgs: Media[]; first?: "wide"; uniform?: boolean }   // first = the first picture spans the full width; uniform = all tiles 16:9
+  | { imgs: Media[]; first?: "wide"; uniform?: boolean; vid?: boolean }   // first = the first picture spans the full width; uniform = all tiles 16:9
   | { ids: string[] };                  // pictures or videos that already exist on the site, by id
 export interface CollectionSection { key: string; title: string; parts: Part[] }
 export interface Collection { slug: string; title: string; kicker: string; intro: string; sections: CollectionSection[] }
@@ -25,7 +28,6 @@ const palete = [
   photo("palete-kreminis", 1600, 1066, "Ta pati sofa baltame fone, kreminis audinys"),
   photo("palete-ruda", 1600, 1066, "Ta pati sofa baltame fone, ruda spalva"),
   photo("palete-zalia", 1600, 1066, "Ta pati sofa baltame fone, žalia spalva"),
-  photo("palete-pilka", 1600, 1066, "Ta pati sofa baltame fone, grafito pilka spalva"),
 ];
 const interjerai = [
   photo("interjeras-kreminis", 1600, 1074, "Interjeras su foteliu ir pufu, kreminė spalva"),
@@ -98,6 +100,22 @@ const fotelisAugintiniai = [
 // people and pets shown together as one set, alternating so no two pet pictures sit next to each other
 const fotelisVisi = [fotelisZmones[0], fotelisZmones[1], fotelisAugintiniai[0], fotelisZmones[2], fotelisAugintiniai[1], fotelisZmones[3], fotelisAugintiniai[2], fotelisZmones[4]];
 
+const adVideo = (n: number, lt: string): Media => ({
+  id: "mb-ad-" + n, kind: "video", title: { en: lt, lt },
+  cover: `/assets/video/minksti-ad-${n}.webp`, ratio: 16 / 9,
+  video: { src: `/assets/video/minksti-ad-${n}.mp4`, poster: `/assets/video/minksti-ad-${n}.webp`, vertical: false },
+});
+const reklamosVideo = [
+  adVideo(2, "Augintiniai ant sofos"), adVideo(1, "Muzikos vakaras"), adVideo(3, "Žaidimų kambarys"),
+  adVideo(4, "Naujų namų jausmas"), adVideo(5, "Pirmoji diena naujuose namuose"),
+];
+
+const everyoneFits: Media = {
+  id: "mb-everyone-fits", kind: "video", title: { en: "Everyone fits", lt: "Everyone fits – kiek gyvenimų telpa ant vienos sofos" },
+  cover: "/assets/video/minksti-everyone-fits.webp", ratio: 9 / 16,
+  video: { src: "/assets/video/minksti-everyone-fits.mp4", poster: "/assets/video/minksti-everyone-fits.webp", vertical: true },
+};
+
 export const collections: Collection[] = [
   {
     slug: "minksti-baldai-7k3q",
@@ -109,7 +127,7 @@ export const collections: Collection[] = [
         key: "nuotraukos", title: "Nuotraukos", parts: [
           { h: "Viena nuotrauka. Visa spalvų paletė." },
           { label: "Baltame fone" },
-          { imgs: palete },
+          { imgs: palete, vid: true },
           { p: [
             "Vieną kartą nufotografuotas baldas gali būti pristatomas visomis siūlomomis spalvomis – kiekvieno varianto nereikia fotografuoti atskirai.",
             "Baldas išlieka tas pats: nekeičiame jo formos, proporcijų, audinio tekstūros, siūlių, apšvietimo ar šešėlių. Keičiasi tik spalva, kurią deriname pagal tikrą audinio pavyzdį.",
@@ -170,7 +188,59 @@ export const collections: Collection[] = [
           { imgs: fotelisVisi, first: "wide", uniform: true },
         ],
       },
-      { key: "video", title: "Video", parts: [{ ids: ["the-armchair", "sofa-360"] }] },
+      {
+        key: "video", title: "Video", parts: [
+          { h: "AI VIDEO – nuo produkto nuotraukos iki reklaminės istorijos" },
+          { p: ["Pasitelkdami AI, iš minkštųjų baldų nuotraukų kuriame tikroviškus vaizdo įrašus – nuo produkto pristatymo baltame fone iki reklaminių istorijų su veikėjais. Galime sukurti skirtingas aplinkas, kameros judesius ir scenas be papildomo filmavimo."] },
+          { h4: "Ką AI leidžia sukurti?" },
+          { ulb: [
+            "Skirtingi rakursai ir kadruotės. Kameros priartėjimai, judėjimas iš skirtingų aukščių, perspektyvų keitimas ir dinamiški produkto pristatymai.",
+            "Produkto detalės. Kameros priartėjimai prie audinio tekstūros, siūlių, porankių ir kitų baldo elementų, išryškinant jų dizainą ir medžiagiškumą.",
+            "Skirtingos aplinkos. Baldas moderniame, klasikiniame ar minimalistiniame interjere, terasoje arba kitoje pasirinktoje realistiškoje erdvėje.",
+            "Žmonės ir gyvūnai. Veikėjų įtraukimas į produkto pristatymo scenas.",
+            "Reklaminės istorijos. Kelių scenų pasakojimai su apgalvotu veiksmu, emocija ir montažu.",
+            "Sezoniniai pokyčiai. Skirtingas apšvietimas, metų laikai, dekoras ir atmosfera.",
+          ] },
+          { p: ["Iš vienos ar kelių kokybiškų produkto nuotraukų galime sukurti skirtingus vaizdo įrašus – nuo subtilaus produkto pristatymo iki vientisos reklaminės istorijos. Tai leidžia išplėsti vizualinę komunikaciją neorganizuojant kiekvienai idėjai atskiro filmavimo."] },
+          { h4: "Kada rinktis AI, filmavimą ar abu?" },
+          { table: {
+            cols: ["Ką norite sukurti?", "Rekomenduojamas būdas", "Sąnaudos*"],
+            groups: [
+              { h: "Produkto pristatymas", rows: [
+                ["Trumpas baldo video baltame fone", "AI video", "€€"],
+                ["Papildomi rakursai ir detalių kadrai", "AI video", "€€"],
+                ["Baldas skirtinguose interjeruose", "AI video", "€€"],
+              ] },
+              { h: "Kūrybinė reklama", rows: [
+                ["Trumpa kūrybinė reklama", "AI video", "€€"],
+                ["Gyvenimo istorija su veikėjais", "AI / hibridinis", "€€–€€€"],
+                ["Sezoninė reklama", "AI video", "€€"],
+                ["Ilgesnis reklaminis pasakojimas", "AI / hibridinis", "€€€"],
+              ] },
+              { h: "Produkto funkcijos", rows: [
+                ["Sofos-lovos išskleidimo mechanizmas", "Filmavimas", "€€"],
+                ["Modulių perstatymas ir funkcijų demonstravimas", "Filmavimas / hibridinis", "€€–€€€"],
+              ] },
+              { h: "Hibridiniai sprendimai", rows: [
+                ["Tikras filmuotas baldas AI interjere", "Hibridinis", "€€"],
+                ["Vienas filmavimas kelioms reklamos versijoms", "Hibridinis", "€€€"],
+              ] },
+            ],
+            note: "* € – mažesnės, €€ – vidutinės, €€€ – didesnės orientacinės gamybos sąnaudos. Tai nėra fiksuotos kainos. Konkretus biudžetas priklauso nuo projekto apimties ir sudėtingumo.",
+            legendH: "",
+            legend: [],
+            after: "",
+          } },
+          { p: ["AI gali būti ekonomiškesnis kuriant papildomus vaizdo įrašus iš turimų nuotraukų, ypač kai reikia kelių interjerų ar reklamos versijų. Filmavimas tinkamesnis, kai būtina tiksliai parodyti baldo mechanizmus ir realų veikimą. Hibridinis būdas leidžia derinti tikrą filmuotą produktą su AI sukurtomis aplinkomis ar papildomomis scenomis."] },
+          { h4: "Svarbu žinoti" },
+          { p: [
+            "AI leidžia kurti tikroviškas scenas su žmonėmis, gyvūnais ir jų sąveika su baldais. Tačiau ne visada galima užtikrinti visišką produkto detalių ir sudėtingų judesių tikslumą.",
+            "Kai svarbu tiksliai parodyti baldo mechanizmus, funkcionalumą ar tikrąsias fizines savybes, rekomenduojame realų filmavimą arba hibridinį sprendimą. Kiekvienam projektui tinkamiausią būdą parenkame individualiai.",
+          ] },
+          { imgs: [everyoneFits, findMedia("the-armchair"), findMedia("sofa-360")], vid: true },
+          { imgs: reklamosVideo, first: "wide", uniform: true },
+        ],
+      },
     ],
   },
 ];

@@ -35,9 +35,35 @@ const count = (s: (typeof sections)[number]) => s.parts.reduce((n, p) => n + (p.
           : "label" in p ? <p class="pc-label">{p.label}</p>
           : "p" in p ? <div class="pc-text">{p.p.map((t) => (<p>{t}</p>))}</div>
           : "ul" in p ? <ul class="pc-list">{p.ul.map((t) => (<li>{t}</li>))}</ul>
+          : "table" in p ? (
+            <div class="pc-pt">
+              <div class="pc-pt-scroll">
+                <table class="pc-table">
+                  <thead><tr>{p.table.cols.map((c) => (<th scope="col">{c}</th>))}</tr></thead>
+                  {p.table.groups.map((g) => (
+                    <tbody>
+                      <tr class="pc-grp"><th colspan="3" scope="colgroup">{g.h}</th></tr>
+                      {g.rows.map((r) => (
+                        <tr>
+                          <td>{r[0]}</td>
+                          <td><span class="pc-method" data-m={r[1].replace("*", "").split(" ")[0].toLowerCase()}>{r[1]}</span></td>
+                          <td><span class="pc-cost">{r[2]}</span></td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  ))}
+                </table>
+              </div>
+              <p class="pc-note">{p.table.note}</p>
+              {p.table.legend.length > 0 && (<h4 class="pc-h4">{p.table.legendH}</h4>)}
+              {p.table.legend.length > 0 && (<div class="pc-legend">{p.table.legend.map((l) => (<div><b>{l[0]}</b><strong>{l[1]}</strong><span>{l[2]}</span></div>))}</div>)}
+              {p.table.after && (<p class="pc-after">{p.table.after}</p>)}
+            </div>
+          )
+          : "ulb" in p ? <ul class="pc-list">{p.ulb.map((t) => { const k = t.indexOf(". "); return (<li><strong>{t.slice(0, k + 1)}</strong> {t.slice(k + 2)}</li>); })}</ul>
           : "hr" in p ? <hr class="pc-hr" />
           : p.media ? (
-            <div class={`pc-imgs${"first" in p && p.first === "wide" ? " pc-wide" : ""}${"uniform" in p && p.uniform ? " pc-uni" : ""}${p.media.length === 1 ? " pc-one" : ""}`}>
+            <div class={`pc-imgs${"first" in p && p.first === "wide" ? " pc-wide" : ""}${"uniform" in p && p.uniform ? " pc-uni" : ""}${"vid" in p && p.vid ? " pc-vid" : ""}${p.media.length === 1 ? " pc-one" : ""}`}>
               {p.media.map((m) => (
                 <button type="button" class="pc-card" data-lb={idx(m.id)} aria-haspopup="dialog" aria-label={m.title[lang]}>
                   <div class="pc-media" style={`aspect-ratio:${m.ratio.toFixed(4)}`}>
