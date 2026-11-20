@@ -42,6 +42,7 @@ const count = (s: (typeof sections)[number]) => s.parts.reduce((n, p) => n + (p.
                 <button type="button" class="pc-card" data-lb={idx(m.id)} aria-haspopup="dialog" aria-label={m.title[lang]}>
                   <div class="pc-media" style={`aspect-ratio:${m.ratio.toFixed(4)}`}>
                     <img src={`${base}${m.cover}`} alt={m.title[lang]} loading="lazy" decoding="async" />
+                    {(m as any).badge && <span class="pc-badge">{(m as any).badge}</span>}
                     {m.kind === "video" && <span class="gp-play" aria-hidden="true"></span>}
                   </div>
                 </button>
