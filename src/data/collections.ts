@@ -170,7 +170,20 @@ export const collections: Collection[] = [
           { imgs: fotelisVisi, first: "wide", uniform: true },
         ],
       },
-      { key: "video", title: "Video", parts: [{ ids: ["the-armchair", "sofa-360"] }] },
+      {
+        key: "video", title: "Video", parts: [
+          { h: "AI VIDEO – iš nuotraukos į judantį vaizdą" },
+          { p: ["AI technologijos leidžia iš minkštųjų baldų nuotraukų kurti tikroviškus vaizdo įrašus be papildomo filmavimo. Galime suteikti judesio statiškam baldo vaizdui, keisti kameros perspektyvą, kurti skirtingus interjerus, apšvietimą ir atmosferą, įtraukti veikėjus bei pasakoti gyvenimo istorijas, kuriose baldas tampa natūralia aplinkos dalimi."] },
+          { h4: "Kada AI video yra geras pasirinkimas?" },
+          { p: [
+            "Kai norite pristatyti baldą skirtingose aplinkose, sukurti trumpą reklaminį vaizdo įrašą iš turimų nuotraukų ar perteikti nuotaiką ir emociją be naujo filmavimo.",
+            "Tai gali būti ekonomiškesnis sprendimas trumpiems, nesudėtingiems vaizdo įrašams, ypač kai jau turite kokybiškas produkto nuotraukas.",
+          ] },
+          { h4: "Svarbu žinoti" },
+          { p: ["AI geriausiai tinka vizualiniam produkto pristatymui, o ne tiksliam jo funkcijų demonstravimui. Sudėtingas judėjimas ar žmogaus sąveika su baldu gali pakeisti tikrąsias produkto detales, todėl kiekvieną rezultatą kruopščiai tikriname."] },
+          { ids: ["the-armchair", "sofa-360"] },
+        ],
+      },
     ],
   },
 ];
