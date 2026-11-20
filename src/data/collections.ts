@@ -77,6 +77,19 @@ const reklama = [
   photo("reklama-14", 1600, 893, "Moteris sėdi ant sofos tarp kraustymosi dėžių"),
 ];
 
+const fotelisZmones = [
+  photo("fotelis-1", 1600, 893, "Šokėja dryžuoto fotelio šalia, prabangiame interjere su paauksuotu veidrodžiu"),
+  photo("fotelis-2", 1600, 893, "Vyras bordo kostiumu palinkęs ant dryžuoto fotelio, šiltame kabinete su paveikslais"),
+  photo("fotelis-6", 1600, 893, "Vyras geltonu švarku sėdi dryžuotame fotelyje rausvame fone"),
+  photo("fotelis-7", 1600, 900, "Moteris su vinilo plokštele ilsisi dryžuotame fotelyje retro interjere"),
+  photo("fotelis-8", 1600, 893, "Moteris sukryžiavusi kojas skaito knygą dryžuotame fotelyje, vaizdas iš viršaus"),
+];
+const fotelisAugintiniai = [
+  photo("fotelis-3", 1600, 893, "Katė miega ant dryžuoto fotelio atlošo marokietiško stiliaus interjere"),
+  photo("fotelis-4", 1600, 893, "Šuo miega dryžuotame fotelyje dailininko dirbtuvėje"),
+  photo("fotelis-5", 1600, 893, "Juoda katė sėdi dryžuotame fotelyje tamsiame detektyviniame interjere"),
+];
+
 export const collections: Collection[] = [
   {
     slug: "minksti-baldai-7k3q",
@@ -145,6 +158,11 @@ export const collections: Collection[] = [
             "Kiekvieną detalę – nuo aplinkos ir veikėjų iki apšvietimo, kompozicijos ir galutinio reklamos maketo – sujungiame į vientisą vizualinį pasakojimą.",
             "Tikslas – ne tik parodyti produktą, bet ir padėti auditorijai įsivaizduoti jį savo gyvenime, stiprinti prekės ženklo atpažįstamumą ir kurti įsimintiną komunikaciją.",
           ] },
+          { h4: "Vienas fotelis. Skirtingi gyvenimai." },
+          { label: "Žmonės" },
+          { imgs: fotelisZmones, first: "wide", uniform: true },
+          { label: "Augintiniai" },
+          { imgs: fotelisAugintiniai, first: "wide", uniform: true },
         ],
       },
       { key: "video", title: "Video", parts: [{ ids: ["the-armchair", "sofa-360"] }] },
