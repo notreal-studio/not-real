@@ -48,7 +48,7 @@ const rinkinysBalta = [
   photo("rinkinys-galas", 1600, 893, "Ta pati sofa iš galo ir šono"),
   photo("rinkinys-sonas", 1600, 893, "Ta pati sofa, vaizdas iš šono"),
   photo("rinkinys-kampas", 1600, 893, "Ta pati sofa, vaizdas iš kampo"),
-  photo("rinkinys-kampas-pilkas", 1600, 893, "Ta pati sofa kitu kampu, šviesiai pilkame fone"),
+  { ...photo("rinkinys-kampas-pilkas", 1600, 893, "Pradinė nuotrauka, iš kurios sukurtas visas rinkinys: sofa šviesiai pilkame fone"), badge: "Pradinė nuotrauka" } as Media,
 ];
 const rinkinysDetales = [
   photo("rinkinys-detale-ranktelis", 1600, 893, "Sofos porankio detalė iš arti"),
