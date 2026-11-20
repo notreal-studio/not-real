@@ -175,18 +175,18 @@ export const collections: Collection[] = [
       },
       {
         key: "video", title: "Video", parts: [
-          { h: "AI VIDEO – iš nuotraukos į judantį vaizdą" },
+          { h: "AI VIDEO – nuo produkto nuotraukos iki reklaminės istorijos" },
           { p: ["Pasitelkdami AI, iš minkštųjų baldų nuotraukų kuriame tikroviškus vaizdo įrašus – nuo produkto pristatymo baltame fone iki reklaminių istorijų su veikėjais. Galime sukurti skirtingas aplinkas, kameros judesius ir scenas be papildomo filmavimo."] },
           { h4: "Ką AI leidžia sukurti?" },
           { ulb: [
             "Skirtingi rakursai ir kadruotės. Kameros priartėjimai, judėjimas iš skirtingų aukščių, perspektyvų keitimas ir dinamiški produkto pristatymai.",
-            "Produkto detalės. Artimi audinio tekstūros, siūlių, porankių ir kitų baldo elementų kadrai.",
+            "Produkto detalės. Kameros priartėjimai prie audinio tekstūros, siūlių, porankių ir kitų baldo elementų, išryškinant jų dizainą ir medžiagiškumą.",
             "Skirtingos aplinkos. Baldas moderniame, klasikiniame ar minimalistiniame interjere, terasoje arba kitoje pasirinktoje realistiškoje erdvėje.",
-            "Žmonės ir gyvūnai. Į scenas įtraukiami personažai, augintiniai, jų judėjimas ir kasdienės gyvenimo situacijos.",
-            "Reklaminės istorijos. Kelių scenų pasakojimai su veikėjais, emocijomis, skirtingomis kompozicijomis ir montažu.",
+            "Žmonės ir gyvūnai. Veikėjų įtraukimas į produkto pristatymo scenas.",
+            "Reklaminės istorijos. Kelių scenų pasakojimai su apgalvotu veiksmu, emocija ir montažu.",
             "Sezoniniai pokyčiai. Skirtingas apšvietimas, metų laikai, dekoras ir atmosfera.",
           ] },
-          { p: ["AI ypač naudingas, kai jau turite kokybiškas baldo nuotraukas, o norite daugiau judančio turinio, skirtingų aplinkų ir kūrybinių reklamos variantų be naujo filmavimo."] },
+          { p: ["Iš vienos ar kelių kokybiškų produkto nuotraukų galime sukurti skirtingus vaizdo įrašus – nuo subtilaus produkto pristatymo iki vientisos reklaminės istorijos. Tai leidžia išplėsti vizualinę komunikaciją neorganizuojant kiekvienai idėjai atskiro filmavimo."] },
           { h4: "Kada rinktis AI, filmavimą ar abu?" },
           { table: {
             cols: ["Ką norite sukurti?", "Rekomenduojamas būdas", "Sąnaudos*"],
