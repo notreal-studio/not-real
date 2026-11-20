@@ -90,6 +90,9 @@ const fotelisAugintiniai = [
   photo("fotelis-5", 1600, 893, "Juoda katė sėdi dryžuotame fotelyje tamsiame detektyviniame interjere"),
 ];
 
+// people and pets shown together as one set, alternating so no two pet pictures sit next to each other
+const fotelisVisi = [fotelisZmones[0], fotelisZmones[1], fotelisAugintiniai[0], fotelisZmones[2], fotelisAugintiniai[1], fotelisZmones[3], fotelisAugintiniai[2], fotelisZmones[4]];
+
 export const collections: Collection[] = [
   {
     slug: "minksti-baldai-7k3q",
@@ -159,10 +162,7 @@ export const collections: Collection[] = [
             "Tikslas – ne tik parodyti produktą, bet ir padėti auditorijai įsivaizduoti jį savo gyvenime, stiprinti prekės ženklo atpažįstamumą ir kurti įsimintiną komunikaciją.",
           ] },
           { h4: "Vienas fotelis. Skirtingi gyvenimai." },
-          { label: "Žmonės" },
-          { imgs: fotelisZmones, first: "wide", uniform: true },
-          { label: "Augintiniai" },
-          { imgs: fotelisAugintiniai, first: "wide", uniform: true },
+          { imgs: fotelisVisi, first: "wide", uniform: true },
         ],
       },
       { key: "video", title: "Video", parts: [{ ids: ["the-armchair", "sofa-360"] }] },
