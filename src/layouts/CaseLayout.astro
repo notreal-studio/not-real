@@ -9,9 +9,9 @@ import type { Media } from "../data/portfolio";
 
 interface Props {
   lang: Lang; title: string; desc: string; paths: Record<string, string>;
-  ogImage?: string; mainClass?: string; article?: boolean; lbItems?: (Media & { solo?: boolean })[];
+  ogImage?: string; mainClass?: string; article?: boolean; noindex?: boolean; lbItems?: (Media & { solo?: boolean })[];
 }
-const { lang, title, desc, paths, ogImage, mainClass = "case", article = false, lbItems } = Astro.props;
+const { lang, title, desc, paths, ogImage, mainClass = "case", article = false, lbItems, noindex = false } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
 const site = (Astro.site?.href ?? "").replace(/\/$/, "");
@@ -51,8 +51,9 @@ const ld = article
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={desc} />
   <meta name="twitter:image" content={og} />
-  {languages.map((l) => (<link rel="alternate" hreflang={l} href={`${site}${paths[l]}`} />))}
-  <link rel="alternate" hreflang="x-default" href={`${site}${paths.en}`} />
+  {noindex && <meta name="robots" content="noindex, nofollow, noarchive" />}
+  {!noindex && languages.map((l) => (<link rel="alternate" hreflang={l} href={`${site}${paths[l]}`} />))}
+  {!noindex && <link rel="alternate" hreflang="x-default" href={`${site}${paths.en}`} />}
   <link rel="preload" href={`${base}fonts/newsreader-latin-400-normal.woff2`} as="font" type="font/woff2" crossorigin />
   <link rel="preload" href={`${base}fonts/figtree-latin-400-normal.woff2`} as="font" type="font/woff2" crossorigin />
   {ld && <script type="application/ld+json" set:html={JSON.stringify(ld)} />}

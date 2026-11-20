@@ -1,0 +1,55 @@
+---
+// Unlisted collection page (see src/data/collections.ts): noindex, no links to it anywhere, not in the sitemap.
+import CaseLayout from "../../layouts/CaseLayout.astro";
+import { collections, resolve } from "../../data/collections";
+
+export function getStaticPaths() { return collections.map((c) => ({ params: { slug: c.slug }, props: { c } })); }
+const { c } = Astro.props;
+const lang = "lt" as const;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const { sections, all } = resolve(c);
+const idx = (id: string) => all.findIndex((m) => m.id === id);
+const path = `${base}/p/${c.slug}/`;
+const count = (s: (typeof sections)[number]) => s.parts.reduce((n, p) => n + (p.media?.length ?? 0), 0);
+---
+<CaseLayout lang={lang} title={`${c.title} — Not Real`} desc={c.intro} paths={{ en: path, lt: path }} mainClass="gp" lbItems={all} noindex>
+  <section class="gp-hero">
+    <div class="wrap">
+      <div class="gp-n">{c.kicker}</div>
+      <h1 class="gp-h1"><span class="br-ul">{c.title}</span></h1>
+      <p class="gp-intro">{c.intro}</p>
+      <div class="gp-meta"><span>Sukūrė Inga Bankauskė, NOT REAL studija</span></div>
+      <nav class="gp-tabs" aria-label="Skyriai">
+        {sections.map((s, i) => (<a href={`#${s.key}`}><span class="gp-tn">0{i + 1}</span>{s.title} · {count(s)}</a>))}
+      </nav>
+    </div>
+  </section>
+
+  {sections.map((s) => (
+    <section class="gp-sec pc" id={s.key}>
+      <div class="wrap">
+        <h2 class="pc-sec">{s.title}</h2>
+        {s.parts.map((p) => (
+          "h" in p ? <h3 class="pc-h">{p.h}</h3>
+          : "h4" in p ? <h4 class="pc-h4">{p.h4}</h4>
+          : "label" in p ? <p class="pc-label">{p.label}</p>
+          : "p" in p ? <div class="pc-text">{p.p.map((t) => (<p>{t}</p>))}</div>
+          : "ul" in p ? <ul class="pc-list">{p.ul.map((t) => (<li>{t}</li>))}</ul>
+          : "hr" in p ? <hr class="pc-hr" />
+          : p.media ? (
+            <div class={`pc-imgs${"first" in p && p.first === "wide" ? " pc-wide" : ""}${"uniform" in p && p.uniform ? " pc-uni" : ""}${p.media.length === 1 ? " pc-one" : ""}`}>
+              {p.media.map((m) => (
+                <button type="button" class="pc-card" data-lb={idx(m.id)} aria-haspopup="dialog" aria-label={m.title[lang]}>
+                  <div class="pc-media" style={`aspect-ratio:${m.ratio.toFixed(4)}`}>
+                    <img src={`${base}${m.cover}`} alt={m.title[lang]} loading="lazy" decoding="async" />
+                    {m.kind === "video" && <span class="gp-play" aria-hidden="true"></span>}
+                  </div>
+                </button>
+              ))}
+            </div>
+          ) : null
+        ))}
+      </div>
+    </section>
+  ))}
+</CaseLayout>

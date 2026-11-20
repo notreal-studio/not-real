@@ -196,3 +196,10 @@ export const mosaicLayouts: number[][][] = [
 export const homeLb: (Media & { solo?: boolean })[] = [...mosaicPool, { ...introVideo, solo: true }];
 export const introIndex = mosaicPool.length;
 export const soxiCover = soxiFrames.find((f) => f.id.includes("04_hero"))!;
+
+/* one picture or video of any group by id (used by the unlisted collection pages) */
+export const findMedia = (id: string): Media => {
+  const m = groups.flatMap((g) => g.items).find((x) => x.id === id);
+  if (!m) throw new Error("Media not found: " + id);
+  return m;
+};

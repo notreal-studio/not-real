@@ -12,6 +12,6 @@ export default defineConfig({
   integrations: [
     // Sugeneruoja sitemap-index.xml su visais puslapiais (/, /en/, /sv/ ...).
     // hreflang ryšiai tarp kalbų jau yra <head> (Google juos naudoja).
-    sitemap(),
+    sitemap({ filter: (page) => !page.includes("/p/") }),
   ],
 });
