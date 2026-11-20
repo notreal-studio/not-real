@@ -175,15 +175,12 @@ export const collections: Collection[] = [
       {
         key: "video", title: "Video", parts: [
           { h: "AI VIDEO – iš nuotraukos į judantį vaizdą" },
-          { p: ["AI technologijos leidžia iš minkštųjų baldų nuotraukų kurti tikroviškus vaizdo įrašus be papildomo filmavimo. Galime suteikti judesio statiškam baldo vaizdui, keisti kameros perspektyvą, kurti skirtingus interjerus, apšvietimą ir atmosferą, įtraukti veikėjus bei pasakoti gyvenimo istorijas, kuriose baldas tampa natūralia aplinkos dalimi."] },
-          { h4: "Kada AI video yra geras pasirinkimas?" },
           { p: [
-            "Kai norite pristatyti baldą skirtingose aplinkose, sukurti trumpą reklaminį vaizdo įrašą iš turimų nuotraukų ar perteikti nuotaiką ir emociją be naujo filmavimo.",
-            "Tai gali būti ekonomiškesnis sprendimas trumpiems, nesudėtingiems vaizdo įrašams, ypač kai jau turite kokybiškas produkto nuotraukas.",
+            "Pasitelkdami AI, iš minkštųjų baldų nuotraukų kuriame tikroviškus vaizdo įrašus – nuo subtilaus kameros judesio ir artimų produkto detalių kadrų iki skirtingų interjerų, reklamos scenų ir gyvenimo istorijų su veikėjais.",
+            "Tai suteikia galimybę pristatyti baldus įvairiose aplinkose ir kurti papildomą reklaminį turinį be naujo filmavimo.",
+            "AI ypač naudingas trumpiems produktų pristatymams ir kūrybinėms reklamoms, kai svarbiausia vizualinis įspūdis, atmosfera ir emocija.",
           ] },
-          { h4: "Svarbu žinoti" },
-          { p: ["AI geriausiai tinka vizualiniam produkto pristatymui, o ne tiksliam jo funkcijų demonstravimui. Sudėtingas judėjimas ar žmogaus sąveika su baldu gali pakeisti tikrąsias produkto detales, todėl kiekvieną rezultatą kruopščiai tikriname."] },
-          { h4: "Kada ką rinktis ir kiek tai gali kainuoti?" },
+          { h4: "Kada rinktis AI, filmavimą ar abu?" },
           { table: {
             cols: ["Ką norite sukurti?", "Rekomenduojamas būdas", "Sąnaudos"],
             groups: [
@@ -226,6 +223,8 @@ export const collections: Collection[] = [
             ],
             after: "Nurodytos sąnaudos yra orientacinės. Galutinė projekto kaina priklauso nuo vaizdo įrašo trukmės, scenų sudėtingumo, turimos medžiagos ir reikalingų korekcijų.",
           } },
+          { h4: "Svarbu žinoti" },
+          { p: ["AI geriausiai tinka vizualiniam produkto pristatymui, o ne tiksliam jo funkcijų demonstravimui. Sudėtingas judėjimas ar žmogaus sąveika su baldu gali pakeisti tikrąsias produkto detales, todėl kiekvieną rezultatą kruopščiai tikriname."] },
           { ids: ["the-armchair", "sofa-360"] },
         ],
       },
