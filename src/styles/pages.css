@@ -470,3 +470,28 @@
 .pc-vid{grid-template-columns:repeat(3,1fr);align-items:start}
 @media (max-width:900px){.pc-vid{grid-template-columns:1fr 1fr}}
 @media (max-width:600px){.pc-vid{grid-template-columns:1fr}}
+
+/* collection TOC + section bands */
+.pc-toc{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,2vw,28px);margin-top:clamp(34px,6vh,64px)}
+.pc-toc-col{border:1px solid var(--line);border-radius:6px;background:var(--bg-2);padding:clamp(18px,2.2vw,28px)}
+.pc-toc-h{display:flex;align-items:baseline;gap:12px;font-family:var(--disp);font-size:clamp(1.5rem,2.6vw,2.2rem);color:var(--fg);text-decoration:none;padding-bottom:14px;border-bottom:2px solid var(--br-saffron)}
+.pc-toc-n{font:500 11px/1 var(--body);letter-spacing:.24em;color:var(--muted)}
+.pc-toc-h small{margin-left:auto;font:600 12px/1 var(--body);letter-spacing:.12em;color:var(--muted)}
+.pc-toc ol{list-style:none;margin:14px 0 0;padding:0;counter-reset:t}
+.pc-toc li{counter-increment:t;border-top:1px solid var(--line)}
+.pc-toc li:first-child{border-top:0}
+.pc-toc li a{display:flex;gap:12px;padding:9px 0;color:var(--muted);text-decoration:none;font-size:clamp(14px,1.1vw,16px);line-height:1.4;transition:color .2s}
+.pc-toc li a::before{content:counter(t);font:600 12px/1.6 var(--body);color:var(--accent);min-width:1.2em}
+.pc-toc li a:hover,.pc-toc li a:focus-visible{color:var(--fg)}
+.pc-band{display:flex;align-items:baseline;gap:clamp(12px,2vw,24px);padding:clamp(18px,3vw,32px) 0;margin-bottom:clamp(26px,4vw,46px);border-top:3px solid var(--br-saffron);border-bottom:1px solid var(--line)}
+.pc-band .pc-sec{margin:0}
+.pc-band-n{font:500 12px/1 var(--body);letter-spacing:.24em;color:var(--muted)}
+.pc-band-c{margin-left:auto;font:600 13px/1 var(--body);letter-spacing:.12em;color:var(--muted)}
+.pc-hn{display:inline-block;min-width:1.6em;margin-right:.35em;font:600 .55em/1 var(--body);letter-spacing:.1em;color:var(--accent);vertical-align:.45em}
+.pc-h{scroll-margin-top:90px}
+@media (max-width:760px){.pc-toc{grid-template-columns:1fr}}
+
+.pc-about{max-width:44em;margin-top:clamp(20px,3vh,34px)}
+.pc-about p{font-family:var(--disp);font-size:clamp(1.1rem,1.6vw,1.4rem);line-height:1.5;margin:0 0 .8em}
+.pc-about p:first-child{font-size:clamp(1.3rem,2.2vw,1.9rem);line-height:1.35}
+.pc-about strong{font-weight:600}

@@ -16,7 +16,7 @@ export type Part =
   | { imgs: Media[]; first?: "wide"; uniform?: boolean; vid?: boolean }   // first = the first picture spans the full width; uniform = all tiles 16:9
   | { ids: string[] };                  // pictures or videos that already exist on the site, by id
 export interface CollectionSection { key: string; title: string; parts: Part[] }
-export interface Collection { slug: string; title: string; kicker: string; intro: string; sections: CollectionSection[] }
+export interface Collection { slug: string; title: string; kicker: string; intro: string; about?: string[]; sections: CollectionSection[] }
 
 const photo = (file: string, w: number, h: number, alt: string): Media => ({
   id: "mb-" + file, kind: "image", title: { en: alt, lt: alt },
@@ -46,11 +46,11 @@ const audinysInterjerai = [
 ];
 
 const rinkinysBalta = [
+  { ...photo("rinkinys-kampas-pilkas", 1600, 893, "Pradinė nuotrauka, iš kurios sukurtas visas rinkinys: sofa šviesiai pilkame fone"), badge: "Pradinė nuotrauka" } as Media,
   photo("rinkinys-priekis", 1600, 893, "Bordo spalvos kampinė sofa su gulimąja dalimi, vaizdas iš priekio baltame fone"),
   photo("rinkinys-galas", 1600, 893, "Ta pati sofa iš galo ir šono"),
   photo("rinkinys-sonas", 1600, 893, "Ta pati sofa, vaizdas iš šono"),
   photo("rinkinys-kampas", 1600, 893, "Ta pati sofa, vaizdas iš kampo"),
-  { ...photo("rinkinys-kampas-pilkas", 1600, 893, "Pradinė nuotrauka, iš kurios sukurtas visas rinkinys: sofa šviesiai pilkame fone"), badge: "Pradinė nuotrauka" } as Media,
 ];
 const rinkinysDetales = [
   photo("rinkinys-detale-ranktelis", 1600, 893, "Sofos porankio detalė iš arti"),
@@ -121,6 +121,13 @@ export const collections: Collection[] = [
     slug: "minksti-baldai-7k3q",
     title: "Minksti baldai",
     kicker: "Atskira kolekcija",
+    about: [
+      "Esu Inga Bankauskė – fotografė, vizualų kūrėja ir NOT REAL studijos įkūrėja.",
+      "Pusantrų metų specializavausi minkštųjų baldų fotografijoje, kurdama komercinius vizualus, skirtus didelėms Europos e. prekybos platformoms, tokioms kaip OTTO, fonQ ir home24, bei baldų prekių ženklams „Veken“ ir „Skaidar“.",
+      "Puikiai pažįstu minkštųjų baldų fotografavimo subtilybes – nuo formų ir proporcijų iki audinių tekstūrų, spalvų tikslumo, apšvietimo ir konstrukcinių detalių.",
+      "Šiandien šią patirtį jungiu su profesionaliu retušavimu, grafiniu dizainu ir AI technologijomis, kurdama tikroviškas baldų nuotraukas, reklaminius vizualus bei vaizdo įrašus.",
+      "Man svarbu ne tik estetika, bet ir **tikslus tikrojo baldo charakterio, medžiagiškumo bei išskirtinių savybių perteikimas.**",
+    ],
     intro: "Minkštų baldų vizualai vienoje vietoje: nuotraukos ir video. Paspausk bet kurį kadrą, kad pamatytum jį didesnį.",
     sections: [
       {
@@ -144,13 +151,14 @@ export const collections: Collection[] = [
           { h4: "Kaip atrodytų tas pats baldas su visiškai kitu audiniu?" },
           { p: [
             "Pasitelkdami AI, galime pakeisti baldo audinį, išlaikydami jo formą, proporcijas ir konstrukcines detales. Keičiasi ne tik spalva, bet ir audinio tekstūra, paviršiaus savybės bei šviesos atspindžiai.",
-            "Tai leidžia pristatyti skirtingus audinių variantus negaminant ir nefotografuojant kiekvieno baldo atskirai.",
+            "Pirmiausia sukuriame baldo nuotrauką baltame fone su nauju audiniu. Įvertiname, kaip audinys atrodo ant baldo, ir patikriname svarbiausias detales. Tuomet jau paruoštą baldo variantą galime pristatyti pasirinktame interjere, pritaikydami aplinką, apšvietimą ir bendrą vizualinį stilių.",
+            "Taip galima pristatyti skirtingus audinių variantus negaminant ir nefotografuojant kiekvieno baldo atskirai.",
           ] },
           { h4: "Ko reikia iš jūsų?" },
           { ul: [
             "Kokybiškos baldo nuotraukos.",
-            "Aiškios norimo audinio nuotraukos iš arti, kuriose matoma jo tekstūra.",
-            "Nuotraukos, kuriose matyti, kaip tas pats audinys atrodo ant kito baldo ar gaminio.",
+            "Aiškios norimo audinio nuotraukos iš arti, kurioje matoma jo tekstūra.",
+            "Nuotraukos, kurioje matyti, kaip tas pats audinys atrodo ant kito baldo ar gaminio.",
           ] },
           { h4: "Svarbu žinoti" },
           { p: ["Ne visais atvejais įmanoma pakeisti baldo audinį naudojant AI. Ne ant kiekvieno esamo audinio galima tikroviškai pritaikyti kitą, todėl prieš pradedant darbą būtina individuali konsultacija, kurios metu įvertiname keitimo galimybes."] },
@@ -202,7 +210,8 @@ export const collections: Collection[] = [
             "Sezoniniai pokyčiai. Skirtingas apšvietimas, metų laikai, dekoras ir atmosfera.",
           ] },
           { p: ["Iš vienos ar kelių kokybiškų produkto nuotraukų galime sukurti skirtingus vaizdo įrašus – nuo subtilaus produkto pristatymo iki vientisos reklaminės istorijos. Tai leidžia išplėsti vizualinę komunikaciją neorganizuojant kiekvienai idėjai atskiro filmavimo."] },
-          { h4: "Kada rinktis AI, filmavimą ar abu?" },
+          { hr: true },
+          { h: "Kada rinktis AI, filmavimą ar abu?" },
           { table: {
             cols: ["Ką norite sukurti?", "Rekomenduojamas būdas", "Sąnaudos*"],
             groups: [
@@ -232,11 +241,14 @@ export const collections: Collection[] = [
             after: "",
           } },
           { p: ["AI gali būti ekonomiškesnis kuriant papildomus vaizdo įrašus iš turimų nuotraukų, ypač kai reikia kelių interjerų ar reklamos versijų. Filmavimas tinkamesnis, kai būtina tiksliai parodyti baldo mechanizmus ir realų veikimą. Hibridinis būdas leidžia derinti tikrą filmuotą produktą su AI sukurtomis aplinkomis ar papildomomis scenomis."] },
-          { h4: "Svarbu žinoti" },
+          { hr: true },
+          { h: "Svarbu žinoti" },
           { p: [
             "AI leidžia kurti tikroviškas scenas su žmonėmis, gyvūnais ir jų sąveika su baldais. Tačiau ne visada galima užtikrinti visišką produkto detalių ir sudėtingų judesių tikslumą.",
             "Kai svarbu tiksliai parodyti baldo mechanizmus, funkcionalumą ar tikrąsias fizines savybes, rekomenduojame realų filmavimą arba hibridinį sprendimą. Kiekvienam projektui tinkamiausią būdą parenkame individualiai.",
           ] },
+          { hr: true },
+          { h: "Video pavyzdžiai" },
           { imgs: [everyoneFits, findMedia("the-armchair"), findMedia("sofa-360")], vid: true },
           { imgs: reklamosVideo, first: "wide", uniform: true },
         ],
