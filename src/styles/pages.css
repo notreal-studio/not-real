@@ -464,3 +464,5 @@
   .pc-table td:not(:first-child){display:inline-block;width:auto;margin-right:10px}
   .pc-legend{grid-template-columns:1fr 1fr}
 }
+/* collection pages: text runs the full content width, like the table */
+.pc .pc-text,.pc .pc-list,.pc .pc-note,.pc .pc-after,.pc .pc-h{max-width:none}
