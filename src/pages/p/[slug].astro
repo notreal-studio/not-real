@@ -55,9 +55,9 @@ const count = (s: (typeof sections)[number]) => s.parts.reduce((n, p) => n + (p.
                 </table>
               </div>
               <p class="pc-note">{p.table.note}</p>
-              <h4 class="pc-h4">{p.table.legendH}</h4>
-              <div class="pc-legend">{p.table.legend.map((l) => (<div><b>{l[0]}</b><strong>{l[1]}</strong><span>{l[2]}</span></div>))}</div>
-              <p class="pc-after">{p.table.after}</p>
+              {p.table.legend.length > 0 && (<h4 class="pc-h4">{p.table.legendH}</h4>)}
+              {p.table.legend.length > 0 && (<div class="pc-legend">{p.table.legend.map((l) => (<div><b>{l[0]}</b><strong>{l[1]}</strong><span>{l[2]}</span></div>))}</div>)}
+              {p.table.after && (<p class="pc-after">{p.table.after}</p>)}
             </div>
           )
           : "ulb" in p ? <ul class="pc-list">{p.ulb.map((t) => { const k = t.indexOf(". "); return (<li><strong>{t.slice(0, k + 1)}</strong> {t.slice(k + 2)}</li>); })}</ul>
