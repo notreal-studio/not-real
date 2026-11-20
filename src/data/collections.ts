@@ -21,7 +21,12 @@ const photo = (file: string, w: number, h: number, alt: string): Media => ({
   src: `/assets/img/collections/minksti-baldai/${file}.webp`, w, h,
 });
 
-const palete = photo("balta-palete", 1600, 1194, "Pilkšvai kreminė sofa baltame fone ir trys jos spalvų variantai su audinio pavyzdžiais: ruda, žalia, pilka");
+const palete = [
+  photo("palete-kreminis", 1600, 1066, "Ta pati sofa baltame fone, kreminis audinys"),
+  photo("palete-ruda", 1600, 1066, "Ta pati sofa baltame fone, ruda spalva"),
+  photo("palete-zalia", 1600, 1066, "Ta pati sofa baltame fone, žalia spalva"),
+  photo("palete-pilka", 1600, 1066, "Ta pati sofa baltame fone, grafito pilka spalva"),
+];
 const interjerai = [
   photo("interjeras-kreminis", 1600, 1074, "Interjeras su foteliu ir pufu, kreminė spalva"),
   photo("interjeras-pilkas", 1600, 1074, "Tas pats interjeras, šviesiai pilka spalva"),
@@ -104,7 +109,7 @@ export const collections: Collection[] = [
         key: "nuotraukos", title: "Nuotraukos", parts: [
           { h: "Viena nuotrauka. Visa spalvų paletė." },
           { label: "Baltame fone" },
-          { imgs: [palete] },
+          { imgs: palete },
           { p: [
             "Vieną kartą nufotografuotas baldas gali būti pristatomas visomis siūlomomis spalvomis – kiekvieno varianto nereikia fotografuoti atskirai.",
             "Baldas išlieka tas pats: nekeičiame jo formos, proporcijų, audinio tekstūros, siūlių, apšvietimo ar šešėlių. Keičiasi tik spalva, kurią deriname pagal tikrą audinio pavyzdį.",
