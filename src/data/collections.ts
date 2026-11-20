@@ -10,11 +10,10 @@ export const collections: Collection[] = [
     slug: "minksti-baldai-7k3q",
     title: "Minksti baldai",
     kicker: "Atskira kolekcija",
-    intro: "Minkštų baldų vizualai vienoje vietoje: nuotraukos, video ir grafika. Paspausk bet kurį kadrą, kad pamatytum jį didesnį.",
+    intro: "Minkštų baldų vizualai vienoje vietoje: nuotraukos ir video. Paspausk bet kurį kadrą, kad pamatytum jį didesnį.",
     sections: [
       { key: "nuotraukos", title: "Nuotraukos", ids: ["ph-13", "ph-17", "ph-14", "ph-01"] },
       { key: "video", title: "Video", ids: ["the-armchair", "sofa-360"] },
-      { key: "grafika", title: "Grafika", ids: ["gd-n13"] },
     ],
   },
 ];
