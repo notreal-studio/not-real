@@ -218,7 +218,10 @@ export const collections: Collection[] = [
           } },
           { p: ["AI gali būti ekonomiškesnis kuriant papildomus vaizdo įrašus iš turimų nuotraukų, ypač kai reikia kelių interjerų ar reklamos versijų. Filmavimas tinkamesnis, kai būtina tiksliai parodyti baldo mechanizmus ir realų veikimą. Hibridinis būdas leidžia derinti tikrą filmuotą produktą su AI sukurtomis aplinkomis ar papildomomis scenomis."] },
           { h4: "Svarbu žinoti" },
-          { p: ["AI geriausiai tinka vizualiniam produkto pristatymui, o ne tiksliam jo funkcijų demonstravimui. Sudėtingas judėjimas ar žmogaus sąveika su baldu gali pakeisti tikrąsias produkto detales, todėl kiekvieną rezultatą kruopščiai tikriname."] },
+          { p: [
+            "AI leidžia kurti tikroviškas scenas su žmonėmis, gyvūnais ir jų sąveika su baldais. Tačiau ne visada galima užtikrinti visišką produkto detalių ir sudėtingų judesių tikslumą.",
+            "Kai svarbu tiksliai parodyti baldo mechanizmus, funkcionalumą ar tikrąsias fizines savybes, rekomenduojame realų filmavimą arba hibridinį sprendimą. Kiekvienam projektui tinkamiausią būdą parenkame individualiai.",
+          ] },
           { ids: ["the-armchair", "sofa-360"] },
         ],
       },
