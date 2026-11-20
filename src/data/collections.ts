@@ -6,6 +6,7 @@ import { findMedia, type Media } from "./portfolio";
 export interface PriceTable { cols: [string, string, string]; groups: { h: string; rows: [string, string, string][] }[]; note: string; legendH: string; legend: [string, string, string][]; after: string }
 export type Part =
   | { h: string }
+  | { steps: string[] }
   | { h4: string }
   | { label: string }
   | { p: string[] }
@@ -126,7 +127,7 @@ export const collections: Collection[] = [
       "Pusantrų metų specializavausi minkštųjų baldų fotografijoje, kurdama komercinius vizualus, skirtus didelėms Europos e. prekybos platformoms, tokioms kaip OTTO, fonQ ir home24, bei baldų prekių ženklams „Veken“ ir „Skaidar“.",
       "Puikiai pažįstu minkštųjų baldų fotografavimo subtilybes – nuo formų ir proporcijų iki audinių tekstūrų, spalvų tikslumo, apšvietimo ir konstrukcinių detalių.",
       "Šiandien šią patirtį jungiu su profesionaliu retušavimu, grafiniu dizainu ir AI technologijomis, kurdama tikroviškas baldų nuotraukas, reklaminius vizualus bei vaizdo įrašus.",
-      "Man svarbu ne tik estetika, bet ir **tikslus tikrojo baldo charakterio, medžiagiškumo bei išskirtinių savybių perteikimas.**",
+      "Man svarbu ne tik estetika, bet ir **tikslus baldas, medžiagiškumas bei išskirtinių savybių perteikimas.**",
     ],
     intro: "Minkštų baldų vizualai vienoje vietoje: nuotraukos ir video. Paspausk bet kurį kadrą, kad pamatytum jį didesnį.",
     sections: [
@@ -152,6 +153,9 @@ export const collections: Collection[] = [
           { p: [
             "Pasitelkdami AI, galime pakeisti baldo audinį, išlaikydami jo formą, proporcijas ir konstrukcines detales. Keičiasi ne tik spalva, bet ir audinio tekstūra, paviršiaus savybės bei šviesos atspindžiai.",
             "Pirmiausia sukuriame baldo nuotrauką baltame fone su nauju audiniu. Įvertiname, kaip audinys atrodo ant baldo, ir patikriname svarbiausias detales. Tuomet jau paruoštą baldo variantą galime pristatyti pasirinktame interjere, pritaikydami aplinką, apšvietimą ir bendrą vizualinį stilių.",
+          ] },
+          { steps: ["Originalus baldas", "Naujas audinys", "Baldas interjere"] },
+          { p: [
             "Taip galima pristatyti skirtingus audinių variantus negaminant ir nefotografuojant kiekvieno baldo atskirai.",
           ] },
           { h4: "Ko reikia iš jūsų?" },

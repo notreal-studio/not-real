@@ -495,3 +495,12 @@
 .pc-about p{font-family:var(--disp);font-size:clamp(1.1rem,1.6vw,1.4rem);line-height:1.5;margin:0 0 .8em}
 .pc-about p:first-child{font-size:clamp(1.3rem,2.2vw,1.9rem);line-height:1.35}
 .pc-about strong{font-weight:600}
+
+.pc-steps{list-style:none;margin:clamp(18px,3vw,30px) 0;padding:0;display:flex;align-items:flex-start;gap:0}
+.pc-steps li{flex:1 1 0;max-width:260px;display:flex;flex-direction:column;align-items:center;gap:12px;position:relative}
+.pc-steps li+li{margin-left:clamp(28px,4vw,48px)}
+.pc-steps li+li::before{content:"→";position:absolute;left:calc(-1 * clamp(28px,4vw,48px));width:clamp(28px,4vw,48px);top:clamp(22px,3vw,34px);text-align:center;color:var(--muted);font-size:18px;line-height:1}
+.pc-step-i{width:100%;height:clamp(66px,8vw,92px);display:flex;align-items:center;justify-content:center;background:var(--bg-2);border:1px solid var(--line);border-radius:14px;color:var(--fg)}
+.pc-step-i svg{width:clamp(26px,3vw,34px);height:auto;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.pc-step-t{font-weight:600;font-size:clamp(14px,1.1vw,16px);text-align:center}
+@media (max-width:560px){.pc-steps li+li{margin-left:22px}.pc-steps li+li::before{left:-22px;width:22px}}
