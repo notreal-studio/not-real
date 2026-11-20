@@ -34,6 +34,8 @@ const count = (s: (typeof sections)[number]) => s.parts.reduce((n, p) => n + (p.
           : "h4" in p ? <h4 class="pc-h4">{p.h4}</h4>
           : "label" in p ? <p class="pc-label">{p.label}</p>
           : "p" in p ? <div class="pc-text">{p.p.map((t) => (<p>{t}</p>))}</div>
+          : "ul" in p ? <ul class="pc-list">{p.ul.map((t) => (<li>{t}</li>))}</ul>
+          : "hr" in p ? <hr class="pc-hr" />
           : p.media ? (
             <div class={`pc-imgs${"first" in p && p.first === "wide" ? " pc-wide" : ""}${p.media.length === 1 ? " pc-one" : ""}`}>
               {p.media.map((m) => (

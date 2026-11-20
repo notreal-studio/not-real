@@ -8,6 +8,8 @@ export type Part =
   | { h4: string }
   | { label: string }
   | { p: string[] }
+  | { ul: string[] }
+  | { hr: true }
   | { imgs: Media[]; first?: "wide" }   // first = the first picture spans the full width
   | { ids: string[] };                  // pictures or videos that already exist on the site, by id
 export interface CollectionSection { key: string; title: string; parts: Part[] }
@@ -26,6 +28,14 @@ const interjerai = [
   photo("interjeras-ruda", 1600, 1074, "Tas pats interjeras, ruda spalva"),
   photo("interjeras-zalias", 1600, 1074, "Tas pats interjeras, žalia spalva"),
   photo("interjeras-grafito", 1600, 1074, "Tas pats interjeras, grafito spalva"),
+];
+
+const audinysBalta = photo("audinys-balta", 1600, 534, "Balta modulinė sofa baltame fone, audinio pavyzdys iš arti ir ta pati sofa su smėlio spalvos audiniu");
+const audinysInterjerai = [
+  photo("audinys-fotelis-sviesus", 1600, 1066, "Fotelis ir pufas su šviesiu austu audiniu, vaizdas iš viršaus"),
+  photo("audinys-fotelis-pilkas", 1600, 1066, "Tas pats fotelis ir pufas su pilku lygiu audiniu"),
+  photo("audinys-sofa-ruda", 1600, 1074, "Sofa su rudu audiniu interjere"),
+  photo("audinys-sofa-pilka", 1600, 1074, "Sofa su pilku margu audiniu interjere"),
 ];
 
 export const collections: Collection[] = [
@@ -49,6 +59,25 @@ export const collections: Collection[] = [
           { p: ["Kokybiškos baldo nuotraukos ir norimų spalvų audinių pavyzdžių, pagal kuriuos atkuriamos spalvos."] },
           { label: "Interjeruose" },
           { imgs: interjerai, first: "wide" },
+          { hr: true },
+          { h: "Tas pats baldas. Kitas audinys." },
+          { label: "Baltame fone" },
+          { imgs: [audinysBalta] },
+          { h4: "Kaip atrodytų tas pats baldas su visiškai kitu audiniu?" },
+          { p: [
+            "Pasitelkdami AI, galime pakeisti baldo audinį, išlaikydami jo formą, proporcijas ir konstrukcines detales. Keičiasi ne tik spalva, bet ir audinio tekstūra, paviršiaus savybės bei šviesos atspindžiai.",
+            "Tai leidžia pristatyti skirtingus audinių variantus negaminant ir nefotografuojant kiekvieno baldo atskirai.",
+          ] },
+          { h4: "Ko reikia iš jūsų?" },
+          { ul: [
+            "Kokybiškos baldo nuotraukos.",
+            "Aiškios norimo audinio nuotraukos iš arti, kuriose matoma jo tekstūra.",
+            "Nuotraukos, kuriose matyti, kaip tas pats audinys atrodo ant kito baldo ar gaminio.",
+          ] },
+          { h4: "Svarbu žinoti" },
+          { p: ["Ne visais atvejais įmanoma pakeisti baldo audinį naudojant AI. Ne ant kiekvieno esamo audinio galima tikroviškai pritaikyti kitą, todėl prieš pradedant darbą būtina individuali konsultacija, kurios metu įvertiname keitimo galimybes."] },
+          { label: "Interjeruose" },
+          { imgs: audinysInterjerai },
         ],
       },
       { key: "video", title: "Video", parts: [{ ids: ["the-armchair", "sofa-360"] }] },
